@@ -4,6 +4,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import Login from './pages/Login';
 import Home from './pages/Home';
 import Admin from './pages/Admin';
+import About from './pages/cus/About';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <Route exact path='/home' element={<Home />} />
       <Route exact path='/login' element={<Login />} />
       <Route exact path='/admin' element={<Admin />} />
+      <Route exact path='/gioi-thieu' element={<About />} />
     </Routes>
   );
 }

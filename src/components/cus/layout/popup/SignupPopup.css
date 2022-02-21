@@ -1,0 +1,69 @@
+.textinput {
+  padding: 12px;
+}
+
+.nameinput {
+  max-width: 45%;
+}
+
+.signupinput {
+  font-size: 17px;
+  width: 100%;
+  height: 45px;
+  border-radius: 20px;
+  border-color: #808080;
+  border-width: 2px;
+  border-style: solid;
+  padding: 15px;
+  background-color: white;
+}
+
+.signupinput::-webkit-input-placeholder {
+  font-size: 17px;
+}
+
+.signupinput:focus {
+  border: 5px #808080;
+  box-shadow: 0 0 5px #808080;
+}
+
+::placeholder {
+  color: #808080;
+  font-size: 14px;
+}
+
+.swal2-container {
+  z-index: 20000 !important;
+}
+.form__input {
+  display: block;
+  font-family: inherit;
+  font-size: 1rem;
+  color: inherit;
+  padding: 0.5rem 1rem;
+  border: none;
+  width: 100%;
+  height: 50px;
+  border-radius: 20px;
+  border-color: #808080;
+  background-color: #fff;
+  background-color: #f2f2f2;
+  border-top: 3px solid transparent;
+  border-bottom: 3px solid transparent;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  /* Pseudo element (a visible thing that isn't really in the DOM).
+              Also needs -ms- */
+}
+.form__input:focus {
+  outline: none;
+  border-bottom: 3px solid #55c57a;
+}
+.form__input:focus:invalid {
+  border-bottom: 3px solid #ff7730;
+}
+.form__input::-webkit-input-placeholder {
+  color: #bbb;
+}
