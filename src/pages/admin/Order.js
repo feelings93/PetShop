@@ -1,7 +1,8 @@
 import React from 'react';
+import Typography from '@mui/material/Typography';
 
 const Order = () => {
-  return <div>Order</div>;
+  return <Typography>Đơn hàng</Typography>;
 };
 
 export default Order;

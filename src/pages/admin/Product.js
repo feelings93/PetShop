@@ -1,7 +1,13 @@
 import React from 'react';
+import Typography from '@mui/material/Typography';
 
 const Product = () => {
-  return <div>Product</div>;
+  return (
+    <>
+      <Typography>Sản phẩm</Typography>
+      <Typography>Sản phẩm</Typography>
+    </>
+  );
 };
 
 export default Product;
