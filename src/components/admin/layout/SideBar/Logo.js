@@ -5,9 +5,9 @@ import logo from '../../../../assets/images/logo.png';
 
 const Logo = () => {
   return (
-    <Stack spacing={2} direction='row' alignItems='center'>
-      <img width={48} height={48} src={logo} alt={logo} />
-      <Typography color='#999' fontWeight={700} variant='h5'>
+    <Stack mb={2} px={1} spacing={2} direction='row' alignItems='center'>
+      <img width={32} height={32} src={logo} alt={logo} />
+      <Typography color='#999' fontWeight={700} variant='h6'>
         PetShop
       </Typography>
     </Stack>
