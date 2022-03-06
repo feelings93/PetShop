@@ -3,25 +3,30 @@ import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
+
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import InputAdornment from '@mui/material/InputAdornment';
 import {
   AlternateEmail,
+  People,
   RemoveRedEye,
   VisibilityOff,
 } from '@mui/icons-material';
-import GoogleLogin from 'react-google-login';
 import Avatar from '@mui/material/Avatar';
 import swal from 'sweetalert';
+import GoogleLogin from 'react-google-login';
 import { Link } from 'react-router-dom';
-import useHttp from '../../hooks/use-http';
-import { login, loginGoogle } from '../../lib/api/auth';
-
 import google from '../../assets/images/google.png';
+import useHttp from '../../hooks/use-http';
+import { loginGoogle, signup } from '../../lib/api/auth';
 
-const LoginForm = () => {
-  const { data, error, status, sendRequest } = useHttp(login);
+const SignUpForm = () => {
+  const { data, error, status, sendRequest } = useHttp(signup);
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const [name, setName] = React.useState('');
+  const [isShowPass, setIsShowPass] = React.useState(false);
   const {
     data: dataGoogle,
     error: errorGoogle,
@@ -29,24 +34,25 @@ const LoginForm = () => {
     sendRequest: sendRequestGoogle,
   } = useHttp(loginGoogle);
 
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
-  const [isShowPass, setIsShowPass] = React.useState(false);
-
   const handleShowPass = () => {
     setIsShowPass((prev) => !prev);
   };
+
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
+  };
+
+  const handleNameChange = (e) => {
+    setName(e.target.value);
   };
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   };
 
-  const handleLogin = (e) => {
+  const handleSignup = (e) => {
     e.preventDefault();
-    sendRequest({ email, password });
+    sendRequest({ email, password, name });
   };
 
   const responseGoogleSuccess = (response) => {
@@ -61,7 +67,7 @@ const LoginForm = () => {
     if (status === 'completed') {
       if (!error) {
         window.localStorage.setItem('accessToken', data);
-        window.location.reload();
+        window.location.replace('home');
       } else {
         swal('Đã có lỗi xảy ra', error, 'error');
       }
@@ -78,9 +84,8 @@ const LoginForm = () => {
       }
     }
   }, [dataGoogle, errorGoogle, statusGoogle]);
-
   return (
-    <form onSubmit={handleLogin}>
+    <form onSubmit={handleSignup}>
       <Box
         px={{ xs: 8, sm: 20 }}
         py={4}
@@ -98,18 +103,35 @@ const LoginForm = () => {
             <Avatar alt='Logo' src='logo.png' />
             <Typography variant='h4'>Chào mừng bạn đến với PetShop</Typography>
             <Typography color='text.secondary'>
-              Đăng nhập để có trải nghiệm tốt hơn cũng như cũng như thuận tiện
+              Đăng ký tài khoản để có trải nghiệm tốt hơn cũng như thuận tiện
               hơn trong việc mua sắm cho thú cưng của bạn
             </Typography>
           </Stack>
           <Stack direction='column' spacing={2}>
             <TextField
+              type='text'
+              id='name'
+              required
+              label='Tên'
+              variant='outlined'
+              size='medium'
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position='end'>
+                    <People />
+                  </InputAdornment>
+                ),
+              }}
+              onChange={handleNameChange}
+              value={name}
+            />
+            <TextField
               type='email'
               id='email'
+              required
               label='Email'
               variant='outlined'
               size='medium'
-              required
               InputProps={{
                 endAdornment: (
                   <InputAdornment position='end'>
@@ -123,8 +145,8 @@ const LoginForm = () => {
             <TextField
               type={isShowPass ? 'text' : 'password'}
               id='password'
-              label='Password'
               required
+              label='Password'
               size='medium'
               variant='outlined'
               InputProps={{
@@ -139,9 +161,6 @@ const LoginForm = () => {
               onChange={handlePasswordChange}
               value={password}
             />
-            <Box display='flex' direction='row' justifyContent='flex-end'>
-              <Link to='/forgot'>Quên mật khẩu?</Link>
-            </Box>
           </Stack>
           <Stack direction='column' spacing={2}>
             <Button
@@ -151,7 +170,7 @@ const LoginForm = () => {
               variant='contained'
               disabled={status === 'pending'}
             >
-              {status === 'pending' ? 'Đang đăng nhập' : 'Đăng nhập'}
+              {status === 'pending' ? 'Đang đăng ký' : 'Đăng ký'}
             </Button>
             <GoogleLogin
               clientId='268766015201-ds1eonkrlculon8lbb4un79fgoetg9d0.apps.googleusercontent.com'
@@ -180,11 +199,11 @@ const LoginForm = () => {
         </Stack>
 
         <Typography color='text.secondary' sx={{ mt: 4 }} textAlign='center'>
-          Bạn chưa có tài khoản? <Link to='/sign-up'>Đăng ký</Link>
+          Bạn đã có tài khoản? <Link to='/login'>Đăng nhập</Link>
         </Typography>
       </Box>
     </form>
   );
 };
 
-export default LoginForm;
+export default SignUpForm;

@@ -5,73 +5,51 @@ import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import Search from '@mui/icons-material/Search';
-import { DataGrid } from '@mui/x-data-grid';
+
 import AddCategoryForm from '../../components/admin/category/AddCategoryForm';
+import useHttp from '../../hooks/use-http';
+import { getCategories } from '../../lib/api/category';
+import CategoryGrid from '../../components/admin/category/CategoryGrid';
+import EditCategoryForm from '../../components/admin/category/EditCategoryForm';
 
-const columns = [
-  {
-    field: 'id',
-    editable: false,
-  },
-  {
-    field: 'name',
-    headerName: 'Tên danh mục',
-  },
-  {
-    field: 'parent',
-    headerName: 'Tên danh mục cha',
-  },
-];
-
-const data = [
-  {
-    id: 1,
-    name: 'Danh mục chó',
-    parent: 'Không có',
-  },
-  {
-    id: 2,
-    name: 'Danh mục mèo',
-    parent: 'Không có',
-  },
-  {
-    id: 3,
-    name: 'Danh mục dịch vụ',
-    parent: 'Không có',
-  },
-  {
-    id: 1,
-    name: 'Danh mục chó',
-    parent: 'Không có',
-  },
-  {
-    id: 2,
-    name: 'Danh mục mèo',
-    parent: 'Không có',
-  },
-  {
-    id: 3,
-    name: 'Danh mục dịch vụ',
-    parent: 'Không có',
-  },
-  {
-    id: 1,
-    name: 'Danh mục chó',
-    parent: 'Không có',
-  },
-  {
-    id: 2,
-    name: 'Danh mục mèo',
-    parent: 'Không có',
-  },
-  {
-    id: 3,
-    name: 'Danh mục dịch vụ',
-    parent: 'Không có',
-  },
-];
 const Category = () => {
   const [openAdd, setOpenAdd] = React.useState(false);
+  const [openEdit, setOpenEdit] = React.useState(false);
+  const [openDelete, setOpenDelete] = React.useState(false);
+  const [editCategory, setEditCategory] = React.useState(null);
+  const [categories, setCategories] = React.useState([]);
+  const { data, error, status, sendRequest } = useHttp(getCategories, true);
+
+  const handleAddCategory = (category) => {
+    const newCategories = [...categories, category];
+    console.log(newCategories);
+    setCategories(newCategories);
+  };
+
+  const handleEditCategory = (category) => {
+    const newCategories = categories.map((item) => {
+      if (item.id === category.id) {
+        return category;
+      }
+      return item;
+    });
+
+    console.log(newCategories);
+    setCategories(newCategories);
+  };
+
+  React.useEffect(() => {
+    sendRequest();
+  }, [sendRequest]);
+
+  React.useEffect(() => {
+    if (status === 'completed' && data) {
+      setCategories(data);
+    }
+  }, [setCategories, data, status]);
+
+  if (status === 'pending') return <h1>Loading...</h1>;
+  if (error) return <h1>Đã có lỗi xảy ra</h1>;
   return (
     <>
       <Stack
@@ -106,26 +84,46 @@ const Category = () => {
           </Button>
         </Stack>
       </Stack>
-
-      <div style={{ height: 500, width: '100%' }}>
-        <div style={{ display: 'flex', height: '100%' }}>
-          <div style={{ flexGrow: 1 }}>
-            <DataGrid
-              columns={columns}
-              rows={data}
-              checkboxSelection
-              disableSelectionOnClick
-            />
-          </div>
-        </div>
-      </div>
-
-      <AddCategoryForm
-        open={openAdd}
-        onClose={() => {
-          setOpenAdd(false);
+      <CategoryGrid
+        handleChangeEditCategory={(category) => {
+          setEditCategory(category);
+          setOpenEdit(true);
         }}
+        categories={categories}
       />
+
+      {openAdd && (
+        <AddCategoryForm
+          categories={categories}
+          open={openAdd}
+          onClose={() => {
+            setOpenAdd(false);
+          }}
+          handleAddCategory={handleAddCategory}
+        />
+      )}
+      {openEdit && (
+        <EditCategoryForm
+          categories={categories}
+          open={openEdit}
+          onClose={() => {
+            setOpenEdit(false);
+          }}
+          category={editCategory}
+          handleEditCategory={handleEditCategory}
+        />
+      )}
+      {openDelete && (
+        <EditCategoryForm
+          categories={categories}
+          open={openEdit}
+          onClose={() => {
+            setOpenEdit(false);
+          }}
+          category={editCategory}
+          handleEditCategory={handleEditCategory}
+        />
+      )}
     </>
   );
 };

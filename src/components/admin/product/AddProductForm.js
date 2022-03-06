@@ -12,7 +12,7 @@ import PropTypes from 'prop-types';
 import useHttp from '../../../hooks/use-http';
 import { createCategory } from '../../../lib/api/category';
 
-const AddCategoryForm = (props) => {
+const AddProductForm = (props) => {
   const { open, onClose, categories, handleAddCategory } = props;
   const { data, error, sendRequest, status } = useHttp(createCategory);
   const [name, setName] = React.useState('');
@@ -81,7 +81,7 @@ const AddCategoryForm = (props) => {
   );
 };
 
-AddCategoryForm.propTypes = {
+AddProductForm.propTypes = {
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   categories: PropTypes.arrayOf(
@@ -97,4 +97,4 @@ AddCategoryForm.propTypes = {
   handleAddCategory: PropTypes.func.isRequired,
 };
 
-export default AddCategoryForm;
+export default AddProductForm;

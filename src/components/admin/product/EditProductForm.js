@@ -8,15 +8,16 @@ import DialogActions from '@mui/material/DialogActions';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import Autocomplete from '@mui/material/Autocomplete';
+import LinearProgress from '@mui/material/LinearProgress';
 import PropTypes from 'prop-types';
 import useHttp from '../../../hooks/use-http';
-import { createCategory } from '../../../lib/api/category';
+import { editCategory } from '../../../lib/api/category';
 
-const AddCategoryForm = (props) => {
-  const { open, onClose, categories, handleAddCategory } = props;
-  const { data, error, sendRequest, status } = useHttp(createCategory);
-  const [name, setName] = React.useState('');
-  const [parent, setParent] = React.useState(null);
+const EditProductForm = (props) => {
+  const { open, onClose, categories, handleEditCategory, category } = props;
+  const { data, error, sendRequest, status } = useHttp(editCategory);
+  const [name, setName] = React.useState(category.name);
+  const [parent, setParent] = React.useState(category.parent);
 
   const handleChangeName = (e) => {
     setName(e.target.value);
@@ -28,24 +29,26 @@ const AddCategoryForm = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    sendRequest({ name, parentId: parent?.id });
+    sendRequest({ id: category.id, name, parentId: parent?.id });
   };
 
   React.useEffect(() => {
     if (status === 'completed') {
       if (data) {
-        swal('Thành công', 'Bạn đã thêm danh mục mới thành công', 'success');
-        handleAddCategory(data);
+        swal('Thành công', 'Bạn đã chỉnh sửa danh mục  thành công', 'success');
+        handleEditCategory(data);
         onClose();
       } else if (error) swal('Thất bại', 'Đã có lỗi xảy ra', 'error');
     }
-  }, [data, status, error, handleAddCategory, onClose]);
+  }, [data, status, error, handleEditCategory, onClose]);
   return (
     <Dialog open={open}>
+      {status === 'pending' && <LinearProgress />}
       <form onSubmit={handleSubmit}>
-        <DialogTitle>Thêm danh mục</DialogTitle>
+        <DialogTitle>Chỉnh sửa danh mục</DialogTitle>
         <DialogContent>
           <Stack mt={1} spacing={2}>
+            <TextField id='id' label='Id' disabled value={category.id} />
             <TextField
               id='name'
               label='Tên danh mục'
@@ -56,6 +59,9 @@ const AddCategoryForm = (props) => {
               id='parent'
               getOptionLabel={(option) => option.name}
               onChange={handleChangeParent}
+              isOptionEqualToValue={(option, value) => {
+                return option.id === value.id;
+              }}
               value={parent}
               options={categories}
               renderInput={(params) => (
@@ -69,8 +75,12 @@ const AddCategoryForm = (props) => {
           </Stack>
         </DialogContent>
         <DialogActions>
-          <Button variant='contained' type='submit'>
-            Thêm
+          <Button
+            disabled={status === 'pending'}
+            variant='contained'
+            type='submit'
+          >
+            Cập nhật
           </Button>
           <Button variant='text' onClick={onClose}>
             Hủy bỏ
@@ -81,7 +91,7 @@ const AddCategoryForm = (props) => {
   );
 };
 
-AddCategoryForm.propTypes = {
+EditProductForm.propTypes = {
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   categories: PropTypes.arrayOf(
@@ -94,7 +104,15 @@ AddCategoryForm.propTypes = {
       ),
     })
   ).isRequired,
-  handleAddCategory: PropTypes.func.isRequired,
+  handleEditCategory: PropTypes.func.isRequired,
+  category: PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string,
+    parent: PropTypes.shape({ id: PropTypes.number, name: PropTypes.string }),
+    children: PropTypes.arrayOf(
+      PropTypes.shape({ id: PropTypes.number, name: PropTypes.string })
+    ),
+  }).isRequired,
 };
 
-export default AddCategoryForm;
+export default EditProductForm;
