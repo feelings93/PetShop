@@ -5,31 +5,31 @@ import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import Search from '@mui/icons-material/Search';
-
-import AddCategoryForm from '../../components/admin/category/AddCategoryForm';
 import useHttp from '../../hooks/use-http';
-import { getCategories } from '../../lib/api/category';
-import CategoryGrid from '../../components/admin/category/CategoryGrid';
-import EditCategoryForm from '../../components/admin/category/EditCategoryForm';
-import { CategoryContext } from '../../store/admin/category-context';
+import { getUsers } from '../../lib/api/user';
+import { UserContext } from '../../store/admin/user-context';
+import UserGrid from '../../components/admin/user/UserGrid';
+import AddUserForm from '../../components/admin/user/AddUserForm';
+import EditUserForm from '../../components/admin/user/EditUserForm';
+import DelUserForm from '../../components/admin/user/DelUserForm';
 
-const Category = () => {
-  const { data, error, status, sendRequest } = useHttp(getCategories, true);
-  const categoryCtx = useContext(CategoryContext);
-  const { setCategories, openAdd, openEdit, openDelete, handleOpenAdd } =
-    categoryCtx;
+const User = () => {
+  const { data, error, status, sendRequest } = useHttp(getUsers, true);
+  const userCtx = useContext(UserContext);
+  const { setUsers, openAdd, openEdit, openDelete, handleOpenAdd } = userCtx;
   React.useEffect(() => {
     sendRequest();
   }, [sendRequest]);
 
   React.useEffect(() => {
     if (status === 'completed' && data) {
-      setCategories(data);
+      setUsers(data);
     }
-  }, [data, status, setCategories]);
+  }, [data, status, setUsers]);
 
   if (status === 'pending') return <h1>Loading...</h1>;
   if (error) return <h1>Đã có lỗi xảy ra</h1>;
+
   return (
     <>
       <Stack
@@ -62,13 +62,12 @@ const Category = () => {
           </Button>
         </Stack>
       </Stack>
-      <CategoryGrid />
-
-      {openAdd && <AddCategoryForm />}
-      {openEdit && <EditCategoryForm />}
-      {openDelete && <EditCategoryForm />}
+      <UserGrid />
+      {openAdd && <AddUserForm />}
+      {openEdit && <EditUserForm />}
+      {openDelete && <DelUserForm />}
     </>
   );
 };
 
-export default Category;
+export default User;

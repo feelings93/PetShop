@@ -7,42 +7,35 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
-import Autocomplete from '@mui/material/Autocomplete';
 import LinearProgress from '@mui/material/LinearProgress';
 import useHttp from '../../../hooks/use-http';
-import { editCategory } from '../../../lib/api/category';
-import { CategoryContext } from '../../../store/admin/category-context';
+import { editUser } from '../../../lib/api/user';
+import { UserContext } from '../../../store/admin/user-context';
 
-const EditCategoryForm = () => {
-  const categoryCtx = useContext(CategoryContext);
-  const {
-    editCateObj,
-    handleEditCategory,
-    handleCloseEdit,
-    openEdit,
-    categories,
-  } = categoryCtx;
-  const { data, error, sendRequest, status } = useHttp(editCategory);
-  const [name, setName] = React.useState(editCateObj.name);
-  const [parent, setParent] = React.useState(editCateObj.parent);
+const EditUserForm = () => {
+  const userCtx = useContext(UserContext);
+  const { editUserObj, handleEditCategory, handleCloseEdit, openEdit } =
+    userCtx;
+  const { data, error, sendRequest, status } = useHttp(editUser);
+  const [name, setName] = React.useState(editUserObj.name);
 
   const handleChangeName = (e) => {
     setName(e.target.value);
   };
 
-  const handleChangeParent = (e, value) => {
-    setParent(value);
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    sendRequest({ id: categoryCtx.editCateObj.id, name, parentId: parent?.id });
+    sendRequest({ id: editUserObj.id, name });
   };
 
   React.useEffect(() => {
     if (status === 'completed') {
       if (data) {
-        swal('Thành công', 'Bạn đã chỉnh sửa danh mục  thành công', 'success');
+        swal(
+          'Thành công',
+          'Bạn đã chỉnh sửa thông tin người dùng thành công',
+          'success'
+        );
         handleEditCategory(data);
         handleCloseEdit();
       } else if (error) swal('Thất bại', 'Đã có lỗi xảy ra', 'error');
@@ -52,32 +45,21 @@ const EditCategoryForm = () => {
     <Dialog open={openEdit}>
       {status === 'pending' && <LinearProgress />}
       <form onSubmit={handleSubmit}>
-        <DialogTitle>Chỉnh sửa danh mục</DialogTitle>
+        <DialogTitle>Chỉnh sửa thông tin người dùng</DialogTitle>
         <DialogContent>
           <Stack mt={1} spacing={2}>
-            <TextField id='id' label='Id' disabled value={editCateObj.id} />
+            <TextField id='id' label='Id' disabled value={editUserObj.id} />
             <TextField
               id='name'
-              label='Tên danh mục'
+              label='Họ tên'
               value={name}
               onChange={handleChangeName}
             />
-            <Autocomplete
-              id='parent'
-              getOptionLabel={(option) => option.name}
-              onChange={handleChangeParent}
-              isOptionEqualToValue={(option, value) => {
-                return option.id === value.id;
-              }}
-              value={parent}
-              options={categories}
-              renderInput={(params) => (
-                <TextField
-                  // eslint-disable-next-line react/jsx-props-no-spreading
-                  {...params}
-                  label='Danh mục cha'
-                />
-              )}
+            <TextField
+              disabled
+              id='email'
+              label='Email'
+              value={editUserObj.email}
             />
           </Stack>
         </DialogContent>
@@ -98,4 +80,4 @@ const EditCategoryForm = () => {
   );
 };
 
-export default EditCategoryForm;
+export default EditUserForm;

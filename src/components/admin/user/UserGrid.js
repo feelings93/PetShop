@@ -3,15 +3,15 @@ import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
 import { Delete, Edit } from '@mui/icons-material';
 import StyleGrid from '../../UI/StyleGrid/StyleGrid';
-import { CategoryContext } from '../../../store/admin/category-context';
+import { UserContext } from '../../../store/admin/user-context';
 
 function partial(fn, ...args) {
   return fn.bind(fn, ...args);
 }
 
-const CategoryGrid = () => {
-  const categoryCtx = useContext(CategoryContext);
-  const { categories, handleChangeEditCategory } = categoryCtx;
+const UserGrid = () => {
+  const userCtx = useContext(UserContext);
+  const { users, handleChangeEditUser, handleChangeDelUser } = userCtx;
   const columns = [
     {
       field: 'id',
@@ -20,18 +20,15 @@ const CategoryGrid = () => {
     },
     {
       field: 'name',
-      headerName: 'Tên danh mục',
+      headerName: 'Họ tên',
       width: 200,
       editable: false,
     },
     {
-      field: 'parent',
-      headerName: 'Tên danh mục cha',
+      field: 'email',
+      headerName: 'Email',
       width: 200,
       editable: false,
-      valueGetter: (params) => {
-        return params.row.parent?.name;
-      },
     },
     {
       field: 'action',
@@ -42,10 +39,10 @@ const CategoryGrid = () => {
       renderCell: (params) => {
         return (
           <Stack direction='row'>
-            <IconButton onClick={partial(handleChangeEditCategory, params.row)}>
+            <IconButton onClick={partial(handleChangeEditUser, params.row)}>
               <Edit />
             </IconButton>
-            <IconButton>
+            <IconButton onClick={partial(handleChangeDelUser, params.row)}>
               <Delete />
             </IconButton>
           </Stack>
@@ -60,7 +57,7 @@ const CategoryGrid = () => {
         <div style={{ flexGrow: 1 }}>
           <StyleGrid
             columns={columns}
-            rows={categories}
+            rows={users}
             disableSelectionOnClick
             rowsPerPageOptions={[5, 25, 50]}
           />
@@ -70,4 +67,4 @@ const CategoryGrid = () => {
   );
 };
 
-export default CategoryGrid;
+export default UserGrid;

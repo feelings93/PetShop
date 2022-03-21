@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import swal from 'sweetalert';
 import Button from '@mui/material/Button';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -8,12 +8,14 @@ import DialogActions from '@mui/material/DialogActions';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import Autocomplete from '@mui/material/Autocomplete';
-import PropTypes from 'prop-types';
 import useHttp from '../../../hooks/use-http';
 import { createCategory } from '../../../lib/api/category';
+import { CategoryContext } from '../../../store/admin/category-context';
 
-const AddCategoryForm = (props) => {
-  const { open, onClose, categories, handleAddCategory } = props;
+const AddCategoryForm = () => {
+  const categoryCtx = useContext(CategoryContext);
+  const { handleAddCategory, handleCloseAdd, openAdd, categories } =
+    categoryCtx;
   const { data, error, sendRequest, status } = useHttp(createCategory);
   const [name, setName] = React.useState('');
   const [parent, setParent] = React.useState(null);
@@ -36,12 +38,12 @@ const AddCategoryForm = (props) => {
       if (data) {
         swal('Thành công', 'Bạn đã thêm danh mục mới thành công', 'success');
         handleAddCategory(data);
-        onClose();
+        handleCloseAdd();
       } else if (error) swal('Thất bại', 'Đã có lỗi xảy ra', 'error');
     }
-  }, [data, status, error, handleAddCategory, onClose]);
+  }, [data, status, error, handleAddCategory, handleCloseAdd]);
   return (
-    <Dialog open={open}>
+    <Dialog open={openAdd}>
       <form onSubmit={handleSubmit}>
         <DialogTitle>Thêm danh mục</DialogTitle>
         <DialogContent>
@@ -72,29 +74,13 @@ const AddCategoryForm = (props) => {
           <Button variant='contained' type='submit'>
             Thêm
           </Button>
-          <Button variant='text' onClick={onClose}>
+          <Button variant='text' onClick={handleCloseAdd}>
             Hủy bỏ
           </Button>
         </DialogActions>
       </form>
     </Dialog>
   );
-};
-
-AddCategoryForm.propTypes = {
-  open: PropTypes.bool.isRequired,
-  onClose: PropTypes.func.isRequired,
-  categories: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number,
-      name: PropTypes.string,
-      parent: PropTypes.shape({ id: PropTypes.number, name: PropTypes.string }),
-      children: PropTypes.arrayOf(
-        PropTypes.shape({ id: PropTypes.number, name: PropTypes.string })
-      ),
-    })
-  ).isRequired,
-  handleAddCategory: PropTypes.func.isRequired,
 };
 
 export default AddCategoryForm;
