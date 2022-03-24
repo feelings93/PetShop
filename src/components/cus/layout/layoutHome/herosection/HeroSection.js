@@ -11,6 +11,9 @@ import classes from './HeroSection.module.css';
 const HeroSection = () => {
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
+  const [color1, setColor1] = React.useState('#ff6b00');
+  const [color2, setColor2] = React.useState('#f2b203');
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -37,7 +40,7 @@ const HeroSection = () => {
             }}
           >
             <Stack spacing={2}>
-              <Typography variant='h3' sx={{ fontWeight: 700 }} color='#ff6b00'>
+              <Typography variant='h3' sx={{ fontWeight: 700 }} color={color1}>
                 Trải nghiệm thú cưng tại Pet Family
               </Typography>
               <Typography

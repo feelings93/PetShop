@@ -180,6 +180,7 @@ const Header = (props) => {
               setOpenLogin(true);
             }}
             variant='outlined'
+            sx={{ backgroundColor: '#ff6b00' }}
           >
             Đăng nhập
           </Button>
@@ -319,6 +320,14 @@ const Header = (props) => {
                           setOpenLogin(true);
                         }}
                         variant='outlined'
+                        sx={{
+                          color: '#ff6b00',
+                          borderColor: '#ff6b00',
+                          '&:hover': {
+                            borderColor: '#ff6b00',
+                            opacity: [0.9, 0.8, 0.7],
+                          },
+                        }}
                       >
                         Đăng nhập
                       </Button>
@@ -327,6 +336,13 @@ const Header = (props) => {
                           setOpenSignup(true);
                         }}
                         variant='contained'
+                        sx={{
+                          backgroundColor: '#ff6b00',
+                          '&:hover': {
+                            backgroundColor: '#ff6b00',
+                            opacity: [0.9, 0.8, 0.7],
+                          },
+                        }}
                       >
                         Đăng ký
                       </Button>

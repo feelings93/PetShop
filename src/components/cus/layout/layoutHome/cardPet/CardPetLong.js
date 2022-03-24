@@ -14,19 +14,21 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import Link from '@mui/material/Link';
 import './cardpetpro.css';
 
-const CardTourPro = (props) => {
+const CardPetLong = (props) => {
   const [hide, setHide] = useState(false);
+  const [color2, setColor2] = useState('#f2b203');
+  const [color1, setColor1] = useState('#ff6b00');
   return (
-    <Box padding='8px'>
+    <Grid container sm={12}>
       <Grid
-        container
-        sm={12}
+        item
+        sm={4.8}
         sx={{
-          height: 300,
+          height: 210,
           borderRadius: 2,
           boxShadow: 3,
           // eslint-disable-next-line react/prop-types
-          backgroundImage: `url(${props.url})`,
+          backgroundImage: `url("https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/best-girl-cat-names-1606245046.jpg?crop=0.668xw:1.00xh;0.126xw,0&resize=640:*")`,
           backgroundSize: ' cover',
           backgroundColor: '#f99',
           backgroundPosition: 'center',
@@ -82,6 +84,7 @@ const CardTourPro = (props) => {
                   backgroundColor: '#ff3b00',
                 },
               }}
+              href='/san-pham'
             >
               <SavedSearchIcon
                 sx={{
@@ -112,19 +115,13 @@ const CardTourPro = (props) => {
             Thêm vào giỏ
           </Button>
         </div>
-        <Grid
-          container
-          item
-          sm={12}
-          display='flex'
-          justifyContent='space-between'
-        >
+        <Box display='flex' justifyContent='space-between'>
           {props.new === 'true' ? (
             <div className='image__title'>NEW</div>
           ) : (
             <div />
           )}
-          {!hide ? (
+          {/* {!hide ? (
             <IconButton
               aria-label='delete'
               sx={{
@@ -153,125 +150,157 @@ const CardTourPro = (props) => {
             >
               <FavoriteBorderIcon sx={{ color: '#00000', fontSize: '35px' }} />
             </IconButton>
-          )}
-        </Grid>
+          )} */}
+        </Box>
       </Grid>
-
-      <Box backgroundColor='#fff' marginTop='5px'>
-        <Link
-          href='/tours/detailtour'
-          underline='none'
-          fontWeight='bold'
-          fontSize='18px'
-          color='#f2b203'
+      <Grid item sm={0.2}></Grid>
+      <Grid item sm={7}>
+        <Box
+          item
           sx={{
-            '&:hover': {
-              color: '#c89300',
-            },
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-around',
           }}
         >
-          {props.title}
-        </Link>
-        <Box display='flex' alignItems='center'>
-          <IconButton
-            aria-label='delete'
+          <Box
             sx={{
-              marginRight: '2px',
-              backgroundColor: '#00aa6c',
-              borderRadius: 8,
-              height: '5px',
-              width: '5px',
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
             }}
-          />
-          <IconButton
-            aria-label='delete'
-            sx={{
-              marginRight: '2px',
-              backgroundColor: '#00aa6c',
-              borderRadius: 8,
-              height: '5px',
-              width: '5px',
-            }}
-          />
-          <IconButton
-            aria-label='delete'
-            sx={{
-              marginRight: '2px',
-              backgroundColor: '#00aa6c',
-              borderRadius: 8,
-              height: '5px',
-              width: '5px',
-            }}
-          />
-          <IconButton
-            aria-label='delete'
-            sx={{
-              marginRight: '2px',
-              backgroundColor: '#00aa6c',
-              borderRadius: 8,
-              height: '5px',
-              width: '5px',
-            }}
-          />
-          <IconButton
-            aria-label='delete'
-            sx={{
-              marginRight: '10px',
-              backgroundColor: '#00aa6c',
-              borderRadius: 8,
-              height: '5px',
-              width: '5px',
-            }}
-          />
+          >
+            <Typography
+              sx={{
+                fontWeight: 'bold',
+                fontSize: '20px',
+                lineHeight: '22px',
+                marginTop: '0px',
+                color: color1,
+              }}
+            >
+              Alaska Hồng Ú Nụ
+            </Typography>
+            <IconButton
+              aria-label='delete'
+              sx={{
+                margin: '5px 5px 0px 0px',
+                color: '#000000',
+                backgroundColor: '#fff',
+                borderRadius: 8,
+                height: '30px',
+                width: '30px',
+              }}
+            >
+              <FavoriteBorderIcon sx={{ color: '#00000', fontSize: '35px' }} />
+            </IconButton>
+          </Box>
 
+          <Box display='flex' sx={{ marginTop: '5px' }}>
+            <IconButton
+              aria-label='delete'
+              sx={{
+                marginRight: '2px',
+                backgroundColor: '#00aa6c',
+                borderRadius: 8,
+                height: '5px',
+                width: '5px',
+              }}
+            />
+            <IconButton
+              aria-label='delete'
+              sx={{
+                marginRight: '2px',
+                backgroundColor: '#00aa6c',
+                borderRadius: 8,
+                height: '5px',
+                width: '5px',
+              }}
+            />
+            <IconButton
+              aria-label='delete'
+              sx={{
+                marginRight: '2px',
+                backgroundColor: '#00aa6c',
+                borderRadius: 8,
+                height: '5px',
+                width: '5px',
+              }}
+            />
+            <IconButton
+              aria-label='delete'
+              sx={{
+                marginRight: '2px',
+                backgroundColor: '#00aa6c',
+                borderRadius: 8,
+                height: '5px',
+                width: '5px',
+              }}
+            />
+            <IconButton
+              aria-label='delete'
+              sx={{
+                marginRight: '2px',
+                backgroundColor: '#00aa6c',
+                borderRadius: 8,
+                height: '5px',
+                width: '5px',
+              }}
+            />
+
+            <Typography
+              variant='h6'
+              gutterBottom
+              component='div'
+              fontWeight='regular'
+              fontSize='13px'
+              color='#555555'
+              margin='0px 0px 0px 2px'
+            >
+              1280 đánh giá
+            </Typography>
+          </Box>
           <Typography
-            variant='h6'
-            gutterBottom
-            component='div'
-            fontWeight='regular'
-            fontSize='13px'
-            color='#555555'
-            margin='1px 0px 0px 0px'
+            sx={{
+              width: '100%',
+              fontWeight: '400',
+              color: '#666',
+              marginTop: '10px',
+            }}
           >
-            1280 đánh giá
+            Giống chó alaska thuần chủng, được sinh ra từ bố và mẹ đều là
+            alaska. Cam kết uy tín
           </Typography>
         </Box>
-        <Typography
-          variant='h6'
-          gutterBottom
-          component='div'
-          fontWeight='medium'
-          fontSize='16px'
-          color='#555555'
-          margin='1px 0px 0px 0px'
+        <Link
+          href='#'
+          style={{
+            display: 'flex',
+            justifyContent: 'flex-end',
+            fontSize: '14px',
+            fontWeight: 'light',
+            color: '#f2b203',
+            textDecoration: 'none',
+            width: '100%',
+            marginTop: '5px',
+          }}
         >
-          Loại: {props.type}
-        </Typography>
-        <Box display='flex' justifyContent='space-between'>
+          Xem thêm >
+        </Link>
+        <Box sx={{ alignItems: 'flex-end', marginTop: '20px' }}>
           <Typography
-            variant='h6'
-            gutterBottom
-            component='div'
-            fontWeight='bold'
-            fontSize='18px'
-            color='#ff6b00'
+            style={{
+              fontSize: '28px',
+              fontWeight: 'bold',
+              color: color2,
+            }}
           >
-            Giá:
-          </Typography>
-          <Typography
-            variant='h6'
-            gutterBottom
-            component='div'
-            fontWeight='bold'
-            fontSize='18px'
-            color='#ff6b00'
-          >
-            {props.price}Đ
+            20.000.000 VND
           </Typography>
         </Box>
-      </Box>
-    </Box>
+      </Grid>
+    </Grid>
   );
 };
 
-export default CardTourPro;
+export default CardPetLong;

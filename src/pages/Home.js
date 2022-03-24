@@ -4,7 +4,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import Header from '../components/cus/layout/navbar/Header';
 import HeroSection from '../components/cus/layout/layoutHome/herosection/HeroSection';
 import AllOurServices from '../components/cus/layout/layoutHome/ourservice/AllOurServices';
-import AllCardPets from '../components/cus/layout/layoutHome/cardtour/AllCardPets';
+import AllCardPets from '../components/cus/layout/layoutHome/cardPet/AllCardPets';
 import AllNewsReview from '../components/cus/layout/layoutHome/newsreview/AllNewsReview';
 import AllCardReview from '../components/cus/layout/layoutHome/review/AllCardReview';
 import About from './cus/About';

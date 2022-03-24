@@ -60,3 +60,8 @@
   font-size: 1.25em;
   margin-top: 0.25em;
 }
+
+.textLine {
+  align-items: flex-end;
+  display: flex;
+}

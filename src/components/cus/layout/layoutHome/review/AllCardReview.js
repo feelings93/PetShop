@@ -8,7 +8,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Slider from 'react-slick';
 
-import '../cardtour/sliders.css';
+import '../cardPet/sliders.css';
 import Container from '@mui/material/Container';
 import CardReview from './CardReview';
 
