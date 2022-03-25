@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 export const UserContext = React.createContext({
   users: [],
   setUsers: () => {},
-  handleAddUser: (User) => {},
-  handleEditUser: (User) => {},
+  handleAddUser: () => {},
+  handleEditUser: () => {},
   editUserObj: {},
   delUserObj: {},
   setEditUser: () => {},

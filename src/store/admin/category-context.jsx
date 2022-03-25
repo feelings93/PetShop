@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 export const CategoryContext = React.createContext({
   categories: [],
   setCategories: () => {},
-  handleAddCategory: (category) => {},
-  handleEditCategory: (category) => {},
+  handleAddCategory: () => {},
+  handleEditCategory: () => {},
   editCateObj: {},
   setEditCategory: () => {},
   openEdit: false,

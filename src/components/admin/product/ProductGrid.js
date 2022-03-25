@@ -1,16 +1,20 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Stack from '@mui/material/Stack';
+import Avatar from '@mui/material/Avatar';
+
 import IconButton from '@mui/material/IconButton';
-import PropTypes from 'prop-types';
 import { Delete, Edit } from '@mui/icons-material';
 import StyleGrid from '../../UI/StyleGrid/StyleGrid';
+import { ProductContext } from '../../../store/admin/product-context';
 
 function partial(fn, ...args) {
   return fn.bind(fn, ...args);
 }
 
-const ProductGrid = (props) => {
-  const { categories, handleChangeEditCategory } = props;
+const ProductGrid = () => {
+  const productCtx = useContext(ProductContext);
+  const { products, handleChangeEditProduct, handleChangeDelProduct } =
+    productCtx;
   const columns = [
     {
       field: 'id',
@@ -19,18 +23,33 @@ const ProductGrid = (props) => {
     },
     {
       field: 'name',
-      headerName: 'Tên danh mục',
+      headerName: 'Tên sản phẩm',
       width: 200,
       editable: false,
     },
     {
-      field: 'parent',
-      headerName: 'Tên danh mục cha',
+      field: 'photos',
+      headerName: 'Hinh anh',
+      width: 100,
+      editable: false,
+      renderCell: (params) => {
+        return (
+          <Avatar
+          sx={{width: '100px', height: '100px'}}
+            src={
+              params.row.photos[0]?.url ||
+              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkH-JPzVPj5TVAyg1OIKjMRbagTYcJIegBwc7KOUlWBA6xPbSD7Za_TIk-_D5xJC3rAs8&usqp=CAU'
+            }
+            variant='square'
+          />
+        );
+      },
+    },
+    {
+      field: 'quantity',
+      headerName: 'Số lượng',
       width: 200,
       editable: false,
-      valueGetter: (params) => {
-        return params.row.parent?.name;
-      },
     },
     {
       field: 'action',
@@ -41,10 +60,10 @@ const ProductGrid = (props) => {
       renderCell: (params) => {
         return (
           <Stack direction='row'>
-            <IconButton onClick={partial(handleChangeEditCategory, params.row)}>
+            <IconButton onClick={partial(handleChangeEditProduct, params.row)}>
               <Edit />
             </IconButton>
-            <IconButton>
+            <IconButton onClick={partial(handleChangeDelProduct, params.row)}>
               <Delete />
             </IconButton>
           </Stack>
@@ -59,7 +78,7 @@ const ProductGrid = (props) => {
         <div style={{ flexGrow: 1 }}>
           <StyleGrid
             columns={columns}
-            rows={categories}
+            rows={products}
             checkboxSelection
             disableSelectionOnClick
             rowsPerPageOptions={[5, 25, 50]}
@@ -68,19 +87,6 @@ const ProductGrid = (props) => {
       </div>
     </div>
   );
-};
-ProductGrid.propTypes = {
-  categories: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number,
-      name: PropTypes.string,
-      parent: PropTypes.shape({ id: PropTypes.number, name: PropTypes.string }),
-      children: PropTypes.arrayOf(
-        PropTypes.shape({ id: PropTypes.number, name: PropTypes.string })
-      ),
-    })
-  ).isRequired,
-  handleChangeEditCategory: PropTypes.func.isRequired,
 };
 
 export default ProductGrid;

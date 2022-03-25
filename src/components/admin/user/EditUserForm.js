@@ -14,7 +14,7 @@ import { UserContext } from '../../../store/admin/user-context';
 
 const EditUserForm = () => {
   const userCtx = useContext(UserContext);
-  const { editUserObj, handleEditCategory, handleCloseEdit, openEdit } =
+  const { editUserObj, handleEditUser, handleCloseEdit, openEdit } =
     userCtx;
   const { data, error, sendRequest, status } = useHttp(editUser);
   const [name, setName] = React.useState(editUserObj.name);
@@ -36,11 +36,11 @@ const EditUserForm = () => {
           'Bạn đã chỉnh sửa thông tin người dùng thành công',
           'success'
         );
-        handleEditCategory(data);
+        handleEditUser(data);
         handleCloseEdit();
       } else if (error) swal('Thất bại', 'Đã có lỗi xảy ra', 'error');
     }
-  }, [data, status, error, handleEditCategory, handleCloseEdit]);
+  }, [data, status, error, handleEditUser, handleCloseEdit]);
   return (
     <Dialog open={openEdit}>
       {status === 'pending' && <LinearProgress />}

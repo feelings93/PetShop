@@ -18,6 +18,7 @@ import { getProfile } from './lib/api/auth';
 import CategoryContextProvider from './store/admin/category-context';
 import User from './pages/admin/User';
 import UserContextProvider from './store/admin/user-context';
+import ProductContextProvider from './store/admin/product-context';
 
 const theme = createTheme({
   palette: {
@@ -87,7 +88,14 @@ function App() {
         {admin && (
           <Route exact path='/admin' element={<Admin user={data} />}>
             <Route path='' element={<Navigate to='overview' />} />
-            <Route path='product' element={<Product />} />
+            <Route
+              path='product'
+              element={
+                <ProductContextProvider>
+                  <Product />
+                </ProductContextProvider>
+              }
+            />
             <Route
               path='user'
               element={

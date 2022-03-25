@@ -2,11 +2,13 @@ import React, { useCallback, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 
 export const ProductContext = React.createContext({
-  categories: [],
-  setCategories: () => {},
-  handleAddProduct: (Product) => {},
-  handleEditProduct: (Product) => {},
-  editCateObj: {},
+  products: [],
+  setProducts: () => {},
+  handleAddProduct: () => {},
+  handleEditProduct: () => {},
+  handleDelProduct: () => {},
+  editProductObj: {},
+  delProductObj: {},
   setEditProduct: () => {},
   openEdit: false,
   openAdd: false,
@@ -15,38 +17,55 @@ export const ProductContext = React.createContext({
   handleCloseEdit: () => {},
   handleOpenAdd: () => {},
   handleCloseAdd: () => {},
+  handleChangeDelProduct: () => {},
 });
 
 const ProductContextProvider = (props) => {
   const { children } = props;
-  const [categories, setCategories] = useState([]);
+  const [products, setProducts] = useState([]);
   const [openAdd, setOpenAdd] = React.useState(false);
   const [openEdit, setOpenEdit] = React.useState(false);
   const [openDelete, setOpenDelete] = React.useState(false);
   const [editProduct, setEditProduct] = React.useState(null);
+  const [delProduct, setDelProduct] = React.useState(null);
 
   const handleAddProduct = useCallback((Product) => {
-    setCategories((prev) => [...prev, Product]);
+    setProducts((prev) => [...prev, Product]);
   }, []);
 
   const handleEditProduct = useCallback(
     (Product) => {
-      const newCategories = categories.map((item) => {
+      const newproducts = products.map((item) => {
         if (item.id === Product.id) {
           return Product;
         }
         return item;
       });
 
-      console.log(newCategories);
-      setCategories(newCategories);
+      console.log(newproducts);
+      setProducts(newproducts);
     },
-    [categories]
+    [products]
+  );
+  const handleDelProduct = useCallback(
+    (Product) => {
+      const newProducts = products.filter((item) => item.id !== Product.id);
+
+      console.log(newProducts);
+      setProducts(newProducts);
+    },
+    [products]
   );
   const handleChangeEditProduct = useCallback((Product) => {
     setEditProduct(Product);
     setOpenEdit(true);
   }, []);
+
+  const handleChangeDelProduct = useCallback((Product) => {
+    setDelProduct(Product);
+    setOpenDelete(true);
+  }, []);
+
   const handleOpenEdit = useCallback(() => {
     setOpenEdit(true);
   }, []);
@@ -73,10 +92,12 @@ const ProductContextProvider = (props) => {
 
   const contextValue = useMemo(
     () => ({
-      categories,
-      setCategories,
-      editCateObj: editProduct,
+      products,
+      setProducts,
+      editProductObj: editProduct,
+      delProductObj: delProduct,
       handleChangeEditProduct,
+      handleChangeDelProduct,
       openEdit,
       openAdd,
       openDelete,
@@ -88,16 +109,20 @@ const ProductContextProvider = (props) => {
       handleCloseDelete,
       handleAddProduct,
       handleEditProduct,
+      handleDelProduct,
     }),
     [
-      categories,
+      products,
       editProduct,
+      delProduct,
       handleAddProduct,
       handleChangeEditProduct,
+      handleChangeDelProduct,
       handleCloseAdd,
       handleCloseDelete,
       handleCloseEdit,
       handleEditProduct,
+      handleDelProduct,
       handleOpenAdd,
       handleOpenDelete,
       handleOpenEdit,
