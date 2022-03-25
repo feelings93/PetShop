@@ -17,66 +17,59 @@ import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import HomeIcon from '@mui/icons-material/Home';
 
 import Aos from 'aos';
+import BorderAllIcon from '@mui/icons-material/BorderAll';
+import DensityMediumIcon from '@mui/icons-material/DensityMedium';
+import IconButton from '@mui/material/IconButton';
+
 import { TypographyMod } from '../../components/cus/layout/layoutProduct/TypoUtils';
 import TourFilters from '../../components/cus/layout/layoutProduct/TourFilter';
 import 'aos/dist/aos.css';
 import CardPetLong from '../../components/cus/layout/layoutHome/cardPet/CardPetLong';
+import CardPetPro from '../../components/cus/layout/layoutHome/cardPet/CardPetPro';
 import Header from '../../components/cus/layout/navbar/Header';
-import BorderAllIcon from '@mui/icons-material/BorderAll';
-import { Description } from '@mui/icons-material';
-import DensityMediumIcon from '@mui/icons-material/DensityMedium';
-import IconButton from '@mui/material/IconButton';
 
 const data = [
   {
-    image: '/images/cards/card-image1.jpg',
-    name: 'Saigon Barbecue',
-    salePrice: 89,
-    price: 69,
-    reviewNum: 200,
-    properties: ['Free cancellation', 'Properties with special offers'],
-    tags: ['Wine&Beer'],
-    rating: 5,
+    url: 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/best-girl-cat-names-1606245046.jpg?crop=0.668xw:1.00xh;0.126xw,0&resize=640:*',
+    title: 'MÈO TAI CỤP SIÊU ĐÁNG YÊU            ',
+    type: 'Mèo',
+    price: '20.000.000',
   },
   {
-    image: '/images/cards/card-image2.jpg',
-    name: 'In Love With Saigon',
-    salePrice: 89,
-    price: 59,
-    reviewNum: 250,
-    properties: ['Free cancellation', 'Properties with special offers'],
-    tags: ['Best Tours', 'Wine&Beer'],
-    rating: 4,
+    url: 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/best-girl-cat-names-1606245046.jpg?crop=0.668xw:1.00xh;0.126xw,0&resize=640:*',
+    title: 'MÈO TAI CỤP SIÊU ĐÁNG YÊU            ',
+    type: 'Mèo',
+    price: '20.000.000',
   },
   {
-    image: '/images/cards/card-image3.jpg',
-    name: 'Saigon Vegan',
-    salePrice: 109,
-    price: 49,
-    reviewNum: 50,
-    properties: ['Free cancellation', 'Reverse now, pay at stay'],
-    tags: ['Vegan', 'Wine&Beer'],
-    rating: 4,
+    url: 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/best-girl-cat-names-1606245046.jpg?crop=0.668xw:1.00xh;0.126xw,0&resize=640:*',
+    title: 'MÈO TAI CỤP SIÊU ĐÁNG YÊU            ',
+    type: 'Mèo',
+    price: '20.000.000',
   },
   {
-    image: '/images/cards/card-image4.jpg',
-    name: 'Saigon BackStreet',
-    salePrice: 79,
-    price: 39,
-    reviewNum: 80,
-    properties: ['Free cancellation', 'Properties with special offers'],
-    tags: ['Wine&Beer'],
-    rating: 3,
+    url: 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/best-girl-cat-names-1606245046.jpg?crop=0.668xw:1.00xh;0.126xw,0&resize=640:*',
+    title: 'MÈO TAI CỤP SIÊU ĐÁNG YÊU            ',
+    type: 'Mèo',
+    price: '20.000.000',
   },
   {
-    image: '/images/cards/card-image5.jpg',
-    name: 'In Love With Saigon',
-    salePrice: 89,
-    price: 59,
-    reviewNum: 250,
-    properties: ['Free cancellation', 'Properties with special offers'],
-    tags: ['Vegan', 'Best Tours'],
-    rating: 4,
+    url: 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/best-girl-cat-names-1606245046.jpg?crop=0.668xw:1.00xh;0.126xw,0&resize=640:*',
+    title: 'MÈO TAI CỤP SIÊU ĐÁNG YÊU            ',
+    type: 'Mèo',
+    price: '20.000.000',
+  },
+  {
+    url: 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/best-girl-cat-names-1606245046.jpg?crop=0.668xw:1.00xh;0.126xw,0&resize=640:*',
+    title: 'MÈO TAI CỤP SIÊU ĐÁNG YÊU            ',
+    type: 'Mèo',
+    price: '20.000.000',
+  },
+  {
+    url: 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/best-girl-cat-names-1606245046.jpg?crop=0.668xw:1.00xh;0.126xw,0&resize=640:*',
+    title: 'MÈO TAI CỤP SIÊU ĐÁNG YÊU            ',
+    type: 'Mèo',
+    price: '20.000.000',
   },
 ];
 
@@ -85,6 +78,7 @@ export default function Products() {
     Aos.init();
     Aos.refresh();
   }, []);
+  const [shortPro, setShortPro] = React.useState(true);
   return (
     <div className=''>
       <Header />
@@ -112,16 +106,8 @@ export default function Products() {
       </Container>
       <Box style={{ backgroundColor: '#F6F9FC', height: '100%' }}>
         <Container fluid>
-          <Grid container style={{ justifyContent: 'space-between' }}>
-            <Grid
-              container
-              elevation={3}
-              item
-              xs={12}
-              md={4}
-              lg={4}
-              sx={{ pb: 2, position: 'sticky' }}
-            >
+          <Grid container xs={12} md={12} lg={12}>
+            <Grid item xs={12} md={4} lg={4}>
               <TourFilters />
             </Grid>
             <Grid item xs={12} md={8} lg={8} sx={{ mb: 2 }}>
@@ -157,21 +143,61 @@ export default function Products() {
                       </TypographyMod>
                     </Box>
                     <Box>
-                      <BorderAllIcon sx={{ marginRight: '2px' }} />
-                      <DensityMediumIcon />
+                      {shortPro ? (
+                        <>
+                          <IconButton size='small' disabled>
+                            <BorderAllIcon />
+                          </IconButton>
+                          <IconButton
+                            size='small'
+                            onClick={() => setShortPro(!shortPro)}
+                          >
+                            <DensityMediumIcon />
+                          </IconButton>
+                        </>
+                      ) : (
+                        <>
+                          <IconButton
+                            size='small'
+                            onClick={() => setShortPro(!shortPro)}
+                          >
+                            <BorderAllIcon />
+                          </IconButton>
+                          <IconButton size='small' disabled>
+                            <DensityMediumIcon />
+                          </IconButton>
+                        </>
+                      )}
                     </Box>
                   </Box>
                 </Box>
               </div>
               <div data-aos='fade-up' data-aos-duration={1000}>
-                {data.map((item, index) => {
-                  return (
-                    <Box sx={{ mt: 1, mb: 1 }}>
-                      <CardPetLong />
-                      <hr width='95%' align='center' color='#d9d9d9' />
-                    </Box>
-                  );
-                })}
+                <Grid container sm={12} xs={12} md={12}>
+                  {shortPro
+                    ? data.map((item, index) => {
+                        return (
+                          <Grid item sm={4} md={4}>
+                            <CardPetPro
+                              url={item.url}
+                              title={item.title}
+                              type={item.type}
+                              price={item.price}
+                              new={false}
+                            />
+                            <hr width='95%' align='center' color='#d9d9d9' />
+                          </Grid>
+                        );
+                      })
+                    : data.map((item, index) => {
+                        return (
+                          <Box sx={{ mt: 1, mb: 1 }}>
+                            <CardPetLong />
+                            <hr width='95%' align='center' color='#d9d9d9' />
+                          </Box>
+                        );
+                      })}
+                </Grid>
               </div>
               <Box
                 display='flex'

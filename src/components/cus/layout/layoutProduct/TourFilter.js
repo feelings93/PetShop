@@ -109,12 +109,12 @@ const TourFilters = () => {
       {/* Covid 19 */}
       <Box sx={{ m: 1, ml: 2, mr: 2 }}>
         <TypographyMod fontSize='14px'>
-          Because of Covid-19,you must wear mask except for eating
+          Bởi vì dịch covid-19, quý khách vui lòng mang khẩu trang khi đến nhé
         </TypographyMod>
       </Box>
       <Divider />
       <Box sx={{ m: 1, ml: 2, mr: 2 }}>
-        <TypographyMod fontSize='14px'>Deals</TypographyMod>
+        <TypographyMod fontSize='14px'>Danh mục</TypographyMod>
         <FormGroup>
           <FormControlLabel
             control={<Checkbox />}
@@ -150,10 +150,10 @@ const TourFilters = () => {
       </Box>
       <Divider />
       <Box sx={{ m: 1, ml: 2, mr: 2 }}>
-        <TypographyMod fontSize='14px'>Price</TypographyMod>
+        <TypographyMod fontSize='14px'>Giá</TypographyMod>
         <Box textAlign='center'>
           <TypographyMod fontSize='12px'>
-            From {price[0]} USD to {price[1]} USD
+            Từ {price[0]} VNĐ đến {price[1]} VNĐ
           </TypographyMod>
         </Box>
         <Box>
@@ -169,195 +169,12 @@ const TourFilters = () => {
             sx={{ color: '#00aa6c', ml: 1 }}
           />
         </Box>
-        <FormGroup>
-          <FormControlLabel
-            control={<Checkbox />}
-            label={<Typographyf14medium>Price without VAT</Typographyf14medium>}
-          />
-          <FormControlLabel
-            control={<Checkbox />}
-            label={<Typographyf14light>Price with VAT</Typographyf14light>}
-          />
-        </FormGroup>
-        <Grid container direction='column'>
-          <Grid container>
-            <Grid
-              item
-              xs={4}
-              display='flex'
-              sx={{ marginTop: 'auto', marginBottom: 'auto' }}
-            >
-              <PeopleAltSharpIcon />
-              <Box sx={{ margin: 'auto' }}>
-                <Typographyf14light>Adults</Typographyf14light>
-              </Box>
-            </Grid>
-            <Grid
-              item
-              xs={6}
-              display='flex'
-              justifyContent='space-between'
-              sx={{
-                border: '1px solid',
-                borderColor: grey[600],
-                borderRadius: '7px',
-              }}
-            >
-              <Button
-                onClick={(event) =>
-                  adultNum >= 2 ? setAdultNum(adultNum - 1) : 0
-                }
-                variant='outlined'
-                size='small'
-                sx={{
-                  minHeight: 0,
-                  minWidth: 0,
-                  color: grey[800],
-                  borderColor: grey[600],
-                  border: 'none',
-                  borderRight: `0.5px solid`,
-                  bordeRadius: '0px !important',
-                  '&:hover': {
-                    border: 'none',
-                    backgroundColor: grey[500],
-                    color: grey[800],
-                    borderColor: grey[600],
-                  },
-                }}
-                style={{
-                  borderRadius: 0,
-                }}
-              >
-                <Typography sx={{ fontSize: '18px', mt: '5px' }}>
-                  <ion-icon name='remove-outline' />
-                </Typography>
-              </Button>
-              <Box sx={{ margin: 'auto' }}>
-                <Typographyf14light>{adultNum}</Typographyf14light>
-              </Box>
-              <Button
-                onClick={(event) =>
-                  adultNum <= 6 ? setAdultNum(adultNum + 1) : 0
-                }
-                variant='outlined'
-                size='small'
-                sx={{
-                  minHeight: 0,
-                  minWidth: 0,
-                  color: grey[800],
-                  borderColor: grey[600],
-                  border: 'none',
-                  borderLeft: `0.5px solid`,
-                  bordeRadius: '0px !important',
-                  '&:hover': {
-                    border: 'none',
-                    backgroundColor: grey[500],
-                    color: grey[800],
-                    borderColor: grey[600],
-                  },
-                }}
-                style={{
-                  borderRadius: 0,
-                }}
-              >
-                <Typography sx={{ fontSize: '18px', mt: '5px' }}>
-                  <ion-icon name='add-outline' />
-                </Typography>
-              </Button>
-            </Grid>
-          </Grid>
-          <Grid container sx={{ mt: 1 }}>
-            <Grid
-              item
-              xs={4}
-              display='flex'
-              sx={{ marginTop: 'auto', marginBottom: 'auto' }}
-            >
-              <ChildCareSharpIcon sx={{ ml: '-3px', fontSize: '30px' }} />
-              <Box sx={{ margin: 'auto' }}>
-                <Typographyf14light>Children</Typographyf14light>
-              </Box>
-            </Grid>
-            <Grid
-              item
-              xs={6}
-              display='flex'
-              justifyContent='space-between'
-              sx={{
-                border: '1px solid',
-                borderColor: grey[600],
-                borderRadius: '7px',
-              }}
-            >
-              <Button
-                onClick={(event) =>
-                  childNum >= 1 ? setChildNum(childNum - 1) : 0
-                }
-                variant='outlined'
-                size='small'
-                sx={{
-                  minHeight: 0,
-                  minWidth: 0,
-                  color: grey[800],
-                  borderColor: grey[600],
-                  border: 'none',
-                  borderRight: `0.5px solid`,
-                  bordeRadius: '0px !important',
-                  '&:hover': {
-                    border: 'none',
-                    backgroundColor: grey[500],
-                    color: grey[800],
-                    borderColor: grey[600],
-                  },
-                }}
-                style={{
-                  borderRadius: 0,
-                }}
-              >
-                <Typography sx={{ fontSize: '18px', mt: '5px' }}>
-                  <ion-icon name='remove-outline' />
-                </Typography>
-              </Button>
-              <Box sx={{ margin: 'auto' }}>
-                <Typographyf14light>{childNum}</Typographyf14light>
-              </Box>
-              <Button
-                onClick={(event) =>
-                  childNum <= 2 ? setChildNum(childNum + 1) : 0
-                }
-                variant='outlined'
-                size='small'
-                sx={{
-                  minHeight: 0,
-                  minWidth: 0,
-                  color: grey[800],
-                  borderColor: grey[600],
-                  border: 'none',
-                  borderLeft: `0.5px solid`,
-                  '&:hover': {
-                    border: 'none',
-                    backgroundColor: grey[500],
-                    color: grey[800],
-                    borderColor: grey[600],
-                  },
-                }}
-                style={{
-                  borderRadius: 0,
-                }}
-              >
-                <Typography sx={{ fontSize: '18px', mt: '5px' }}>
-                  <ion-icon name='add-outline' />
-                </Typography>
-              </Button>
-            </Grid>
-          </Grid>
-        </Grid>
       </Box>
       <Divider />
       <Box sx={{ m: 1, ml: 2, mr: 2 }}>
-        <TypographyMod fontSize='14px'>Popular</TypographyMod>
+        <TypographyMod fontSize='14px'>Phổ biến</TypographyMod>
         <Box textAlign='center'>
-          <TypographyMod fontSize='12px'>{stars} stars</TypographyMod>
+          <TypographyMod fontSize='12px'>{stars} Đánh giá</TypographyMod>
         </Box>
         <Box
           sx={{
@@ -380,17 +197,11 @@ const TourFilters = () => {
         <FormGroup>
           <FormControlLabel
             control={<Checkbox />}
-            label={<Typographyf14medium>Vegan</Typographyf14medium>}
+            label={<Typographyf14medium>Sản phẩm mới</Typographyf14medium>}
           />
           <FormControlLabel
             control={<Checkbox />}
-            label={<Typographyf14light>Wine and Beer</Typographyf14light>}
-          />
-          <FormControlLabel
-            control={<Checkbox />}
-            label={
-              <Typographyf14light>Best Tours of the years</Typographyf14light>
-            }
+            label={<Typographyf14light>Sản phẩm bán chạy</Typographyf14light>}
           />
         </FormGroup>
       </Box>

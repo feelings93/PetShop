@@ -153,7 +153,9 @@ const CardPetLong = (props) => {
           )} */}
         </Box>
       </Grid>
-      <Grid item sm={0.2}></Grid>
+      <Grid item sm={0.2}>
+        <Box />
+      </Grid>
       <Grid item sm={7}>
         <Box
           item
@@ -273,7 +275,7 @@ const CardPetLong = (props) => {
           </Typography>
         </Box>
         <Link
-          href='#'
+          href='/'
           style={{
             display: 'flex',
             justifyContent: 'flex-end',
@@ -285,7 +287,7 @@ const CardPetLong = (props) => {
             marginTop: '5px',
           }}
         >
-          Xem thêm >
+          Xem thêm ...
         </Link>
         <Box sx={{ alignItems: 'flex-end', marginTop: '20px' }}>
           <Typography
