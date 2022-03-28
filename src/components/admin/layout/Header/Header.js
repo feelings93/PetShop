@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Avatar from '@mui/material/Avatar';
 import Toolbar from '@mui/material/Toolbar';
@@ -13,9 +13,11 @@ import Divider from '@mui/material/Divider';
 import PropTypes from 'prop-types';
 import { PersonOutlined, VpnKeyOutlined } from '@mui/icons-material';
 import { SIDEBAR_WIDTH } from '../../constants';
+import { AuthContext } from '../../../../store/auth-context';
 
 const Header = (props) => {
-  const { user } = props;
+  const authCtx = useContext(AuthContext);
+  const { user } = authCtx;
   const [anchorEl, setAnchorEl] = React.useState(null);
   const { handleDrawerToggle } = props;
   const open = Boolean(anchorEl);
@@ -222,10 +224,5 @@ const Header = (props) => {
 };
 Header.propTypes = {
   handleDrawerToggle: PropTypes.func.isRequired,
-  user: PropTypes.shape({
-    name: PropTypes.string,
-    email: PropTypes.string,
-    avatarUrl: PropTypes.string,
-  }).isRequired,
 };
 export default Header;

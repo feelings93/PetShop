@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import CssBaseline from '@mui/material/CssBaseline';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { blue, green } from '@mui/material/colors';
@@ -13,12 +13,12 @@ import NotFound from './pages/admin/NotFound';
 import Category from './pages/admin/Category';
 import Order from './pages/admin/Order';
 import Overview from './pages/admin/Overview';
-import useHttp from './hooks/use-http';
-import { getProfile } from './lib/api/auth';
 import CategoryContextProvider from './store/admin/category-context';
 import User from './pages/admin/User';
 import UserContextProvider from './store/admin/user-context';
 import ProductContextProvider from './store/admin/product-context';
+import useAuth from './hooks/use-auth';
+import AuthContextProvider from './store/auth-context';
 
 const theme = createTheme({
   palette: {
@@ -48,77 +48,74 @@ const theme = createTheme({
   },
 });
 
+function PrivateOutlet() {
+  const [auth, , status] = useAuth();
+  if (status === 'pending') return <h1>Loadin</h1>;
+  return auth ? <Outlet /> : <NotFound />;
+}
+
+function PrivateAdminOutlet() {
+  const [auth, admin, status] = useAuth();
+  if (status === 'pending') return <h1>Loading</h1>;
+  return auth && admin ? <Outlet /> : <NotFound />;
+}
+
+function RedirectWhenSignedInRoute() {
+  console.log(useAuth());
+  const [auth, , status] = useAuth();
+
+  if (status === 'pending') return <h1>Loading</h1>;
+  return !auth ? <Outlet /> : <Navigate to='/' />;
+}
+
 function App() {
-  const [auth, setAuth] = React.useState(false);
-  const [admin, setAdmin] = React.useState(false);
-  const { data, status, sendRequest } = useHttp(getProfile, true);
-  React.useEffect(() => {
-    sendRequest();
-  }, [sendRequest]);
-  React.useEffect(() => {
-    if (status === 'completed') {
-      if (data) {
-        setAuth(true);
-        if (data.role === 'admin') setAdmin(true);
-        else setAdmin(false);
-      } else setAuth(false);
-    }
-  }, [setAuth, data, status]);
-  if (status === 'pending') return <h1>Loading...</h1>;
-  console.log(auth);
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Routes>
-        <Route exact path='/' element={<Navigate to='/home' />} />
-        <Route exact path='/home' element={<Home />} />
-        {!auth && (
-          <>
+      <AuthContextProvider>
+        <Routes>
+          <Route exact path='/' element={<Navigate to='/home' />} />
+          <Route exact path='/home' element={<Home />} />
+          <Route element={<RedirectWhenSignedInRoute />}>
             <Route exact path='/login' element={<Login />} />
             <Route exact path='/sign-up' element={<SignUp />} />
-          </>
-        )}
-        {auth && (
-          <>
-            <Route exact path='/login' element={<Navigate to='/home' />} />
-            <Route exact path='/sign-up' element={<Navigate to='/home' />} />
-          </>
-        )}
-
-        {admin && (
-          <Route exact path='/admin' element={<Admin user={data} />}>
-            <Route path='' element={<Navigate to='overview' />} />
-            <Route
-              path='product'
-              element={
-                <ProductContextProvider>
-                  <Product />
-                </ProductContextProvider>
-              }
-            />
-            <Route
-              path='user'
-              element={
-                <UserContextProvider>
-                  <User />
-                </UserContextProvider>
-              }
-            />
-            <Route path='order' element={<Order />} />
-            <Route path='overview' element={<Overview />} />
-            <Route
-              path='category'
-              element={
-                <CategoryContextProvider>
-                  <Category />
-                </CategoryContextProvider>
-              }
-            />
-            <Route path='*' element={<NotFound />} />
           </Route>
-        )}
-        <Route path='*' element={<NotFound />} />
-      </Routes>
+          <Route element={<PrivateAdminOutlet />}>
+            <Route exact path='/admin' element={<Admin user={{}} />}>
+              <Route path='' element={<Navigate to='overview' />} />
+              <Route
+                path='product'
+                element={
+                  <ProductContextProvider>
+                    <Product />
+                  </ProductContextProvider>
+                }
+              />
+              <Route
+                path='user'
+                element={
+                  <UserContextProvider>
+                    <User />
+                  </UserContextProvider>
+                }
+              />
+              <Route path='order' element={<Order />} />
+              <Route path='overview' element={<Overview />} />
+              <Route
+                path='category'
+                element={
+                  <CategoryContextProvider>
+                    <Category />
+                  </CategoryContextProvider>
+                }
+              />
+              <Route path='*' element={<NotFound />} />
+            </Route>
+          </Route>
+
+          <Route path='*' element={<NotFound />} />
+        </Routes>
+      </AuthContextProvider>
     </ThemeProvider>
   );
 }
