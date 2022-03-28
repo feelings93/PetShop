@@ -5,30 +5,31 @@ import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import Search from '@mui/icons-material/Search';
-import { ProductContext } from '../../store/admin/product-context';
-import { getProducts } from '../../lib/api/product';
-import AddProductForm from '../../components/admin/product/AddProductForm';
-import EditProductForm from '../../components/admin/product/EditProductForm';
 import useHttp from '../../hooks/use-http';
-import ProductGrid from '../../components/admin/product/ProductGrid';
+import { getUsers } from '../../lib/api/user';
+import { UserContext } from '../../store/admin/user-context';
+import UserGrid from '../../components/admin/user/UserGrid';
+import AddUserForm from '../../components/admin/user/AddUserForm';
+import EditUserForm from '../../components/admin/user/EditUserForm';
+import DelUserForm from '../../components/admin/user/DelUserForm';
 
-const Product = () => {
-  const { data, error, status, sendRequest } = useHttp(getProducts, true);
-  const productCtx = useContext(ProductContext);
-  const { setProducts, openAdd, openEdit, openDelete, handleOpenAdd } =
-    productCtx;
+const User = () => {
+  const { data, error, status, sendRequest } = useHttp(getUsers, true);
+  const userCtx = useContext(UserContext);
+  const { setUsers, openAdd, openEdit, openDelete, handleOpenAdd } = userCtx;
   React.useEffect(() => {
     sendRequest();
   }, [sendRequest]);
 
   React.useEffect(() => {
     if (status === 'completed' && data) {
-      setProducts(data);
+      setUsers(data);
     }
-  }, [data, status, setProducts]);
+  }, [data, status, setUsers]);
 
   if (status === 'pending') return <h1>Loading...</h1>;
   if (error) return <h1>Đã có lỗi xảy ra</h1>;
+
   return (
     <>
       <Stack
@@ -37,7 +38,7 @@ const Product = () => {
         alignItems='center'
         direction='row'
       >
-        <Typography>Sản phẩm</Typography>
+        <Typography>Danh mục</Typography>
         <Stack spacing={1} alignItems='center' direction='row'>
           <TextField
             size='small'
@@ -61,12 +62,12 @@ const Product = () => {
           </Button>
         </Stack>
       </Stack>
-      <ProductGrid />
-      {openAdd && <AddProductForm />}
-      {openEdit && <EditProductForm />}
-      {openDelete && <EditProductForm />}
+      <UserGrid />
+      {openAdd && <AddUserForm />}
+      {openEdit && <EditUserForm />}
+      {openDelete && <DelUserForm />}
     </>
   );
 };
 
-export default Product;
+export default User;

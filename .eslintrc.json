@@ -6,8 +6,6 @@
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
-    "airbnb",
-    "airbnb/hooks",
     "prettier"
   ],
   "parserOptions": {
@@ -22,6 +20,8 @@
     "no-unused-vars": "warn",
     "arrow-body-style": "off",
     "react/jsx-filename-extension": "off",
-    "react/function-component-definition": "off"
+    "react/function-component-definition": "off",
+    "no-console": "off",
+    "import/prefer-default-export": "off"
   }
 }

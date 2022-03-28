@@ -5,27 +5,28 @@ import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import Search from '@mui/icons-material/Search';
-import { ProductContext } from '../../store/admin/product-context';
-import { getProducts } from '../../lib/api/product';
-import AddProductForm from '../../components/admin/product/AddProductForm';
-import EditProductForm from '../../components/admin/product/EditProductForm';
-import useHttp from '../../hooks/use-http';
-import ProductGrid from '../../components/admin/product/ProductGrid';
 
-const Product = () => {
-  const { data, error, status, sendRequest } = useHttp(getProducts, true);
-  const productCtx = useContext(ProductContext);
-  const { setProducts, openAdd, openEdit, openDelete, handleOpenAdd } =
-    productCtx;
+import AddCategoryForm from '../../components/admin/category/AddCategoryForm';
+import useHttp from '../../hooks/use-http';
+import { getCategories } from '../../lib/api/category';
+import CategoryGrid from '../../components/admin/category/CategoryGrid';
+import EditCategoryForm from '../../components/admin/category/EditCategoryForm';
+import { CategoryContext } from '../../store/admin/category-context';
+
+const Category = () => {
+  const { data, error, status, sendRequest } = useHttp(getCategories, true);
+  const categoryCtx = useContext(CategoryContext);
+  const { setCategories, openAdd, openEdit, openDelete, handleOpenAdd } =
+    categoryCtx;
   React.useEffect(() => {
     sendRequest();
   }, [sendRequest]);
 
   React.useEffect(() => {
     if (status === 'completed' && data) {
-      setProducts(data);
+      setCategories(data);
     }
-  }, [data, status, setProducts]);
+  }, [data, status, setCategories]);
 
   if (status === 'pending') return <h1>Loading...</h1>;
   if (error) return <h1>Đã có lỗi xảy ra</h1>;
@@ -37,7 +38,7 @@ const Product = () => {
         alignItems='center'
         direction='row'
       >
-        <Typography>Sản phẩm</Typography>
+        <Typography>Danh mục</Typography>
         <Stack spacing={1} alignItems='center' direction='row'>
           <TextField
             size='small'
@@ -61,12 +62,13 @@ const Product = () => {
           </Button>
         </Stack>
       </Stack>
-      <ProductGrid />
-      {openAdd && <AddProductForm />}
-      {openEdit && <EditProductForm />}
-      {openDelete && <EditProductForm />}
+      <CategoryGrid />
+
+      {openAdd && <AddCategoryForm />}
+      {openEdit && <EditCategoryForm />}
+      {openDelete && <EditCategoryForm />}
     </>
   );
 };
 
-export default Product;
+export default Category;

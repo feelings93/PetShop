@@ -1,9 +1,9 @@
 import React from 'react';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import LoginForm from '../components/login/LoginForm';
+import SignUpForm from '../components/sign-up/SignUpForm';
 
-const Login = () => {
+const SignUp = () => {
   return (
     <Box sx={{ minHeight: '100vh' }}>
       <Grid spacing={3} container>
@@ -17,11 +17,11 @@ const Login = () => {
           />
         </Grid>
         <Grid xs={12} item sm={6}>
-          <LoginForm />
+          <SignUpForm />
         </Grid>
       </Grid>
     </Box>
   );
 };
 
-export default Login;
+export default SignUp;
