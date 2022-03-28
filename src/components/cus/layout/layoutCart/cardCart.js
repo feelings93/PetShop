@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import IconButton from '@material-ui/core/IconButton';
+import IconButton from '@mui/material/IconButton';
 import AddIcon from '@mui/icons-material/Add';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
@@ -13,10 +13,9 @@ const CardCart = () => {
   return (
     <Box
       sx={{
-        backgroundColor: '#fff',
         padding: '10px 10px',
-        boxShadow: 3,
-        borderRadius: '20px',
+        // boxShadow: 3,
+        borderRadius: '10px',
       }}
     >
       <Grid
@@ -40,7 +39,7 @@ const CardCart = () => {
             }}
           />
         </Grid>
-        <Grid item sm={3.5}>
+        <Grid item sm={3.5} sx={{ textAlign: 'start' }}>
           <Typography sx={{ fontWeight: 'Medium', fontStyle: 'Monospace' }}>
             Mèo lông vàng siêu đáng yêu
           </Typography>
@@ -48,8 +47,8 @@ const CardCart = () => {
             ID: 167DE906
           </Typography>
         </Grid>
-        <Grid item sm={3.5}>
-          <IconButton>
+        <Grid item sm={3.5} sx={{ display: 'flex', alignItems: 'center' }}>
+          <IconButton aria-label='increase item' component='span'>
             <AddCircleIcon />
           </IconButton>
           <TextField
@@ -68,7 +67,7 @@ const CardCart = () => {
               alignItems: 'center',
             }}
           />
-          <IconButton>
+          <IconButton aria-label='decrease item' component='span'>
             <RemoveCircleIcon />
           </IconButton>
         </Grid>
@@ -76,7 +75,7 @@ const CardCart = () => {
           <Typography sx={{ fontWeight: 'bold' }}>10.000.000 VNĐ</Typography>
         </Grid>
         <Grid item sm={0.5}>
-          <IconButton>
+          <IconButton aria-label='delete item' component='span'>
             <DeleteForeverIcon />
           </IconButton>
         </Grid>
