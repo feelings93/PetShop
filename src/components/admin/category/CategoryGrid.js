@@ -34,9 +34,20 @@ const CategoryGrid = () => {
       },
     },
     {
+      field: 'products',
+      headerName: 'Số sản phẩm',
+      width: 200,
+      editable: false,
+      sortable: false,
+      valueGetter: (params) => {
+        return params.row.products.length;
+      },
+    },
+    {
       field: 'action',
-      headerName: 'Hành động',
+      headerName: '',
       headerAlign: 'center',
+      sortable: false,
       width: 200,
       editable: false,
       renderCell: (params) => {

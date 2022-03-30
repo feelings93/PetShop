@@ -14,14 +14,32 @@ import PropTypes from 'prop-types';
 import { PersonOutlined, VpnKeyOutlined } from '@mui/icons-material';
 import { SIDEBAR_WIDTH } from '../../constants';
 import { AuthContext } from '../../../../store/auth-context';
+import EditProfileForm from '../../profile/EditProfileForm';
+import EditPasswordForm from '../../profile/EditPasswordForm';
 
 const Header = (props) => {
   const authCtx = useContext(AuthContext);
   const { user } = authCtx;
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [isEditProfileDialogVisible, setIsEditProfileDialogVisible] =
+    React.useState(false);
+  const [isEditPasswordDialogVisible, setIsEditPasswordDialogVisible] =
+    React.useState(false);
   const { handleDrawerToggle } = props;
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
+  const showEditPasswordHandler = () => {
+    setIsEditPasswordDialogVisible(true);
+  };
+  const hideEditPasswordHandler = () => {
+    setIsEditPasswordDialogVisible(false);
+  };
+  const showEditProfileHandler = () => {
+    setIsEditProfileDialogVisible(true);
+  };
+  const hideEditProfileHandler = () => {
+    setIsEditProfileDialogVisible(false);
+  };
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -131,7 +149,7 @@ const Header = (props) => {
               pr={2}
               direction='row'
               alignItems='center'
-              // onClick={showEditProfileHandler}
+              onClick={showEditProfileHandler}
             >
               <Box
                 sx={{
@@ -173,7 +191,7 @@ const Header = (props) => {
               pr={2}
               direction='row'
               alignItems='center'
-              // onClick={showEditPasswordHandler}
+              onClick={showEditPasswordHandler}
             >
               <Box
                 sx={{
@@ -219,6 +237,20 @@ const Header = (props) => {
           </Stack>
         </Menu>
       </Toolbar>
+      {isEditProfileDialogVisible && (
+        <EditProfileForm
+          editUser={user}
+          open={isEditProfileDialogVisible}
+          onClose={hideEditProfileHandler}
+        />
+      )}
+      {isEditPasswordDialogVisible && (
+        <EditPasswordForm
+          editUser={user}
+          open={isEditPasswordDialogVisible}
+          onClose={hideEditPasswordHandler}
+        />
+      )}
     </AppBar>
   );
 };

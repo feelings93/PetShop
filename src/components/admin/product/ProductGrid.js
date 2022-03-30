@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import Stack from '@mui/material/Stack';
 import Avatar from '@mui/material/Avatar';
+import Chip from '@mui/material/Chip';
 
 import IconButton from '@mui/material/IconButton';
 import { Delete, Edit } from '@mui/icons-material';
@@ -29,13 +30,14 @@ const ProductGrid = () => {
     },
     {
       field: 'photos',
-      headerName: 'Hinh anh',
+      sortable: false,
+      headerName: 'Hình ảnh',
       width: 100,
       editable: false,
       renderCell: (params) => {
         return (
           <Avatar
-          sx={{width: '100px', height: '100px'}}
+            sx={{ width: '100px', height: '100px' }}
             src={
               params.row.photos[0]?.url ||
               'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkH-JPzVPj5TVAyg1OIKjMRbagTYcJIegBwc7KOUlWBA6xPbSD7Za_TIk-_D5xJC3rAs8&usqp=CAU'
@@ -48,13 +50,41 @@ const ProductGrid = () => {
     {
       field: 'quantity',
       headerName: 'Số lượng',
+      width: 100,
+      editable: false,
+    },
+    {
+      field: 'price',
+      headerName: 'Giá',
+      width: 100,
+      editable: false,
+    },
+    {
+      field: 'status',
+      headerName: 'Tình trạng',
       width: 200,
       editable: false,
     },
     {
+      field: 'categories',
+      headerName: 'Danh mục',
+      sortable: false,
+      width: 200,
+      editable: false,
+      renderCell: (params) => {
+        return (
+          <Stack spacing={1}>
+            {params.row.categories.map((x) => (
+              <Chip key={x.id} label={x.name} />
+            ))}
+          </Stack>
+        );
+      },
+    },
+    {
       field: 'action',
-      headerName: 'Hành động',
-      headerAlign: 'center',
+      sortable: false,
+      headerName: '',
       width: 200,
       editable: false,
       renderCell: (params) => {
@@ -79,7 +109,7 @@ const ProductGrid = () => {
           <StyleGrid
             columns={columns}
             rows={products}
-            checkboxSelection
+            disableColumnMenu
             disableSelectionOnClick
             rowsPerPageOptions={[5, 25, 50]}
           />
