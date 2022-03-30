@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 
 export const CategoryContext = React.createContext({
   categories: [],
+  query: '',
+  setQuery: () => {},
+  searchCategories: [],
   setCategories: () => {},
   handleAddCategory: () => {},
   handleEditCategory: () => {},
@@ -20,6 +23,8 @@ export const CategoryContext = React.createContext({
 const CategoryContextProvider = (props) => {
   const { children } = props;
   const [categories, setCategories] = useState([]);
+  const [searchCategories, setSearchCategories] = React.useState([]);
+  const [query, setQuery] = React.useState('');
   const [openAdd, setOpenAdd] = React.useState(false);
   const [openEdit, setOpenEdit] = React.useState(false);
   const [openDelete, setOpenDelete] = React.useState(false);
@@ -71,10 +76,25 @@ const CategoryContextProvider = (props) => {
     setOpenDelete(false);
   }, []);
 
+  React.useEffect(() => {
+    if (query === '' || !query) {
+      setSearchCategories(categories);
+    } else {
+      setSearchCategories(
+        categories.filter((x) =>
+          x.name.toUpperCase().includes(query.toUpperCase())
+        )
+      );
+    }
+  }, [categories, query]);
+
   const contextValue = useMemo(
     () => ({
       categories,
       setCategories,
+      query,
+      setQuery,
+      searchCategories,
       editCateObj: editCategory,
       handleChangeEditCategory,
       openEdit,
@@ -92,6 +112,9 @@ const CategoryContextProvider = (props) => {
     [
       categories,
       editCategory,
+      query,
+      setQuery,
+      searchCategories,
       handleAddCategory,
       handleChangeEditCategory,
       handleCloseAdd,

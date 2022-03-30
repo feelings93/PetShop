@@ -15,8 +15,15 @@ import ProductGrid from '../../components/admin/product/ProductGrid';
 const Product = () => {
   const { data, error, status, sendRequest } = useHttp(getProducts, true);
   const productCtx = useContext(ProductContext);
-  const { setProducts, openAdd, openEdit, openDelete, handleOpenAdd } =
-    productCtx;
+  const {
+    setProducts,
+    openAdd,
+    openEdit,
+    openDelete,
+    handleOpenAdd,
+    query,
+    setQuery,
+  } = productCtx;
   React.useEffect(() => {
     sendRequest();
   }, [sendRequest]);
@@ -43,6 +50,10 @@ const Product = () => {
             size='small'
             id='search'
             label='Tìm kiếm'
+            value={query}
+            onChange={(e) => {
+              setQuery(e.target.value);
+            }}
             InputProps={{
               startAdornment: (
                 <InputAdornment position='start'>

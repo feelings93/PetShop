@@ -16,8 +16,15 @@ import { CategoryContext } from '../../store/admin/category-context';
 const Category = () => {
   const { data, error, status, sendRequest } = useHttp(getCategories, true);
   const categoryCtx = useContext(CategoryContext);
-  const { setCategories, openAdd, openEdit, openDelete, handleOpenAdd } =
-    categoryCtx;
+  const {
+    setCategories,
+    openAdd,
+    openEdit,
+    openDelete,
+    handleOpenAdd,
+    query,
+    setQuery,
+  } = categoryCtx;
   React.useEffect(() => {
     sendRequest();
   }, [sendRequest]);
@@ -44,6 +51,10 @@ const Category = () => {
             size='small'
             id='search'
             label='Tìm kiếm'
+            value={query}
+            onChange={(e) => {
+              setQuery(e.target.value);
+            }}
             InputProps={{
               startAdornment: (
                 <InputAdornment position='start'>

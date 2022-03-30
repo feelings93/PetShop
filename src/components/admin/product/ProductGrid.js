@@ -14,7 +14,7 @@ function partial(fn, ...args) {
 
 const ProductGrid = () => {
   const productCtx = useContext(ProductContext);
-  const { products, handleChangeEditProduct, handleChangeDelProduct } =
+  const { searchProducts, handleChangeEditProduct, handleChangeDelProduct } =
     productCtx;
   const columns = [
     {
@@ -84,18 +84,18 @@ const ProductGrid = () => {
     {
       field: 'action',
       sortable: false,
-      headerName: '',
+      headerName: 'Thao tác',
       width: 200,
       editable: false,
       renderCell: (params) => {
         return (
           <Stack direction='row'>
             <IconButton onClick={partial(handleChangeEditProduct, params.row)}>
-              <Edit />
+              <Edit color='primary' />
             </IconButton>
-            <IconButton onClick={partial(handleChangeDelProduct, params.row)}>
+            {/* <IconButton onClick={partial(handleChangeDelProduct, params.row)}>
               <Delete />
-            </IconButton>
+            </IconButton> */}
           </Stack>
         );
       },
@@ -108,7 +108,7 @@ const ProductGrid = () => {
         <div style={{ flexGrow: 1 }}>
           <StyleGrid
             columns={columns}
-            rows={products}
+            rows={searchProducts}
             disableColumnMenu
             disableSelectionOnClick
             rowsPerPageOptions={[5, 25, 50]}

@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 
 export const ProductContext = React.createContext({
   products: [],
+  searchProducts: [],
+  query: '',
+  setQuery: () => {},
   setProducts: () => {},
   handleAddProduct: () => {},
   handleEditProduct: () => {},
@@ -23,6 +26,8 @@ export const ProductContext = React.createContext({
 const ProductContextProvider = (props) => {
   const { children } = props;
   const [products, setProducts] = useState([]);
+  const [searchProducts, setSearchProducts] = React.useState([]);
+  const [query, setQuery] = React.useState('');
   const [openAdd, setOpenAdd] = React.useState(false);
   const [openEdit, setOpenEdit] = React.useState(false);
   const [openDelete, setOpenDelete] = React.useState(false);
@@ -90,10 +95,25 @@ const ProductContextProvider = (props) => {
     setOpenDelete(false);
   }, []);
 
+  React.useEffect(() => {
+    if (query === '' || !query) {
+      setSearchProducts(products);
+    } else {
+      setSearchProducts(
+        products.filter((x) =>
+          x.name.toUpperCase().includes(query.toUpperCase())
+        )
+      );
+    }
+  }, [products, query]);
+
   const contextValue = useMemo(
     () => ({
       products,
       setProducts,
+      searchProducts,
+      query,
+      setQuery,
       editProductObj: editProduct,
       delProductObj: delProduct,
       handleChangeEditProduct,
@@ -113,6 +133,8 @@ const ProductContextProvider = (props) => {
     }),
     [
       products,
+      searchProducts,
+      query,
       editProduct,
       delProduct,
       handleAddProduct,
