@@ -19,6 +19,7 @@ import UserContextProvider from './store/admin/user-context';
 import ProductContextProvider from './store/admin/product-context';
 import useAuth from './hooks/use-auth';
 import AuthContextProvider from './store/auth-context';
+import OrderContextProvider from './store/admin/order-context';
 
 const theme = createTheme({
   palette: {
@@ -99,7 +100,14 @@ function App() {
                   </UserContextProvider>
                 }
               />
-              <Route path='order' element={<Order />} />
+              <Route
+                path='order'
+                element={
+                  <OrderContextProvider>
+                    <Order />
+                  </OrderContextProvider>
+                }
+              />
               <Route path='overview' element={<Overview />} />
               <Route
                 path='category'
