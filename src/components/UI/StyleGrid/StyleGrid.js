@@ -55,6 +55,9 @@ const StyleGrid = styled(DataGrid)(({ theme }) => ({
     maxHeight: 'none !important',
     whiteSpace: 'normal',
   },
+  '& .MuiDataGrid-cell:focus': {
+    outline: 'none',
+  },
   '& .MuiPaginationItem-root': {
     borderRadius: 0,
   },

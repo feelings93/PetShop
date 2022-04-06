@@ -7,18 +7,28 @@ import InputAdornment from '@mui/material/InputAdornment';
 import Search from '@mui/icons-material/Search';
 import useHttp from '../../hooks/use-http';
 import { getOrders } from '../../lib/api/order';
+import { getProducts } from '../../lib/api/product';
+
 import { OrderContext } from '../../store/admin/order-context';
 import OrderGrid from '../../components/admin/order/OrderGrid';
 import AddOrderForm from '../../components/admin/order/AddOrderForm';
 
 const Order = () => {
   const { data, status, sendRequest, error } = useHttp(getOrders);
+  const {
+    data: dataProducts,
+    error: errorProducts,
+    sendRequest: sendRequestProducts,
+    status: statusProducts,
+  } = useHttp(getProducts, true);
   const orderCtx = useContext(OrderContext);
-  const { query, setQuery, handleOpenAdd, setOrders, openAdd } = orderCtx;
+  const { query, setQuery, handleOpenAdd, setOrders, openAdd, setProducts } =
+    orderCtx;
 
   React.useEffect(() => {
     sendRequest();
-  }, [sendRequest]);
+    sendRequestProducts();
+  }, [sendRequest, sendRequestProducts]);
 
   React.useEffect(() => {
     if (status === 'completed' && data) {
@@ -26,8 +36,15 @@ const Order = () => {
     }
   }, [data, status, setOrders]);
 
-  if (status === 'pending') return <h1>Loading...</h1>;
-  if (error) return <h1>Đã có lỗi xảy ra</h1>;
+  React.useEffect(() => {
+    if (statusProducts === 'completed' && dataProducts) {
+      setProducts(dataProducts);
+    }
+  }, [dataProducts, statusProducts, setProducts]);
+
+  if (status === 'pending' || statusProducts === 'pending')
+    return <h1>Loading...</h1>;
+  if (error || errorProducts) return <h1>Đã có lỗi xảy ra</h1>;
 
   return (
     <>

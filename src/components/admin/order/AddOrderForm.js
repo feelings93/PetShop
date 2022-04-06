@@ -8,12 +8,13 @@ import DialogActions from '@mui/material/DialogActions';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
 import Autocomplete from '@mui/material/Autocomplete';
 import useHttp from '../../../hooks/use-http';
 import { OrderContext } from '../../../store/admin/order-context';
 import { createOrder } from '../../../lib/api/order';
+import ProductTable from './ProductTable';
 import { AddCircle } from '@mui/icons-material';
+import provinces from '../../../utils/nested-divisions.json';
 
 const paymentTypes = [
   {
@@ -28,11 +29,18 @@ const paymentTypes = [
 
 const AddOrderForm = () => {
   const orderCtx = useContext(OrderContext);
-  const { handleAddOrder, handleCloseAdd, openAdd } = orderCtx;
+  const { handleAddOrder, handleCloseAdd, openAdd, products } = orderCtx;
   const { data, error, sendRequest, status } = useHttp(createOrder);
+
   const [customerName, setCustomerName] = React.useState('');
   const [paymentType, setPaymentType] = React.useState(null);
-  const [city, setCity] = React.useState(null);
+  const [product, setProduct] = React.useState(null);
+  const [quantity, setQuantity] = React.useState('');
+
+  const [selectedProducts, setSelectedProducts] = React.useState([]);
+
+  const [province, setProvince] = React.useState(null);
+  const [districts, setDistricts] = React.useState([]);
   const [district, setDistrict] = React.useState(null);
   const [phone, setPhone] = React.useState('');
   const [address, setAddress] = React.useState('');
@@ -46,8 +54,15 @@ const AddOrderForm = () => {
     setPaymentType(value);
   };
 
-  const handleChangeCity = (e, value) => {
-    setCity(value);
+  const handleChangeProduct = (e, value) => {
+    setProduct(value);
+    setQuantity('');
+  };
+
+  const handleChangeProvince = (e, value) => {
+    setProvince(value);
+    setDistricts(value?.districts || []);
+    setDistrict(null);
   };
 
   const handleChangeDistrict = (e, value) => {
@@ -58,6 +73,19 @@ const AddOrderForm = () => {
     setAddress(e.target.value);
   };
 
+  const handleChangeQuantity = (e) => {
+    const quantity = e.target.value;
+    if (
+      (quantity > 0 &&
+        quantity <=
+          product.quantity -
+            (selectedProducts.find((x) => x.productId === product.id)
+              ?.quantity || 0)) ||
+      !quantity
+    )
+      setQuantity(quantity);
+  };
+
   const handleChangeNote = (e) => {
     setNote(e.target.value);
   };
@@ -66,9 +94,46 @@ const AddOrderForm = () => {
     setPhone(e.target.value);
   };
 
+  const handleAddProduct = () => {
+    if (!product || !quantity) {
+      swal('Lỗi', 'Vui lòng nhập đầy đủ thông tin sản phẩm');
+      return;
+    }
+    const productAdd = selectedProducts.find((x) => x.productId === product.id);
+    if (productAdd) {
+      setSelectedProducts((prev) => {
+        const index = prev.findIndex((x) => x.productId === product.id);
+        const newProducts = [...prev];
+        newProducts[index].quantity = +newProducts[index].quantity + +quantity;
+        return newProducts;
+      });
+    } else
+      setSelectedProducts((prev) => [
+        ...prev,
+        { productId: product.id, name: product.name, quantity: +quantity },
+      ]);
+    setProduct(null);
+    setQuantity('');
+  };
+
+  const handleDeleteProduct = (id) => {
+    console.log(id);
+    const newProducts = selectedProducts.filter((x) => x.productId !== id);
+    setSelectedProducts(newProducts);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    sendRequest({ customerName, paymentType: paymentType.label });
+    sendRequest({
+      customerName,
+      paymentType: paymentType.label,
+      products: selectedProducts,
+      province: province.name,
+      district: district.name,
+      address,
+      phone,
+      note,
+    });
   };
 
   React.useEffect(() => {
@@ -93,14 +158,27 @@ const AddOrderForm = () => {
               value={customerName}
               onChange={handleChangeCustomerName}
             />
+            {selectedProducts.length > 0 && (
+              <ProductTable
+                products={selectedProducts}
+                onDelete={handleDeleteProduct}
+              />
+            )}
             <Stack spacing={1} direction='row'>
               <Autocomplete
-                sx={{ width: '400px' }}
+                sx={{ width: '450px' }}
                 id='product'
-                getOptionLabel={(option) => option.label}
-                onChange={handleChangePaymentType}
-                value={paymentType}
-                options={paymentTypes}
+                getOptionLabel={(option) =>
+                  'Id: ' +
+                  option.id +
+                  ' | ' +
+                  option.name +
+                  ' | Số lượng: ' +
+                  option.quantity
+                }
+                onChange={handleChangeProduct}
+                value={product}
+                options={products}
                 renderInput={(params) => (
                   <TextField
                     // eslint-disable-next-line react/jsx-props-no-spreading
@@ -111,10 +189,12 @@ const AddOrderForm = () => {
               />
               <TextField
                 label='Số lượng'
-                sx={{ width: '150px' }}
+                // sx={{ width: '150px' }}
                 type='number'
+                value={quantity}
+                onChange={handleChangeQuantity}
               />
-              <IconButton color='primary'>
+              <IconButton onClick={handleAddProduct} color='primary'>
                 <AddCircle />
               </IconButton>
             </Stack>
@@ -133,11 +213,11 @@ const AddOrderForm = () => {
               )}
             />
             <Autocomplete
-              id='city'
-              getOptionLabel={(option) => option.label}
-              onChange={handleChangePaymentType}
-              value={paymentType}
-              options={paymentTypes}
+              id='province'
+              getOptionLabel={(option) => option.name}
+              onChange={handleChangeProvince}
+              value={province}
+              options={provinces}
               renderInput={(params) => (
                 <TextField
                   // eslint-disable-next-line react/jsx-props-no-spreading
@@ -148,10 +228,10 @@ const AddOrderForm = () => {
             />
             <Autocomplete
               id='district'
-              getOptionLabel={(option) => option.label}
-              onChange={handleChangePaymentType}
-              value={paymentType}
-              options={paymentTypes}
+              getOptionLabel={(option) => option.name}
+              onChange={handleChangeDistrict}
+              value={district}
+              options={districts}
               renderInput={(params) => (
                 <TextField
                   // eslint-disable-next-line react/jsx-props-no-spreading
@@ -195,133 +275,5 @@ const AddOrderForm = () => {
     </Dialog>
   );
 };
-
-const top100Films = [
-  { title: 'The Shawshank Redemption', year: 1994 },
-  { title: 'The Godfather', year: 1972 },
-  { title: 'The Godfather: Part II', year: 1974 },
-  { title: 'The Dark Knight', year: 2008 },
-  { title: '12 Angry Men', year: 1957 },
-  { title: "Schindler's List", year: 1993 },
-  { title: 'Pulp Fiction', year: 1994 },
-  {
-    title: 'The Lord of the Rings: The Return of the King',
-    year: 2003,
-  },
-  { title: 'The Good, the Bad and the Ugly', year: 1966 },
-  { title: 'Fight Club', year: 1999 },
-  {
-    title: 'The Lord of the Rings: The Fellowship of the Ring',
-    year: 2001,
-  },
-  {
-    title: 'Star Wars: Episode V - The Empire Strikes Back',
-    year: 1980,
-  },
-  { title: 'Forrest Gump', year: 1994 },
-  { title: 'Inception', year: 2010 },
-  {
-    title: 'The Lord of the Rings: The Two Towers',
-    year: 2002,
-  },
-  { title: "One Flew Over the Cuckoo's Nest", year: 1975 },
-  { title: 'Goodfellas', year: 1990 },
-  { title: 'The Matrix', year: 1999 },
-  { title: 'Seven Samurai', year: 1954 },
-  {
-    title: 'Star Wars: Episode IV - A New Hope',
-    year: 1977,
-  },
-  { title: 'City of God', year: 2002 },
-  { title: 'Se7en', year: 1995 },
-  { title: 'The Silence of the Lambs', year: 1991 },
-  { title: "It's a Wonderful Life", year: 1946 },
-  { title: 'Life Is Beautiful', year: 1997 },
-  { title: 'The Usual Suspects', year: 1995 },
-  { title: 'Léon: The Professional', year: 1994 },
-  { title: 'Spirited Away', year: 2001 },
-  { title: 'Saving Private Ryan', year: 1998 },
-  { title: 'Once Upon a Time in the West', year: 1968 },
-  { title: 'American History X', year: 1998 },
-  { title: 'Interstellar', year: 2014 },
-  { title: 'Casablanca', year: 1942 },
-  { title: 'City Lights', year: 1931 },
-  { title: 'Psycho', year: 1960 },
-  { title: 'The Green Mile', year: 1999 },
-  { title: 'The Intouchables', year: 2011 },
-  { title: 'Modern Times', year: 1936 },
-  { title: 'Raiders of the Lost Ark', year: 1981 },
-  { title: 'Rear Window', year: 1954 },
-  { title: 'The Pianist', year: 2002 },
-  { title: 'The Departed', year: 2006 },
-  { title: 'Terminator 2: Judgment Day', year: 1991 },
-  { title: 'Back to the Future', year: 1985 },
-  { title: 'Whiplash', year: 2014 },
-  { title: 'Gladiator', year: 2000 },
-  { title: 'Memento', year: 2000 },
-  { title: 'The Prestige', year: 2006 },
-  { title: 'The Lion King', year: 1994 },
-  { title: 'Apocalypse Now', year: 1979 },
-  { title: 'Alien', year: 1979 },
-  { title: 'Sunset Boulevard', year: 1950 },
-  {
-    title:
-      'Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb',
-    year: 1964,
-  },
-  { title: 'The Great Dictator', year: 1940 },
-  { title: 'Cinema Paradiso', year: 1988 },
-  { title: 'The Lives of Others', year: 2006 },
-  { title: 'Grave of the Fireflies', year: 1988 },
-  { title: 'Paths of Glory', year: 1957 },
-  { title: 'Django Unchained', year: 2012 },
-  { title: 'The Shining', year: 1980 },
-  { title: 'WALL·E', year: 2008 },
-  { title: 'American Beauty', year: 1999 },
-  { title: 'The Dark Knight Rises', year: 2012 },
-  { title: 'Princess Mononoke', year: 1997 },
-  { title: 'Aliens', year: 1986 },
-  { title: 'Oldboy', year: 2003 },
-  { title: 'Once Upon a Time in America', year: 1984 },
-  { title: 'Witness for the Prosecution', year: 1957 },
-  { title: 'Das Boot', year: 1981 },
-  { title: 'Citizen Kane', year: 1941 },
-  { title: 'North by Northwest', year: 1959 },
-  { title: 'Vertigo', year: 1958 },
-  {
-    title: 'Star Wars: Episode VI - Return of the Jedi',
-    year: 1983,
-  },
-  { title: 'Reservoir Dogs', year: 1992 },
-  { title: 'Braveheart', year: 1995 },
-  { title: 'M', year: 1931 },
-  { title: 'Requiem for a Dream', year: 2000 },
-  { title: 'Amélie', year: 2001 },
-  { title: 'A Clockwork Orange', year: 1971 },
-  { title: 'Like Stars on Earth', year: 2007 },
-  { title: 'Taxi Driver', year: 1976 },
-  { title: 'Lawrence of Arabia', year: 1962 },
-  { title: 'Double Indemnity', year: 1944 },
-  {
-    title: 'Eternal Sunshine of the Spotless Mind',
-    year: 2004,
-  },
-  { title: 'Amadeus', year: 1984 },
-  { title: 'To Kill a Mockingbird', year: 1962 },
-  { title: 'Toy Story 3', year: 2010 },
-  { title: 'Logan', year: 2017 },
-  { title: 'Full Metal Jacket', year: 1987 },
-  { title: 'Dangal', year: 2016 },
-  { title: 'The Sting', year: 1973 },
-  { title: '2001: A Space Odyssey', year: 1968 },
-  { title: "Singin' in the Rain", year: 1952 },
-  { title: 'Toy Story', year: 1995 },
-  { title: 'Bicycle Thieves', year: 1948 },
-  { title: 'The Kid', year: 1921 },
-  { title: 'Inglourious Basterds', year: 2009 },
-  { title: 'Snatch', year: 2000 },
-  { title: '3 Idiots', year: 2009 },
-  { title: 'Monty Python and the Holy Grail', year: 1975 },
-];
 
 export default AddOrderForm;

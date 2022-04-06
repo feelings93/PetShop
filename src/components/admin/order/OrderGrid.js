@@ -1,13 +1,12 @@
 import React, { useContext } from 'react';
-import Stack from '@mui/material/Stack';
-import Avatar from '@mui/material/Avatar';
-import Chip from '@mui/material/Chip';
 
 import IconButton from '@mui/material/IconButton';
-import { Delete, Edit } from '@mui/icons-material';
+import { Edit } from '@mui/icons-material';
 import StyleGrid from '../../UI/StyleGrid/StyleGrid';
 import { OrderContext } from '../../../store/admin/order-context';
+import { useNavigate } from 'react-router-dom';
 const OrderGrid = () => {
+  const navigate = useNavigate();
   const orderCtx = useContext(OrderContext);
   const { handleChangeEditOrder, searchOrders } = orderCtx;
   const columns = [
@@ -53,7 +52,7 @@ const OrderGrid = () => {
       editable: false,
     },
     {
-      field: 'city',
+      field: 'province',
       headerName: 'Tỉnh, thành',
       width: 120,
       editable: false,
@@ -84,6 +83,9 @@ const OrderGrid = () => {
             disableColumnMenu
             disableSelectionOnClick
             rowsPerPageOptions={[5, 25, 50]}
+            onRowClick={(params) => {
+              navigate(`${params.row.id}`);
+            }}
           />
         </div>
       </div>

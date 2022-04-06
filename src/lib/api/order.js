@@ -11,7 +11,7 @@ export const getOrders = async () => {
 
 export const getOrder = async (id) => {
   try {
-    const response = await axios.get(`/orderss/${id}`);
+    const response = await axios.get(`/orders/${id}`);
     return response.data;
   } catch (err) {
     throw new Error(err);
