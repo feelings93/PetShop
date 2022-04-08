@@ -7,6 +7,7 @@ import Admin from './pages/Admin';
 import About from './pages/cus/About';
 import DetailProduct from './pages/cus/DetailProduct';
 import Products from './pages/cus/Product';
+import Cart from './pages/cus/Cart';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
       <Route exact path='/admin' element={<Admin />} />
       <Route exact path='/gioi-thieu' element={<About />} />
       <Route exact path='/thu-cung' element={<Products />} />
+      <Route exact path='/gio-hang' element={<Cart />} />
     </Routes>
   );
 }
