@@ -11,7 +11,7 @@ function partial(fn, ...args) {
 
 const CategoryGrid = () => {
   const categoryCtx = useContext(CategoryContext);
-  const { categories, handleChangeEditCategory } = categoryCtx;
+  const { searchCategories, handleChangeEditCategory } = categoryCtx;
   const columns = [
     {
       field: 'id',
@@ -34,20 +34,31 @@ const CategoryGrid = () => {
       },
     },
     {
+      field: 'products',
+      headerName: 'Số sản phẩm',
+      width: 200,
+      editable: false,
+      sortable: false,
+      valueGetter: (params) => {
+        return params.row.products.length;
+      },
+    },
+    {
       field: 'action',
-      headerName: 'Hành động',
+      headerName: 'Thao tác',
       headerAlign: 'center',
+      sortable: false,
       width: 200,
       editable: false,
       renderCell: (params) => {
         return (
           <Stack direction='row'>
             <IconButton onClick={partial(handleChangeEditCategory, params.row)}>
-              <Edit />
+              <Edit color='primary' />
             </IconButton>
-            <IconButton>
+            {/* <IconButton>
               <Delete />
-            </IconButton>
+            </IconButton> */}
           </Stack>
         );
       },
@@ -60,7 +71,8 @@ const CategoryGrid = () => {
         <div style={{ flexGrow: 1 }}>
           <StyleGrid
             columns={columns}
-            rows={categories}
+            rows={searchCategories}
+            disableColumnMenu
             disableSelectionOnClick
             rowsPerPageOptions={[5, 25, 50]}
           />

@@ -22,6 +22,7 @@ const StyleGrid = styled(DataGrid)(({ theme }) => ({
   ].join(','),
   WebkitFontSmoothing: 'auto',
   letterSpacing: 'normal',
+
   '& .MuiDataGrid-columnsContainer': {
     backgroundColor: theme.palette.mode === 'light' ? '#fafafa' : '#1d1d1d',
   },
@@ -38,11 +39,24 @@ const StyleGrid = styled(DataGrid)(({ theme }) => ({
       theme.palette.mode === 'light' ? '#f0f0f0' : '#303030'
     }`,
   },
+  '& .MuiDataGrid-renderingZone': {
+    maxHeight: 'none !important',
+  },
+
+  '& .MuiDataGrid-row': {
+    maxHeight: 'none !important',
+  },
   '& .MuiDataGrid-cell': {
     color:
       theme.palette.mode === 'light'
         ? 'rgba(0,0,0,.85)'
         : 'rgba(255,255,255,0.65)',
+    lineHeight: 'unset !important',
+    maxHeight: 'none !important',
+    whiteSpace: 'normal',
+  },
+  '& .MuiDataGrid-cell:focus': {
+    outline: 'none',
   },
   '& .MuiPaginationItem-root': {
     borderRadius: 0,

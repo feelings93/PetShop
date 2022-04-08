@@ -70,7 +70,7 @@ const EditCategoryForm = () => {
                 return option.id === value.id;
               }}
               value={parent}
-              options={categories}
+              options={categories.filter((x) => x.parent === null)}
               renderInput={(params) => (
                 <TextField
                   // eslint-disable-next-line react/jsx-props-no-spreading

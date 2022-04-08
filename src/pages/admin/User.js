@@ -12,11 +12,21 @@ import UserGrid from '../../components/admin/user/UserGrid';
 import AddUserForm from '../../components/admin/user/AddUserForm';
 import EditUserForm from '../../components/admin/user/EditUserForm';
 import DelUserForm from '../../components/admin/user/DelUserForm';
+import ActiveUserForm from '../../components/admin/user/ActiveUserForm';
 
 const User = () => {
   const { data, error, status, sendRequest } = useHttp(getUsers, true);
   const userCtx = useContext(UserContext);
-  const { setUsers, openAdd, openEdit, openDelete, handleOpenAdd } = userCtx;
+  const {
+    setUsers,
+    openAdd,
+    openEdit,
+    openDelete,
+    openActive,
+    handleOpenAdd,
+    setQuery,
+    query,
+  } = userCtx;
   React.useEffect(() => {
     sendRequest();
   }, [sendRequest]);
@@ -38,12 +48,16 @@ const User = () => {
         alignItems='center'
         direction='row'
       >
-        <Typography>Danh mục</Typography>
+        <Typography>Người dùng</Typography>
         <Stack spacing={1} alignItems='center' direction='row'>
           <TextField
             size='small'
             id='search'
             label='Tìm kiếm'
+            value={query}
+            onChange={(e) => {
+              setQuery(e.target.value);
+            }}
             InputProps={{
               startAdornment: (
                 <InputAdornment position='start'>
@@ -66,6 +80,7 @@ const User = () => {
       {openAdd && <AddUserForm />}
       {openEdit && <EditUserForm />}
       {openDelete && <DelUserForm />}
+      {openActive && <ActiveUserForm />}
     </>
   );
 };

@@ -1,16 +1,19 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 
-export const CategoryContext = React.createContext({
-  categories: [],
+export const OrderContext = React.createContext({
+  orders: [],
+  products: [],
+  setProducts: () => {},
   query: '',
   setQuery: () => {},
-  searchCategories: [],
-  setCategories: () => {},
-  handleAddCategory: () => {},
-  handleEditCategory: () => {},
-  editCateObj: {},
-  setEditCategory: () => {},
+  searchOrders: [],
+  setOrders: () => {},
+  handleAddOrder: () => {},
+  handleEditOrder: () => {},
+  handleChangeEditOrder: () => {},
+  editOrderObj: {},
+  setEditOrder: () => {},
   openEdit: false,
   openAdd: false,
   openDelete: false,
@@ -20,36 +23,37 @@ export const CategoryContext = React.createContext({
   handleCloseAdd: () => {},
 });
 
-const CategoryContextProvider = (props) => {
+const OrderContextProvider = (props) => {
   const { children } = props;
-  const [categories, setCategories] = useState([]);
-  const [searchCategories, setSearchCategories] = React.useState([]);
+  const [orders, setOrders] = useState([]);
+  const [products, setProducts] = useState([]);
+
+  const [searchOrders, setSearchOrders] = React.useState([]);
   const [query, setQuery] = React.useState('');
   const [openAdd, setOpenAdd] = React.useState(false);
   const [openEdit, setOpenEdit] = React.useState(false);
   const [openDelete, setOpenDelete] = React.useState(false);
-  const [editCategory, setEditCategory] = React.useState(null);
+  const [editOrder, setEditOrder] = React.useState(null);
 
-  const handleAddCategory = useCallback((category) => {
-    setCategories((prev) => [...prev, category]);
+  const handleAddOrder = useCallback((order) => {
+    setOrders((prev) => [...prev, order]);
   }, []);
 
-  const handleEditCategory = useCallback(
-    (category) => {
-      const newCategories = categories.map((item) => {
-        if (item.id === category.id) {
-          return category;
+  const handleEditOrder = useCallback(
+    (order) => {
+      const newOrders = orders.map((item) => {
+        if (item.id === order.id) {
+          return order;
         }
         return item;
       });
 
-      console.log(newCategories);
-      setCategories(newCategories);
+      setOrders(newOrders);
     },
-    [categories]
+    [orders]
   );
-  const handleChangeEditCategory = useCallback((category) => {
-    setEditCategory(category);
+  const handleChangeEditOrder = useCallback((order) => {
+    setEditOrder(order);
     setOpenEdit(true);
   }, []);
   const handleOpenEdit = useCallback(() => {
@@ -78,25 +82,27 @@ const CategoryContextProvider = (props) => {
 
   React.useEffect(() => {
     if (query === '' || !query) {
-      setSearchCategories(categories);
+      setSearchOrders(orders);
     } else {
-      setSearchCategories(
-        categories.filter((x) =>
-          x.name.toUpperCase().includes(query.toUpperCase())
+      setSearchOrders(
+        orders.filter((x) =>
+          x.customerName.toUpperCase().includes(query.toUpperCase())
         )
       );
     }
-  }, [categories, query]);
+  }, [orders, query]);
 
   const contextValue = useMemo(
     () => ({
-      categories,
-      setCategories,
+      orders,
+      setOrders,
+      products,
+      setProducts,
       query,
       setQuery,
-      searchCategories,
-      editCateObj: editCategory,
-      handleChangeEditCategory,
+      searchOrders,
+      editOrderObj: editOrder,
+      handleChangeEditOrder,
       openEdit,
       openAdd,
       openDelete,
@@ -106,21 +112,22 @@ const CategoryContextProvider = (props) => {
       handleOpenEdit,
       handleOpenDelete,
       handleCloseDelete,
-      handleAddCategory,
-      handleEditCategory,
+      handleAddOrder,
+      handleEditOrder,
     }),
     [
-      categories,
-      editCategory,
+      orders,
+      products,
+      editOrder,
       query,
       setQuery,
-      searchCategories,
-      handleAddCategory,
-      handleChangeEditCategory,
+      searchOrders,
+      handleAddOrder,
+      handleChangeEditOrder,
       handleCloseAdd,
       handleCloseDelete,
       handleCloseEdit,
-      handleEditCategory,
+      handleEditOrder,
       handleOpenAdd,
       handleOpenDelete,
       handleOpenEdit,
@@ -131,14 +138,14 @@ const CategoryContextProvider = (props) => {
   );
 
   return (
-    <CategoryContext.Provider value={contextValue}>
+    <OrderContext.Provider value={contextValue}>
       {children}
-    </CategoryContext.Provider>
+    </OrderContext.Provider>
   );
 };
 
-CategoryContextProvider.propTypes = {
+OrderContextProvider.propTypes = {
   children: PropTypes.element.isRequired,
 };
 
-export default CategoryContextProvider;
+export default OrderContextProvider;
