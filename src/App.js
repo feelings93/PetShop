@@ -8,6 +8,10 @@ import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import Home from './pages/Home';
 import Admin from './pages/Admin';
+import About from './pages/cus/About';
+import DetailProduct from './pages/cus/DetailProduct';
+import Products from './pages/cus/Product';
+import Cart from './pages/cus/Cart';
 import Product from './pages/admin/Product';
 import NotFound from './pages/admin/NotFound';
 import Category from './pages/admin/Category';
@@ -51,7 +55,6 @@ const theme = createTheme({
   },
 });
 
-
 function PrivateAdminOutlet() {
   const [auth, admin, status] = useAuth();
   if (status === 'pending') return <h1>Loading</h1>;
@@ -71,8 +74,13 @@ function App() {
       <CssBaseline />
       <AuthContextProvider>
         <Routes>
-          <Route exact path='/' element={<Navigate to='/home' />} />
-          <Route exact path='/home' element={<Home />} />
+          <Route exact path='/' element={<Navigate to='/trang-chu' />} />
+          <Route exact path='/trang-chu' element={<Home />} />
+          <Route exact path='/san-pham' element={<DetailProduct />} />
+          <Route exact path='/gioi-thieu' element={<About />} />
+          <Route exact path='/thu-cung' element={<Products />} />
+          <Route exact path='/gio-hang' element={<Cart />} />
+          <Route exact path='/san-pham' element={<DetailProduct />} />
           <Route element={<RedirectWhenSignedInRoute />}>
             <Route exact path='/login' element={<Login />} />
             <Route exact path='/sign-up' element={<SignUp />} />
