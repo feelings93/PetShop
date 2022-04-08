@@ -21,6 +21,7 @@ import { MdPets } from 'react-icons/md';
 import SignupPopup from '../popup/SignupPopup';
 import LoginPopup from '../popup/LoginPopup';
 import classes from './Header.module.css';
+import Logo from '../../../admin/layout/SideBar/Logo';
 
 function ElevationScroll(props) {
   const { children, window } = props;
@@ -79,18 +80,7 @@ const Header = (props) => {
   const drawer = (
     <div>
       <Toolbar>
-        <Typography
-          sx={{ fontWeight: 700, cursor: 'pointer', color: '#ff6b00' }}
-          variant='h5'
-          component='span'
-          className={classes.logo}
-          onClick={() => {
-            //  history.push('/');
-          }}
-        >
-          Pet Family
-          <MdPets marginLeft='5px' color='#ff6b00' />
-        </Typography>
+        <Logo />
       </Toolbar>
 
       <Divider />
@@ -236,231 +226,85 @@ const Header = (props) => {
                 >
                   <MenuIcon />
                 </IconButton>
-                <Typography
-                  sx={{ fontWeight: 700, cursor: 'pointer', color: '#ff6b00' }}
-                  variant='h5'
-                  component='span'
-                  className={classes.logo}
-                  onClick={() => {
-                    navigate('/');
-                  }}
-                >
-                  Pet Family
-                  <MdPets style={{ marginLeft: '5px' }} />
-                </Typography>
+                <Logo />
               </Stack>
-              <Box display='flex' alignItems='center'>
-                <Stack
-                  sx={{ mr: 4, display: { xs: 'none', lg: 'flex' } }}
-                  alignItems='center'
-                  direction='row'
-                  spacing={4}
+              <Stack
+                sx={{ mr: 4, display: { xs: 'none', lg: 'flex' } }}
+                alignItems='center'
+                direction='row'
+                spacing={4}
+              >
+                <NavLink
+                to='/trang-chu'
+                  className={({ isActive }) =>
+                    !isActive
+                      ? classes.link
+                      : `${classes.link} ${classes['link--active']}`
+                  }
                 >
-                  <NavLink
-                    to='/trang-chu'
-                    activeClassName={classes['link--active']}
-                    className={classes.link}
-                  >
-                    Trang chủ
-                  </NavLink>
-                  <NavLink
-                    activeClassName={classes['link--active']}
-                    to='/thu-cung'
-                    className={classes.link}
-                  >
-                    Thú cưng
-                  </NavLink>
-                  <NavLink
-                    activeClassName={classes['link--active']}
-                    to='/phu-kien '
-                    className={classes.link}
-                  >
-                    Phụ kiện
-                  </NavLink>
-                  <NavLink
-                    activeClassName={classes['link--active']}
-                    to='/dich-vu'
-                    className={classes.link}
-                  >
-                    Dịch vụ
-                  </NavLink>
-                  <NavLink
-                    activeClassName={classes['link--active']}
-                    to='/gioi-thieu'
-                    className={classes.link}
-                  >
-                    Giới thiệu
-                  </NavLink>
-                  <NavLink
-                    activeClassName={classes['link--active']}
-                    to='/lien-he'
-                    className={classes.link}
-                  >
-                    Liên hệ
-                  </NavLink>
-                  <NavLink
-                    activeClassName={classes['link--active']}
-                    to='/faqs'
-                    className={classes.link}
-                  >
-                    FAQ
-                  </NavLink>
+                  Trang chủ
+                </NavLink>
+                <NavLink
+                  to='/thu-cung'
+                  className={({ isActive }) =>
+                    !isActive
+                      ? classes.link
+                      : `${classes.link} ${classes['link--active']}`
+                  }
+                >
+                  Sản phẩm
+                </NavLink>
 
-                  <NavLink
-                    activeClassName={classes['link--active']}
-                    to='/tin-tuc'
-                    className={classes.link}
-                  >
-                    Tin tức
-                  </NavLink>
-                  {!localStorage.getItem('isLogin') === true && (
-                    <Stack direction='row' spacing={1}>
-                      <Button
-                        onClick={() => {
-                          setOpenLogin(true);
-                        }}
-                        variant='outlined'
-                        sx={{
-                          color: '#ff6b00',
-                          borderColor: '#ff6b00',
-                          '&:hover': {
-                            borderColor: '#ff6b00',
-                            opacity: [0.9, 0.8, 0.7],
-                          },
-                        }}
-                      >
-                        Đăng nhập
-                      </Button>
-                      <Button
-                        onClick={() => {
-                          setOpenSignup(true);
-                        }}
-                        variant='contained'
-                        sx={{
-                          backgroundColor: '#ff6b00',
-                          '&:hover': {
-                            backgroundColor: '#ff6b00',
-                            opacity: [0.9, 0.8, 0.7],
-                          },
-                        }}
-                      >
-                        Đăng ký
-                      </Button>
-                    </Stack>
-                  )}
-                </Stack>
-                {localStorage.getItem('isLogin') && (
-                  <>
-                    <Avatar
-                      alt='Remy Sharp'
-                      onClick={handlePopoverOpen}
-                      sx={{ width: 32, height: 32, cursor: 'pointer' }}
-                      src='https://vnn-imgs-f.vgcloud.vn/2020/04/13/23/suzy-tinh-dau-quoc-dan-so-huu-khoi-tai-san-chuc-trieu-do.jpg'
-                    />
-                    <Popover
-                      id='mouse-over-popover'
-                      open={open}
-                      anchorEl={anchorEl}
-                      anchorOrigin={{
-                        vertical: 'bottom',
-                        horizontal: 'left',
-                      }}
-                      transformOrigin={{
-                        vertical: 'top',
-                        horizontal: 'left',
-                      }}
-                      onClose={handlePopoverClose}
-                      disableRestoreFocus
-                    >
-                      <Stack spacing={1} sx={{ width: '150px' }}>
-                        <Button
-                          href='/profile'
-                          onClick={(event) => {
-                            event.preventDefault();
-                            navigate('/profile');
-                          }}
-                          variant='text'
-                          sx={{
-                            color: '#555',
-                            textTransform: 'none',
-                            fontWeight: 300,
-                            justifyContent: 'flex-start',
-                            paddingLeft: '20px',
-                          }}
-                        >
-                          <i
-                            style={{ marginRight: '8px' }}
-                            className='far fa-user-circle'
-                          />
-                          Profile
-                        </Button>
-                        <Button
-                          href='/order'
-                          onClick={(event) => {
-                            event.preventDefault();
-                            navigate('/order');
-                          }}
-                          variant='text'
-                          sx={{
-                            color: '#555',
-                            textTransform: 'none',
-                            fontWeight: 300,
-                            justifyContent: 'flex-start',
-                            paddingLeft: '20px',
-                          }}
-                        >
-                          <i
-                            style={{ marginRight: '8px' }}
-                            className='fas fa-history'
-                          />
-                          History
-                        </Button>
-                        <Button
-                          href='/all-reviews'
-                          onClick={(event) => {
-                            event.preventDefault();
-                            navigate('/all-reviews');
-                          }}
-                          variant='text'
-                          sx={{
-                            color: '#555',
-                            textTransform: 'none',
-                            fontWeight: 300,
-                            justifyContent: 'flex-start',
-                            paddingLeft: '20px',
-                          }}
-                        >
-                          <i
-                            style={{ marginRight: '8px' }}
-                            className='far fa-edit'
-                          />
-                          Write Review
-                        </Button>
-                        <Button
-                          onClick={() => {
-                            localStorage.removeItem('isLogin');
-                            window.location.reload();
-                          }}
-                          variant='text'
-                          sx={{
-                            color: '#555',
-                            textTransform: 'none',
-                            fontWeight: 300,
-                            justifyContent: 'flex-start',
-                            paddingLeft: '20px',
-                          }}
-                        >
-                          <i
-                            style={{ marginRight: '8px' }}
-                            className='fas fa-sign-out-alt'
-                          />
-                          Log Out
-                        </Button>
-                      </Stack>
-                    </Popover>
-                  </>
-                )}
-              </Box>
+                <NavLink
+                  to='/lien-he'
+                  className={({ isActive }) =>
+                    !isActive
+                      ? classes.link
+                      : `${classes.link} ${classes['link--active']}`
+                  }
+                >
+                  Liên hệ
+                </NavLink>
+                <NavLink
+                  to='/faqs'
+                  className={({ isActive }) =>
+                    !isActive
+                      ? classes.link
+                      : `${classes.link} ${classes['link--active']}`
+                  }
+                >
+                  FAQ
+                </NavLink>
+
+                <NavLink
+                  className={({ isActive }) =>
+                    !isActive
+                      ? classes.link
+                      : `${classes.link} ${classes['link--active']}`
+                  }
+                  to='/tin-tuc'
+                >
+                  Tin tức
+                </NavLink>
+              </Stack>
+              <Stack direction='row' spacing={1}>
+                <Button
+                  onClick={() => {
+                    setOpenLogin(true);
+                  }}
+                  variant='outlined'
+                >
+                  Đăng nhập
+                </Button>
+                <Button
+                  onClick={() => {
+                    setOpenSignup(true);
+                  }}
+                  variant='contained'
+                >
+                  Đăng ký
+                </Button>
+              </Stack>
             </Toolbar>
           </Container>
         </AppBar>

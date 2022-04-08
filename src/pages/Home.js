@@ -8,6 +8,7 @@ import AllCardPets from '../components/cus/layout/layoutHome/cardPet/AllCardPets
 import AllNewsReview from '../components/cus/layout/layoutHome/newsreview/AllNewsReview';
 import AllCardReview from '../components/cus/layout/layoutHome/review/AllCardReview';
 import About from './cus/About';
+import Footer from '../components/cus/layout/footer/Footer';
 
 const Home = () => {
   return (
@@ -21,6 +22,7 @@ const Home = () => {
         <AllNewsReview />
         <AllCardReview />
       </Box>
+      <Footer />
     </div>
   );
 };

@@ -40,7 +40,7 @@ const HeroSection = () => {
             }}
           >
             <Stack spacing={2}>
-              <Typography variant='h3' sx={{ fontWeight: 700 }} color={color1}>
+              <Typography variant='h3' sx={{ fontWeight: 700 }}>
                 Trải nghiệm thú cưng tại Pet Family
               </Typography>
               <Typography
@@ -59,7 +59,6 @@ const HeroSection = () => {
                     event.preventDefault();
                     navigate('/tours');
                   }}
-                  sx={{ backgroundColor: '#ff6b00' }}
                   size='large'
                   variant='contained'
                 >
@@ -69,7 +68,6 @@ const HeroSection = () => {
                   onClick={handleToggle}
                   variant='outlined'
                   size='large'
-                  sx={{ color: '#ff6b00', borderColor: '#ff6b00' }}
                 >
                   {/* <i
                     class='far fa-play-circle'

@@ -1,26 +1,31 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
 import Drawer from '@mui/material/Drawer';
 import PropTypes from 'prop-types';
 import { SIDEBAR_WIDTH } from '../../constants';
 import Logo from './Logo';
+import dog from '../../../../assets/images/dog.svg';
+import TabList from './TabList';
 
 const SideBar = (props) => {
   const { mobileOpen, handleDrawerToggle } = props;
   const drawer = (
     <Stack>
-      <a href='overview'>Tổng quan</a>
-      <a href='category'>Danh mục</a>
-      <a href='product'>Sản phẩm</a>
-      <a href='order'>Đơn hàng</a>
+      <Stack mb={4} spacing={2}>
+        <Logo />
+        <TabList />
+      </Stack>
+      <img src={dog} alt='dog' />
     </Stack>
   );
   return (
     <Box
       component='nav'
-      sx={{ width: { sm: SIDEBAR_WIDTH }, flexShrink: { sm: 0 } }}
+      sx={{
+        width: { sm: SIDEBAR_WIDTH },
+        flexShrink: { sm: 0 },
+      }}
       aria-label='mailbox folders'
     >
       <Drawer
@@ -32,6 +37,8 @@ const SideBar = (props) => {
           '& .MuiDrawer-paper': {
             boxSizing: 'border-box',
             width: SIDEBAR_WIDTH,
+            px: 2,
+            pt: 4,
           },
         }}
       >
@@ -44,6 +51,10 @@ const SideBar = (props) => {
           '& .MuiDrawer-paper': {
             boxSizing: 'border-box',
             width: SIDEBAR_WIDTH,
+            p: 2,
+            pt: 4,
+            boxShadow: 'rgb(113 122 131 / 11%) 0px 7px 30px 0px',
+            border: 'none',
           },
         }}
         open

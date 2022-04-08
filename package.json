@@ -11,6 +11,7 @@
     "@mui/icons-material": "^5.2.5",
     "@mui/material": "^5.2.7",
     "@react-google-maps/api": "^2.7.0",
+    "@mui/x-data-grid": "^5.5.1",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
@@ -19,8 +20,10 @@
     "prop-types": "^15.8.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-hook-form": "^7.28.1",
     "react-icons": "^4.3.1",
+    "react-dropzone": "^12.0.4",
+    "react-google-login": "^5.2.2",
+    "react-hook-form": "^7.29.0",
     "react-router-dom": "^6.2.1",
     "react-scripts": "5.0.0",
     "sweetalert": "^2.1.2",
@@ -34,16 +37,6 @@
     "build": " react-scripts build",
     "test": " react-scripts test",
     "eject": " react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ],
-    "rules": {
-      "jsx-a11y/anchor-is-valid": "off",
-      "no-unused-vars": "off"
-    }
   },
   "browserslist": {
     "production": [
