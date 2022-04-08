@@ -14,16 +14,17 @@ const ProductList = ({ order }) => {
     <Card variant='outlined'>
       <CardHeader
         title={<Typography variant='h6'>Danh sách mặt hàng</Typography>}
-        action={<Button variant='text'>Chỉnh sửa</Button>}
+        // action={<Button variant='text'>Chỉnh sửa</Button>}
       />
       <Divider />
       <CardContent>
         <ProductTable
-            products={order?.orderItems.map((x) => {
-              x.name = x.product.name;
-              x.productId = x.product.id;
-              return x;
-            })}
+          products={order?.orderItems.map((x) => {
+            x.name = x.product.name;
+            x.productId = x.product.id;
+
+            return x;
+          })}
         />
       </CardContent>
     </Card>

@@ -21,6 +21,7 @@ import useAuth from './hooks/use-auth';
 import AuthContextProvider from './store/auth-context';
 import OrderContextProvider from './store/admin/order-context';
 import OrderDetail from './pages/admin/OrderDetail';
+import ProductDetail from './pages/admin/ProductDetail';
 
 const theme = createTheme({
   palette: {
@@ -50,11 +51,6 @@ const theme = createTheme({
   },
 });
 
-function PrivateOutlet() {
-  const [auth, , status] = useAuth();
-  if (status === 'pending') return <h1>Loadin</h1>;
-  return auth ? <Outlet /> : <NotFound />;
-}
 
 function PrivateAdminOutlet() {
   const [auth, admin, status] = useAuth();
@@ -63,7 +59,6 @@ function PrivateAdminOutlet() {
 }
 
 function RedirectWhenSignedInRoute() {
-  console.log(useAuth());
   const [auth, , status] = useAuth();
 
   if (status === 'pending') return <h1>Loading</h1>;
@@ -110,6 +105,8 @@ function App() {
                 }
               />
               <Route path='order/:id' element={<OrderDetail />} />
+              <Route path='product/:id' element={<ProductDetail />} />
+
               <Route path='overview' element={<Overview />} />
               <Route
                 path='category'

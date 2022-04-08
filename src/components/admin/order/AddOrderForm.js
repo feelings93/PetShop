@@ -110,7 +110,12 @@ const AddOrderForm = () => {
     } else
       setSelectedProducts((prev) => [
         ...prev,
-        { productId: product.id, name: product.name, quantity: +quantity },
+        {
+          productId: product.id,
+          name: product.name,
+          quantity: +quantity,
+          price: product.price,
+        },
       ]);
     setProduct(null);
     setQuantity('');

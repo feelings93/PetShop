@@ -19,6 +19,34 @@ import useHttp from '../../../hooks/use-http';
 import { editOrder } from '../../../lib/api/order';
 
 const StatusCard = ({ order }) => {
+  let variant;
+  let color;
+  switch (order.status) {
+    case 'Chờ xử lý':
+      variant = 'filled';
+      color = 'default';
+      break;
+    case 'Đã xác nhận':
+      variant = 'outlined';
+      color = 'default';
+      break;
+      case 'Đang giao hàng':
+      variant = 'outlined';
+      color = 'info';
+      break;
+      case 'Đã giao':
+      variant = 'outlined';
+      color = 'success';
+      break;
+      case 'Đã hoàn thành':
+      variant = 'filled';
+      color = 'success';
+      break;
+      case 'Đã hủy':
+      variant = 'filled';
+      color = 'error';
+      break;
+  }
   const { sendRequest, data, status, error } = useHttp(editOrder);
   const [edit, setEdit] = useState(false);
   const { register, handleSubmit } = useForm();
@@ -26,10 +54,14 @@ const StatusCard = ({ order }) => {
     sendRequest({ id: order.id, ...data });
   };
   useEffect(() => {
+    const showSuccessMsg = async () => {
+      await swal('Cập nhật trạng thái thành công', 'Thành công', 'success');
+      location.reload();
+    };
+
     if (status === 'completed') {
       if (data) {
-        swal('Cập nhật trạng thái thành công', 'Thành công', 'success');
-        location.reload();
+        showSuccessMsg();
       } else if (error) swal('Đã có lỗi xảy ra', 'Thất bại', 'error');
     }
   }, [status, data, error]);
@@ -41,7 +73,7 @@ const StatusCard = ({ order }) => {
           title={
             <Stack spacing={2} direction='row'>
               <Typography variant='h6'>Trạng thái đơn hàng</Typography>
-              <Chip label={order?.status} />
+              <Chip variant={variant} color={color} label={order?.status} />
             </Stack>
           }
           action={

@@ -1,15 +1,19 @@
 import React, { useEffect } from 'react';
 import useHttp from '../../hooks/use-http';
 import Grid from '@mui/material/Grid';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import Stack from '@mui/material/Stack';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
 import StatusCard from '../../components/admin/order-detail/StatusCard';
 import { getOrder } from '../../lib/api/order';
 import CustomerProfile from '../../components/admin/order-detail/CustomerProfile';
 import PaymentInfo from '../../components/admin/order-detail/PaymentInfo';
 import ProductList from '../../components/admin/order-detail/ProductList';
+import { ChevronLeft } from '@mui/icons-material';
 
 const OrderDetail = () => {
+  const navigate = useNavigate();
   const params = useParams();
   const { sendRequest, status, data, error } = useHttp(getOrder, true);
 
@@ -20,14 +24,28 @@ const OrderDetail = () => {
   if (!data || error) return <h1>Đã có lỗi xảy ra</h1>;
   return (
     <Stack spacing={4}>
+      <Stack direction='row'>
+        <IconButton
+          onClick={() => {
+            navigate('/admin/order');
+          }}
+        >
+          <ChevronLeft />
+        </IconButton>
+        <Typography
+          fontWeight='700'
+          fontSize='28px'
+        >{`Đơn hàng #${data.id}`}</Typography>
+      </Stack>
+
       <StatusCard order={data} />
       <ProductList order={data} />
       <Grid container>
-        <Grid item md={6} sm={12}>
+        <Grid pr={2} item md={6} sm={12}>
           <CustomerProfile order={data} />
         </Grid>
 
-        <Grid item md={6} sm={12}>
+        <Grid pl={2} item md={6} sm={12}>
           <PaymentInfo order={data} />
         </Grid>
       </Grid>

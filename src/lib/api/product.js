@@ -29,6 +29,7 @@ export const createProduct = async (Product) => {
   formData.append('name', Product.name);
   formData.append('price', Product.price);
   formData.append('quantity', Product.quantity);
+  formData.append('describe', Product.describe);
   for (let i = 0; i < Product.selectedCategories.length; i++) {
     formData.append(
       'selectedCategories[]',
@@ -52,8 +53,27 @@ export const createProduct = async (Product) => {
 };
 
 export const editProduct = async (Product) => {
+  const formData = new FormData();
+  console.log(Product);
+
+  if (Product.name) formData.append('name', Product.name);
+  if (Product.price) formData.append('price', Product.price);
+  if (Product.quantity) formData.append('quantity', Product.quantity);
+  if (Product.describe) formData.append('describe', Product.describe);
+  for (let i = 0; i < Product.photoUrls.length; i++) {
+    formData.append('photoUrls[]', JSON.stringify(Product.photoUrls[i]));
+  }
+  for (let i = 0; i < Product.selectedCategories.length; i++) {
+    formData.append(
+      'selectedCategories[]',
+      JSON.stringify(Product.selectedCategories[i])
+    );
+  }
+  for (let i = 0; i < Product.files.length; i++) {
+    if (Product.files[i]) formData.append('files', Product.files[i]);
+  }
   try {
-    const response = await axios.patch(`/products/${Product.id}`, Product, {
+    const response = await axios.patch(`/products/${Product.id}`, formData, {
       headers: {
         Authorization: bearerHeader,
       },

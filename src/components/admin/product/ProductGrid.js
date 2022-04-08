@@ -3,19 +3,16 @@ import Stack from '@mui/material/Stack';
 import Avatar from '@mui/material/Avatar';
 import Chip from '@mui/material/Chip';
 
-import IconButton from '@mui/material/IconButton';
-import { Delete, Edit } from '@mui/icons-material';
+// import IconButton from '@mui/material/IconButton';
+// import { Edit } from '@mui/icons-material';
 import StyleGrid from '../../UI/StyleGrid/StyleGrid';
 import { ProductContext } from '../../../store/admin/product-context';
-
-function partial(fn, ...args) {
-  return fn.bind(fn, ...args);
-}
+import { useNavigate } from 'react-router-dom';
 
 const ProductGrid = () => {
   const productCtx = useContext(ProductContext);
-  const { searchProducts, handleChangeEditProduct, handleChangeDelProduct } =
-    productCtx;
+  const { searchProducts } = productCtx;
+  const navigate = useNavigate();
   const columns = [
     {
       field: 'id',
@@ -81,25 +78,25 @@ const ProductGrid = () => {
         );
       },
     },
-    {
-      field: 'action',
-      sortable: false,
-      headerName: 'Thao tác',
-      width: 200,
-      editable: false,
-      renderCell: (params) => {
-        return (
-          <Stack direction='row'>
-            <IconButton onClick={partial(handleChangeEditProduct, params.row)}>
-              <Edit color='primary' />
-            </IconButton>
-            {/* <IconButton onClick={partial(handleChangeDelProduct, params.row)}>
-              <Delete />
-            </IconButton> */}
-          </Stack>
-        );
-      },
-    },
+    // {
+    //   field: 'action',
+    //   sortable: false,
+    //   headerName: 'Thao tác',
+    //   width: 200,
+    //   editable: false,
+    //   renderCell: (params) => {
+    //     return (
+    //       <Stack direction='row'>
+    //         <IconButton onClick={partial(handleChangeEditProduct, params.row)}>
+    //           <Edit color='primary' />
+    //         </IconButton>
+    //         {/* <IconButton onClick={partial(handleChangeDelProduct, params.row)}>
+    //           <Delete />
+    //         </IconButton> */}
+    //       </Stack>
+    //     );
+    //   },
+    // },
   ];
 
   return (
@@ -112,6 +109,9 @@ const ProductGrid = () => {
             disableColumnMenu
             disableSelectionOnClick
             rowsPerPageOptions={[5, 25, 50]}
+            onRowClick={(params) => {
+              navigate(`${params.row.id}`);
+            }}
           />
         </div>
       </div>

@@ -44,14 +44,18 @@ const PaymentInfo = ({ order }) => {
     setPaymentType(value);
   };
   useEffect(() => {
+    const showSuccessMsg = async () => {
+      await swal(
+        'Cập nhật thông tin thanh toán thành công',
+        'Thành công',
+        'success'
+      );
+      location.reload();
+    };
+
     if (status === 'completed') {
       if (data) {
-        swal(
-          'Cập nhật thông tin người nhận thành công',
-          'Thành công',
-          'success'
-        );
-        location.reload();
+        showSuccessMsg();
       } else if (error) swal('Đã có lỗi xảy ra', 'Thất bại', 'error');
     }
   }, [status, data, error]);

@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 
 import IconButton from '@mui/material/IconButton';
+import Chip from '@mui/material/Chip';
 import { Edit } from '@mui/icons-material';
 import StyleGrid from '../../UI/StyleGrid/StyleGrid';
 import { OrderContext } from '../../../store/admin/order-context';
@@ -9,6 +10,7 @@ const OrderGrid = () => {
   const navigate = useNavigate();
   const orderCtx = useContext(OrderContext);
   const { handleChangeEditOrder, searchOrders } = orderCtx;
+
   const columns = [
     {
       field: 'id',
@@ -24,12 +26,45 @@ const OrderGrid = () => {
     {
       field: 'total',
       headerName: 'Tổng cộng',
-      width: 100,
+      width: 150,
       editable: false,
     },
     {
       field: 'status',
       headerName: 'Tình trạng',
+      renderCell: (params) => {
+        let variant;
+        let color;
+        switch (params.row?.status) {
+          case 'Chờ xử lý':
+            variant = 'filled';
+            color = 'default';
+            break;
+          case 'Đã xác nhận':
+            variant = 'outlined';
+            color = 'default';
+            break;
+          case 'Đang giao hàng':
+            variant = 'outlined';
+            color = 'info';
+            break;
+          case 'Đã giao':
+            variant = 'outlined';
+            color = 'success';
+            break;
+          case 'Đã hoàn thành':
+            variant = 'filled';
+            color = 'success';
+            break;
+          case 'Đã hủy':
+            variant = 'filled';
+            color = 'error';
+            break;
+        }
+        return (
+          <Chip variant={variant} color={color} label={params.row?.status} />
+        );
+      },
       width: 200,
       editable: false,
     },
