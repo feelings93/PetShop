@@ -21,7 +21,6 @@ const DetailProduct = () => {
   }, []);
   return (
     <Grid marginTop='30px'>
-      <Header />
       <Container fixed>
         <div data-aos='fade-up' data-aos-duration={1000}>
           <HeroSectionProduct />

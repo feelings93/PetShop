@@ -25,8 +25,6 @@ export default function Cart() {
   }
   return (
     <div>
-      <Header />
-
       <Container fixed>
         <Grid container sm={12} sx={{ backgroundColor: '#fefefe' }}>
           <ListStep />

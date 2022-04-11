@@ -81,7 +81,6 @@ export default function Products() {
   const [shortPro, setShortPro] = React.useState(true);
   return (
     <div className=''>
-      <Header />
       <Container fluid sx={{ mb: 2 }}>
         <Box display='flex'>
           <HomeIcon

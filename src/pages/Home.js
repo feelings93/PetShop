@@ -13,7 +13,6 @@ import Footer from '../components/cus/layout/footer/Footer';
 const Home = () => {
   return (
     <div>
-      <Header />
       <Box sx={{ overflow: 'hidden' }}>
         <HeroSection />
         <AllOurServices />

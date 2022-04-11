@@ -26,7 +26,7 @@ import AuthContextProvider from './store/auth-context';
 import OrderContextProvider from './store/admin/order-context';
 import OrderDetail from './pages/admin/OrderDetail';
 import ProductDetail from './pages/admin/ProductDetail';
-
+import Header from './components/cus/layout/navbar/Header';
 const theme = createTheme({
   palette: {
     primary: {
@@ -67,6 +67,14 @@ function RedirectWhenSignedInRoute() {
   if (status === 'pending') return <h1>Loading</h1>;
   return !auth ? <Outlet /> : <Navigate to='/' />;
 }
+function InnerContent() {
+  return (
+    <>
+      <Header />
+      <Outlet />
+    </>
+  );
+}
 
 function App() {
   return (
@@ -74,16 +82,18 @@ function App() {
       <CssBaseline />
       <AuthContextProvider>
         <Routes>
-          <Route exact path='/' element={<Navigate to='/trang-chu' />} />
-          <Route exact path='/trang-chu' element={<Home />} />
-          <Route exact path='/san-pham' element={<DetailProduct />} />
-          <Route exact path='/gioi-thieu' element={<About />} />
-          <Route exact path='/thu-cung' element={<Products />} />
-          <Route exact path='/gio-hang' element={<Cart />} />
-          <Route exact path='/san-pham' element={<DetailProduct />} />
-          <Route element={<RedirectWhenSignedInRoute />}>
-            <Route exact path='/login' element={<Login />} />
-            <Route exact path='/sign-up' element={<SignUp />} />
+          <Route path='/' element={<InnerContent />}>
+            <Route exact path='/' element={<Navigate to='/trang-chu' />} />
+            <Route exact path='/trang-chu' element={<Home />} />
+            <Route exact path='/san-pham' element={<DetailProduct />} />
+            <Route exact path='/gioi-thieu' element={<About />} />
+            <Route exact path='/thu-cung' element={<Products />} />
+            <Route exact path='/gio-hang' element={<Cart />} />
+            <Route exact path='/san-pham' element={<DetailProduct />} />
+            <Route element={<RedirectWhenSignedInRoute />}>
+              <Route exact path='/login' element={<Login />} />
+              <Route exact path='/sign-up' element={<SignUp />} />
+            </Route>
           </Route>
           <Route element={<PrivateAdminOutlet />}>
             <Route exact path='/admin' element={<Admin user={{}} />}>
