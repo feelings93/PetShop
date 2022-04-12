@@ -22,7 +22,9 @@ import SignupPopup from '../popup/SignupPopup';
 import LoginPopup from '../popup/LoginPopup';
 import classes from './Header.module.css';
 import Logo from '../../../admin/layout/SideBar/Logo';
-
+import Badge from '@mui/material/Badge';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import CartNof from './CartHeader';
 function ElevationScroll(props) {
   const { children, window } = props;
   // Note that you normally won't need to set the window ref as useScrollTrigger
@@ -76,6 +78,7 @@ const Header = (props) => {
   const handlePopoverClose = () => {
     setAnchorEl(null);
   };
+
   const open = Boolean(anchorEl);
   const drawer = (
     <div>
@@ -156,7 +159,9 @@ const Header = (props) => {
           Tin tức
         </NavLink>
       </Stack>
+
       <Divider />
+
       {!localStorage.getItem('isLogin') === true && (
         <Stack
           mt={2}
@@ -178,6 +183,7 @@ const Header = (props) => {
           <Button fullWidth href='/sign-up' variant='contained'>
             Đăng ký
           </Button>
+          <CartNof />
         </Stack>
       )}
       {localStorage.getItem('isLogin') && (
@@ -197,6 +203,7 @@ const Header = (props) => {
           >
             Đăng xuất
           </Button>
+          <CartNof />
         </Stack>
       )}
     </div>
@@ -235,7 +242,7 @@ const Header = (props) => {
                 spacing={4}
               >
                 <NavLink
-                to='/trang-chu'
+                  to='/trang-chu'
                   className={({ isActive }) =>
                     !isActive
                       ? classes.link
@@ -287,6 +294,7 @@ const Header = (props) => {
                   Tin tức
                 </NavLink>
               </Stack>
+
               <Stack direction='row' spacing={1}>
                 <Button
                   onClick={() => {
@@ -304,11 +312,13 @@ const Header = (props) => {
                 >
                   Đăng ký
                 </Button>
+                <CartNof />
               </Stack>
             </Toolbar>
           </Container>
         </AppBar>
       </ElevationScroll>
+
       <Box
         component='nav'
         sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}

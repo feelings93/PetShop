@@ -31,13 +31,14 @@ const TotalCart = () => {
         variant='contained'
         component='span'
         size='large'
+        color='primary'
         sx={{
           width: '100%',
           marginTop: '5px',
-          backgroundColor: '#ff6b00',
+          // backgroundColor: '#ff6b00',
           '&:hover': {
             opacity: [0.9, 0.8, 0.7],
-            backgroundColor: '#ff6b00',
+            // backgroundColor: '#ff6b00',
           },
         }}
       >
@@ -47,12 +48,13 @@ const TotalCart = () => {
         variant='outlined'
         fullWidth
         size='large'
+        color='primary'
         sx={{
           marginTop: '5px',
-          color: '#ff6b00',
-          borderColor: '#ff6b00',
+          // color: '#ff6b00',
+          // borderColor: '#ff6b00',
           '&:hover': {
-            borderColor: '#ff6b00',
+            // borderColor: '#ff6b00',
             opacity: [0.9, 0.8, 0.7],
           },
         }}

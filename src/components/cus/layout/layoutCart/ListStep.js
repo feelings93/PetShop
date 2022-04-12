@@ -7,6 +7,8 @@ import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import Page1 from './Page1';
+import Page2 from './Page2';
 
 const steps = [
   'Select campaign settings',
@@ -14,7 +16,7 @@ const steps = [
   'Create an ad',
 ];
 
-export default function HorizontalLinearStepper() {
+export default function ListStep() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
 
@@ -63,25 +65,22 @@ export default function HorizontalLinearStepper() {
     switch (activeStep) {
       case 0:
         console.log(1);
-        <div>1</div>;
-        break;
+        return <Page1 />;
       case 1:
         console.log(2);
-        <div>1</div>;
+        return <Page2 />;
 
         break;
       case 2:
         console.log(3);
-        <div>1</div>;
-
-        break;
+        return <div>33333333333333333333333333</div>;
       default:
         console.log('default');
         break;
     }
   };
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box sx={{ width: '100%', marginTop: '30px' }}>
       <Stepper activeStep={activeStep}>
         {steps.map((label, index) => {
           const stepProps = {};
@@ -101,7 +100,7 @@ export default function HorizontalLinearStepper() {
           );
         })}
       </Stepper>
-      <switchHandle />
+      {switchHandle(activeStep)}
       {activeStep === steps.length ? (
         <>
           <Typography sx={{ mt: 2, mb: 1 }}>
@@ -114,7 +113,6 @@ export default function HorizontalLinearStepper() {
         </>
       ) : (
         <>
-          <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>
           <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
             <Button
               color='inherit'
@@ -125,11 +123,11 @@ export default function HorizontalLinearStepper() {
               Back
             </Button>
             <Box sx={{ flex: '1 1 auto' }} />
-            {isStepOptional(activeStep) && (
+            {/* {isStepOptional(activeStep) && (
               <Button color='inherit' onClick={handleSkip} sx={{ mr: 1 }}>
                 Skip
               </Button>
-            )}
+            )} */}
             <Button onClick={handleNext}>
               {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
             </Button>

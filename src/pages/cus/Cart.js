@@ -26,51 +26,7 @@ export default function Cart() {
   return (
     <div>
       <Container fixed>
-        <Grid container sm={12} sx={{ backgroundColor: '#fefefe' }}>
-          <ListStep />
-          <Grid item sm={12} sx={{ textAlign: 'center' }}>
-            <Typography sx={{ fontWeight: 'Medium', fontSize: '28px' }}>
-              Giỏ hàng của bạn
-            </Typography>
-            <Typography
-              sx={{
-                fontWeight: 'regular',
-                fontSize: '16px',
-                color: '#5e5e5e',
-                marginBottom: '5px',
-              }}
-            >
-              Bạn có 4 mặt hàng muốn mua đang chờ được thanh toán
-            </Typography>
-            <hr
-              width='100%'
-              align='center'
-              color='#d9d9d9'
-              style={{ marginBottom: '30px' }}
-            />
-
-            <Grid
-              container
-              rowSpacing={2}
-              sx={{
-                padding: '10px 10px',
-                width: '100%',
-                position: 'relative',
-                overflow: 'auto',
-                maxHeight: 800,
-              }}
-            >
-              {[1, 2, 3, 4, 5].map((value) => (
-                <Grid item sm={12}>
-                  <CardCart />
-                </Grid>
-              ))}
-            </Grid>
-          </Grid>
-          <Grid item sm={12} sx={{ marginTop: '20px', padding: '10px 10px' }}>
-            <TotalCart />
-          </Grid>
-        </Grid>
+        <ListStep />
       </Container>
     </div>
   );
