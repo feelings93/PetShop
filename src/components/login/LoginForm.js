@@ -14,7 +14,8 @@ import {
 import GoogleLogin from 'react-google-login';
 import Avatar from '@mui/material/Avatar';
 import swal from 'sweetalert';
-import { Link } from 'react-router-dom';
+import Link from '@mui/material/Link';
+import { useNavigate } from 'react-router-dom';
 import useHttp from '../../hooks/use-http';
 import { login, loginGoogle } from '../../lib/api/auth';
 
@@ -28,7 +29,7 @@ const LoginForm = () => {
     status: statusGoogle,
     sendRequest: sendRequestGoogle,
   } = useHttp(loginGoogle);
-
+  const navigate = useNavigate();
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [isShowPass, setIsShowPass] = React.useState(false);
@@ -140,7 +141,18 @@ const LoginForm = () => {
               value={password}
             />
             <Box display='flex' direction='row' justifyContent='flex-end'>
-              <Link to='/forgot'>Quên mật khẩu?</Link>
+              <Link
+                href='/forgot'
+                onClick={(e) => {
+                  e.preventDefault();
+                  navigate('/forgot');
+                }}
+                sx={{
+                  textDecoration: 'none',
+                }}
+              >
+                Quên mật khẩu?
+              </Link>
             </Box>
           </Stack>
           <Stack direction='column' spacing={2}>
@@ -180,7 +192,19 @@ const LoginForm = () => {
         </Stack>
 
         <Typography color='text.secondary' sx={{ mt: 4 }} textAlign='center'>
-          Bạn chưa có tài khoản? <Link to='/sign-up'>Đăng ký</Link>
+          Bạn chưa có tài khoản?{' '}
+          <Link
+            href='/sign-up'
+            onClick={(e) => {
+              e.preventDefault();
+              navigate('/sign-up');
+            }}
+            sx={{
+              textDecoration: 'none',
+            }}
+          >
+            Đăng ký
+          </Link>
         </Typography>
       </Box>
     </form>

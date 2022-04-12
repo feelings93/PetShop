@@ -16,13 +16,15 @@ import {
 import Avatar from '@mui/material/Avatar';
 import swal from 'sweetalert';
 import GoogleLogin from 'react-google-login';
-import { Link } from 'react-router-dom';
+import Link from '@mui/material/Link';
+import { useNavigate } from 'react-router-dom';
 import google from '../../assets/images/google.png';
 import useHttp from '../../hooks/use-http';
 import { loginGoogle, signup } from '../../lib/api/auth';
 
 const SignUpForm = () => {
   const { data, error, status, sendRequest } = useHttp(signup);
+  const navigate = useNavigate();
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [name, setName] = React.useState('');
@@ -199,7 +201,19 @@ const SignUpForm = () => {
         </Stack>
 
         <Typography color='text.secondary' sx={{ mt: 4 }} textAlign='center'>
-          Bạn đã có tài khoản? <Link to='/login'>Đăng nhập</Link>
+          Bạn đã có tài khoản?{' '}
+          <Link
+            href='/login'
+            onClick={(e) => {
+              e.preventDefault();
+              navigate('/login');
+            }}
+            sx={{
+              textDecoration: 'none',
+            }}
+          >
+            Đăng nhập
+          </Link>
         </Typography>
       </Box>
     </form>
