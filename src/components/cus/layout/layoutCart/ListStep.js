@@ -11,9 +11,9 @@ import Page1 from './Page1';
 import Page2 from './Page2';
 import Page3 from './Page3';
 const steps = [
-  'Select campaign settings',
-  'Create an ad group',
-  'Create an ad',
+  'Giỏ hàng của bạn',
+  'Thông tin khách hàng',
+  'Phương thức thanh toán',
 ];
 
 export default function ListStep() {
@@ -85,11 +85,11 @@ export default function ListStep() {
         {steps.map((label, index) => {
           const stepProps = {};
           const labelProps = {};
-          if (isStepOptional(index)) {
-            labelProps.optional = (
-              <Typography variant='caption'>Optional</Typography>
-            );
-          }
+          // if (isStepOptional(index)) {
+          //   labelProps.optional = (
+          //     <Typography variant='caption'>Optional</Typography>
+          //   );
+          // }
           if (isStepSkipped(index)) {
             stepProps.completed = false;
           }
