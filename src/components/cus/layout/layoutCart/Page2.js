@@ -20,9 +20,10 @@ import Autocomplete from '@mui/material/Autocomplete';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 export default function Page2() {
   const [value, setValue] = React.useState(new Date('2014-08-18T21:11:54'));
-
+  const [hideDiscout, setHideDiscount] = React.useState(true);
   const handleChange = (newValue) => {
     setValue(newValue);
   };
@@ -74,6 +75,7 @@ export default function Page2() {
             label='Địa chỉ Email'
             variant='outlined'
             size='small'
+            type='email'
           />
         </Grid>
         <Grid item xs={6} sm={3}>
@@ -82,6 +84,7 @@ export default function Page2() {
             label='Số điện thoại'
             variant='outlined'
             size='small'
+            type='tel'
           />
         </Grid>
         <Grid item xs={6} sm={3}>
@@ -162,31 +165,69 @@ export default function Page2() {
             label='Số nhà, tên đường'
             variant='outlined'
             size='small'
+            sx={{ width: '100%' }}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            id='outlined-basic'
+            label='Yêu cầu khác (không bắt buộc)'
+            variant='outlined'
+            size='small'
+            sx={{ width: '100%' }}
           />
         </Grid>
       </Grid>
-      <hr
+      {/* <hr
         width='100%'
         align='center'
         color='#d9d9d9'
         style={{ marginTop: '30px' }}
-      />
+      /> */}
 
-      <TextField
-        id='outlined-basic'
-        label='Yêu cầu khác (không bắt buộc)'
-        variant='outlined'
-        size='small'
-        sx={{ marginTop: '10px' }}
-      />
-      <Button
-        variant='contained'
-        endIcon={<MenuItem />}
-        size='small'
-        sx={{ marginTop: '20px' }}
-      >
-        Áp dụng mã giảm giá
-      </Button>
+      <Grid container md={12} spacing={2} sx={{ marginTop: '20px' }}>
+        <Grid item md={12}>
+          <Button
+            variant='contained'
+            endIcon={<ArrowDropDownIcon sx={{ color: '' }} />}
+            size='medium'
+            sx={{ width: '100%' }}
+            onClick={() => setHideDiscount(!hideDiscout)}
+          >
+            Sử dụng mã giảm giá
+          </Button>
+        </Grid>
+        {!hideDiscout && (
+          <>
+            <Grid item md={10}>
+              <TextField
+                id='outlined-basic'
+                label='Điền mã giảm giá'
+                variant='outlined'
+                size='small'
+                sx={{ width: '100%' }}
+              />
+            </Grid>
+            <Grid
+              item
+              md={2}
+              sx={{
+                display: 'flex',
+                justifyContent: 'flex-end',
+                alignItems: 'center',
+              }}
+            >
+              <Button variant='contained' size='medium'>
+                Áp dụng
+              </Button>
+            </Grid>
+          </>
+        )}
+
+        <Grid item md={12} sx={{ marginTop: '30px' }}>
+          <TotalCart />
+        </Grid>
+      </Grid>
     </div>
   );
 }

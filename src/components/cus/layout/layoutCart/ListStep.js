@@ -9,7 +9,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Page1 from './Page1';
 import Page2 from './Page2';
-
+import Page3 from './Page3';
 const steps = [
   'Select campaign settings',
   'Create an ad group',
@@ -73,7 +73,7 @@ export default function ListStep() {
         break;
       case 2:
         console.log(3);
-        return <div>33333333333333333333333333</div>;
+        return <Page3 />;
       default:
         console.log('default');
         break;
