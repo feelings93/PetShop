@@ -49,7 +49,13 @@ const EditProductForm = () => {
       swal('Lỗi', 'Đã có lỗi xảy ra', 'error');
       handleCloseEdit();
     }
-  }, [dataCategories, statusCategories, setCategories, errorCategories]);
+  }, [
+    dataCategories,
+    statusCategories,
+    setCategories,
+    errorCategories,
+    handleCloseEdit,
+  ]);
 
   React.useEffect(() => {
     if (status === 'completed') {
@@ -61,7 +67,7 @@ const EditProductForm = () => {
     }
   }, [data, status, error, handleEditProduct, handleCloseEdit]);
   return (
-    <Dialog open={open}>
+    <Dialog open={true}>
       {status === 'pending' && <LinearProgress />}
       {statusCategories === 'pending' ? (
         <Backdrop

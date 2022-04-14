@@ -17,7 +17,7 @@ const ProductDetail = () => {
   useEffect(() => {
     sendRequest(params.id);
     sendCategories();
-  }, []);
+  }, [params.id, sendCategories, sendRequest]);
   if (status === 'pending' || statusCategories === 'pending')
     return <h1>Loading</h1>;
   if (!data || error || !dataCategories || errorCategories)

@@ -1,18 +1,19 @@
-import React, { useContext } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import useHttp from './use-http';
 import { getProfile } from '../lib/api/auth';
 import { AuthContext } from '../store/auth-context';
 const useAuth = () => {
-  if (!localStorage.getItem('accessToken')) return [false, false, 'completed'];
   const authCtx = useContext(AuthContext);
-  const [admin, setAdmin] = React.useState(false);
-  const [auth, setAuth] = React.useState(false);
+  const [admin, setAdmin] = useState(false);
+  const [auth, setAuth] = useState(false);
   const { setUser } = authCtx;
   const { data, status, sendRequest } = useHttp(getProfile, true);
-  React.useEffect(() => {
-    sendRequest();
+  useEffect(() => {
+    if (!localStorage.getItem('accessToken'))
+      return [false, false, 'completed'];
+    else sendRequest();
   }, [sendRequest]);
-  React.useEffect(() => {
+  useEffect(() => {
     if (status === 'completed') {
       if (data) {
         setAuth(true);
@@ -21,7 +22,7 @@ const useAuth = () => {
         else setAdmin(false);
       } else setAuth(false);
     }
-  }, [setAuth, data, status]);
+  }, [setAuth, data, status, setUser]);
   return [auth, admin, status];
 };
 export default useAuth;

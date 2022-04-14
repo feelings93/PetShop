@@ -28,7 +28,7 @@ const CustomerProfile = ({ order }) => {
         'Thành công',
         'success'
       );
-      location.reload();
+      window.location.reload();
     };
 
     if (status === 'completed') {

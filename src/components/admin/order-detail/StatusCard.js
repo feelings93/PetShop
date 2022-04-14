@@ -30,21 +30,25 @@ const StatusCard = ({ order }) => {
       variant = 'outlined';
       color = 'default';
       break;
-      case 'Đang giao hàng':
+    case 'Đang giao hàng':
       variant = 'outlined';
       color = 'info';
       break;
-      case 'Đã giao':
+    case 'Đã giao':
       variant = 'outlined';
       color = 'success';
       break;
-      case 'Đã hoàn thành':
+    case 'Đã hoàn thành':
       variant = 'filled';
       color = 'success';
       break;
-      case 'Đã hủy':
+    case 'Đã hủy':
       variant = 'filled';
       color = 'error';
+      break;
+    default:
+      variant = 'filled';
+      color = 'default';
       break;
   }
   const { sendRequest, data, status, error } = useHttp(editOrder);
@@ -56,7 +60,7 @@ const StatusCard = ({ order }) => {
   useEffect(() => {
     const showSuccessMsg = async () => {
       await swal('Cập nhật trạng thái thành công', 'Thành công', 'success');
-      location.reload();
+      window.location.reload();
     };
 
     if (status === 'completed') {

@@ -66,7 +66,7 @@ const ProductDetailCard = ({ product, categories = [] }) => {
         'Thành công',
         'success'
       );
-      location.reload();
+      window.location.reload();
     };
     if (status === 'completed') {
       if (data) {

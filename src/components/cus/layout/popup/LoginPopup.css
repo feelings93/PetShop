@@ -50,9 +50,9 @@ a {
   color: #42b72a;
 }
 
-a:hover {
+/* a:hover {
   text-decoration: underline;
-}
+} */
 
 .swal2-container {
   z-index: 20000 !important;

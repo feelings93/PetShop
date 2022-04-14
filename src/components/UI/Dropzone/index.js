@@ -19,7 +19,7 @@ const DropzoneImage = ({ onChange }) => {
         const url = await readUploadedFileAsURL(event.target.files[i]);
         urls.push(url);
       }
-      
+
       onChange(event.target.files);
       setUrlLocal((prev) => [...prev, ...urls]);
     } catch (err) {
@@ -38,7 +38,7 @@ const DropzoneImage = ({ onChange }) => {
       <IconButton color='primary' aria-label='upload picture' component='span'>
         <PhotoCamera />
       </IconButton>
-      <StandardImageList urls={urlLocal} />
+      {urlLocal.length > 0 && <StandardImageList urls={urlLocal} />}
     </label>
   );
 };

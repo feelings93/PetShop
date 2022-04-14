@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import Stack from '@mui/material/Stack';
 import Avatar from '@mui/material/Avatar';
 import Chip from '@mui/material/Chip';
+import Typography from '@mui/material/Typography';
 
 // import IconButton from '@mui/material/IconButton';
 // import { Edit } from '@mui/icons-material';
@@ -22,33 +23,32 @@ const ProductGrid = () => {
     {
       field: 'name',
       headerName: 'Tên sản phẩm',
-      width: 200,
-      editable: false,
-    },
-    {
-      field: 'photos',
-      sortable: false,
-      headerName: 'Hình ảnh',
-      width: 100,
+      width: 240,
       editable: false,
       renderCell: (params) => {
         return (
-          <Avatar
-            sx={{ width: '100px', height: '100px' }}
-            src={
-              params.row.photos[0]?.url ||
-              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkH-JPzVPj5TVAyg1OIKjMRbagTYcJIegBwc7KOUlWBA6xPbSD7Za_TIk-_D5xJC3rAs8&usqp=CAU'
-            }
-            variant='square'
-          />
+          <Stack direction='row' alignItems='center' width='100%' spacing={2}>
+            <Avatar
+              sx={{ width: '50px', height: '50px' }}
+              src={
+                params.row.photos[0]?.url ||
+                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkH-JPzVPj5TVAyg1OIKjMRbagTYcJIegBwc7KOUlWBA6xPbSD7Za_TIk-_D5xJC3rAs8&usqp=CAU'
+              }
+              variant='square'
+            />
+            <Typography>{params.row.name}</Typography>
+          </Stack>
         );
       },
     },
+
     {
       field: 'quantity',
       headerName: 'Số lượng',
-      width: 100,
+      width: 120,
       editable: false,
+      headerAlign: 'right',
+      align: 'right',
     },
     {
       field: 'price',

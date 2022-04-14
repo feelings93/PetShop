@@ -6,6 +6,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
 import Autocomplete from '@mui/material/Autocomplete';
 import Stack from '@mui/material/Stack';
 import Backdrop from '@mui/material/Backdrop';
@@ -52,7 +53,7 @@ const AddProductForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     sendRequest({ name, selectedCategories, files, price, quantity });
-  };  
+  };
 
   React.useEffect(() => {
     sendCategories();
@@ -65,7 +66,13 @@ const AddProductForm = () => {
       swal('Lỗi', 'Đã có lỗi xảy ra', 'error');
       handleCloseAdd();
     }
-  }, [dataCategories, statusCategories, setCategories, errorCategories]);
+  }, [
+    dataCategories,
+    statusCategories,
+    setCategories,
+    errorCategories,
+    handleCloseAdd,
+  ]);
 
   React.useEffect(() => {
     if (status === 'completed') {
@@ -134,6 +141,9 @@ const AddProductForm = () => {
                   />
                 )}
               />
+              <Stack spacing={1}>
+                <Typography variant='body2'>Chọn hình ảnh</Typography>
+              </Stack>
               <DropzoneImage onChange={handleChangeFiles} />
             </Stack>
           </DialogContent>
