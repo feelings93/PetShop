@@ -81,7 +81,7 @@ export default function ListStep() {
   };
   return (
     <Box sx={{ width: '100%', marginTop: '30px' }}>
-      <Stepper activeStep={activeStep}>
+      {/* <Stepper activeStep={activeStep}>
         {steps.map((label, index) => {
           const stepProps = {};
           const labelProps = {};
@@ -99,7 +99,7 @@ export default function ListStep() {
             </Step>
           );
         })}
-      </Stepper>
+      </Stepper> */}
       {switchHandle(activeStep)}
       {activeStep === steps.length ? (
         <>

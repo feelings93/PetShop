@@ -13,9 +13,10 @@ const CardCart = () => {
   return (
     <Box
       sx={{
-        padding: '10px 10px',
+        padding: '10px 15px',
         // boxShadow: 3,
         borderRadius: '10px',
+        backgroundColor: '#fff',
       }}
     >
       <Grid

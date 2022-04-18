@@ -7,6 +7,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Container from '@mui/material/Container';
 import List from '@mui/material/List';
+import Button from '@mui/material/Button';
 import BillCart from './billCart';
 import CardCart from './cardCart';
 import TotalCart from './totalCart';
@@ -24,50 +25,116 @@ export default function Page1() {
     <div>
       <Grid
         container
-        sm={12}
-        sx={{ backgroundColor: '#fefefe', marginTop: '30px' }}
+        sm={8}
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          flexDirection: 'column',
+        }}
       >
-        <Grid item sm={12} sx={{ textAlign: 'center' }}>
-          <Typography sx={{ fontWeight: 'Medium', fontSize: '28px' }}>
-            Giỏ hàng của bạn
-          </Typography>
-          <Typography
-            sx={{
-              fontWeight: 'regular',
-              fontSize: '16px',
-              color: '#5e5e5e',
-              marginBottom: '5px',
-            }}
-          >
-            Bạn có 4 mặt hàng muốn mua đang chờ được thanh toán
-          </Typography>
-          <hr
-            width='100%'
-            align='center'
-            color='#d9d9d9'
-            style={{ marginBottom: '30px' }}
-          />
-
+        <Typography
+          sx={{
+            fontWeight: 'medium',
+            fontSize: '28px',
+          }}
+        >
+          GIỎ HÀNG CỦA BẠN
+        </Typography>
+        <Typography
+          sx={{
+            fontWeight: 'regular',
+            fontSize: '16px',
+            color: '#5e5e5e',
+          }}
+        >
+          Bạn có 4 mặt hàng muốn mua đang chờ được thanh toán
+        </Typography>
+      </Grid>
+      <Grid
+        container
+        spacing={2}
+        sm={12}
+        sx={{ backgroundColor: '#fefefe', marginTop: '10px' }}
+      >
+        <Grid item sm={8} sx={{ textAlign: 'center' }}>
           <Grid
             container
-            rowSpacing={2}
             sx={{
               padding: '10px 10px',
               width: '100%',
               position: 'relative',
               overflow: 'auto',
-              maxHeight: 800,
+              maxHeight: 600,
+              backgroundColor: '#fafafa',
+              borderRadius: '5px',
             }}
           >
-            {[1, 2, 3, 4, 5].map((value) => (
-              <Grid item sm={12}>
+            {[1, 2, 3, 4, 5, 6, 7].map((value) => (
+              <Grid item sm={12} sx={{ marginBottom: '10px' }}>
                 <CardCart />
               </Grid>
             ))}
           </Grid>
         </Grid>
-        <Grid item sm={12} sx={{ marginTop: '20px', padding: '10px 10px' }}>
-          <TotalCart />
+        <Grid item sm={4}>
+          <Box
+            sx={{
+              border: 1,
+              padding: '10px 10px 15px 10px',
+              borderColor: '#cfcfcf',
+              borderRadius: '10px',
+            }}
+          >
+            <Typography
+              sx={{
+                fontWeight: 'medium',
+                fontStyle: 'Monospace',
+                fontSize: '20px',
+                padding: '5px 0px',
+              }}
+            >
+              Thông tin
+            </Typography>
+            <hr width='100%' align='center' color='#dadada' />
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                padding: '5px 0px',
+              }}
+            >
+              <Typography sx={{ fontWeight: 'medium', fontStyle: 'Monospace' }}>
+                Tổng tiền tạm tính:
+              </Typography>
+              <Typography
+                sx={{
+                  fontWeight: 'bold',
+                  fontStyle: 'Monospace',
+                  color: '#ff0404',
+                }}
+              >
+                10.000.000 VNĐ
+              </Typography>
+            </Box>
+
+            <hr width='100%' align='center' color='#dadada' />
+            <Typography
+              sx={{
+                fontWeight: 'light',
+                fontStyle: 'Monospace',
+                fontSize: '15px',
+
+                padding: '10px 0px',
+              }}
+            >
+              Nếu bạn có mã giảm giá, vui lòng sử dụng nó ở trang thanh toán khi
+              đặt hàng.
+            </Typography>
+            <Button variant='contained' sx={{ width: '100%' }}>
+              Đến trang thanh toán
+            </Button>
+          </Box>
         </Grid>
       </Grid>
     </div>
