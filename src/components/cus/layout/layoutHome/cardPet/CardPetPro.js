@@ -1,13 +1,10 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable react/destructuring-assignment */
+
 import { React, useState } from 'react';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { border, Box, fontWeight, ThemeProvider } from '@mui/system';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
-// eslint-disable-next-line import/no-unresolved
 import { BsCart3 } from 'react-icons/bs';
 import SavedSearchIcon from '@mui/icons-material/SavedSearch';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -28,7 +25,6 @@ const CardPetPro = (props) => {
           height: 300,
           borderRadius: 2,
           boxShadow: 3,
-          // eslint-disable-next-line react/prop-types
           backgroundImage: `url(${props.url})`,
           backgroundSize: ' cover',
           backgroundColor: '#f99',

@@ -22,24 +22,25 @@ import Button from '@mui/material/Button';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import InfoCart from './inforCart';
-import ListProduct from './listProduct'
-
-export default function Page2() {
+import Badge from '@mui/material/Badge';
+import CardMini from './cardMini';
+const ListProduct = () => {
   const [value, setValue] = React.useState(new Date('2014-08-18T21:11:54'));
   const [hideDiscout, setHideDiscount] = React.useState(true);
   const handleChange = (newValue) => {
     setValue(newValue);
   };
   return (
-    <Container fixed>
-      <Grid container sm={12} spacing={2}>
-        <Grid item sm={6}>
-          <InfoCart/>
-         </Grid>
-        <Grid item sm={6} sx={{ backgroundColor:"#fafafa"}}>
-          <ListProduct/>
-        </Grid>
-          {/* <Button
+    <Box>
+      <Grid container sm={12} spacing={2} sx={{ padding: '15px 15px' }}>
+        {[1, 2, 3, 4, 5, 6, 7].map((value) => (
+          <Grid item sm={12}>
+            <CardMini />
+          </Grid>
+        ))}
+        <hr width='100%' align='center' color='#dadada' />
+        <Grid item sm={12}>
+          <Button
             variant='contained'
             endIcon={<ArrowDropDownIcon sx={{ color: '' }} />}
             size='medium'
@@ -49,8 +50,12 @@ export default function Page2() {
             Sử dụng mã giảm giá
           </Button>
           {!hideDiscout && (
-            <>
-              <Grid item md={10}>
+            <Grid
+              container
+              sm={12}
+              sx={{ marginTop: '15px', marginBottom: '25px' }}
+            >
+              <Grid item sm={8}>
                 <TextField
                   id='outlined-basic'
                   label='Điền mã giảm giá'
@@ -61,26 +66,52 @@ export default function Page2() {
               </Grid>
               <Grid
                 item
-                md={2}
+                sm={4}
                 sx={{
                   display: 'flex',
                   justifyContent: 'flex-end',
                   alignItems: 'center',
                 }}
               >
-                <Button variant='contained' size='medium'>
+                <Button
+                  variant='contained'
+                  size='medium'
+                  sx={{ backgroundColor: '#000000' }}
+                >
                   Áp dụng
                 </Button>
               </Grid>
-            </>
-          )} */}
+            </Grid>
+          )}
+          <hr width='100%' align='center' color='#dadada' />
+          <Grid
+            item
+            sm={12}
+            sx={{ display: 'flex', justifyContent: 'space-between' }}
+          >
+            <Typography>Tạm tính</Typography>
+            <Typography>2.150.000 VNĐ</Typography>
+          </Grid>
+          <Grid
+            item
+            sm={12}
+            sx={{ display: 'flex', justifyContent: 'space-between' }}
+          >
+            <Typography>Phí vận chuyển</Typography>
+            <Typography>40.000 VNĐ</Typography>
+          </Grid>
+          <hr width='100%' align='center' color='#dadada' />
+          <Grid
+            item
+            sm={12}
+            sx={{ display: 'flex', justifyContent: 'space-between' }}
+          >
+            <Typography>Tổng cộng</Typography>
+            <Typography>2.550.000 VNĐ</Typography>
+          </Grid>
+        </Grid>
       </Grid>
-    </Container>
+    </Box>
   );
-}
-const topData = [
-  { label: 'The Shawshank Redemption', year: 1994 },
-  { label: 'The Godfather', year: 1972 },
-  { label: 'The Godfather: Part II', year: 1974 },
-  { label: 'The Dark Knight', year: 2008 },
-];
+};
+export default ListProduct;

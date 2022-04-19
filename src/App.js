@@ -27,6 +27,8 @@ import OrderContextProvider from './store/admin/order-context';
 import OrderDetail from './pages/admin/OrderDetail';
 import ProductDetail from './pages/admin/ProductDetail';
 import Header from './components/cus/layout/navbar/Header';
+import Checkout from './pages/cus/Checkouts';
+
 const theme = createTheme({
   palette: {
     primary: {
@@ -90,6 +92,7 @@ function App() {
             <Route exact path='/thu-cung' element={<Products />} />
             <Route exact path='/gio-hang' element={<Cart />} />
             <Route exact path='/san-pham' element={<DetailProduct />} />
+            <Route exact path='/thanh-toan' element={<Checkout/>} />
             <Route element={<RedirectWhenSignedInRoute />}>
               <Route exact path='/login' element={<Login />} />
               <Route exact path='/sign-up' element={<SignUp />} />

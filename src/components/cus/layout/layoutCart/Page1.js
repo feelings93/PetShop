@@ -11,18 +11,39 @@ import Button from '@mui/material/Button';
 import BillCart from './billCart';
 import CardCart from './cardCart';
 import TotalCart from './totalCart';
-export default function Page1() {
-  function renderRow() {
-    // const { index, style } = props;
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import Link from '@mui/material/Link';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
 
-    return (
-      <ListItem style={{ width: '100%' }} component='div' disablePadding>
-        <CardCart />
-      </ListItem>
-    );
-  }
+export default function Page1() {
+
+
+  const breadcrumbs = [
+    <Link
+      underline='hover'
+      key='1'
+      color='#000'
+      href='/'
+      fontWeight='regular'
+      sx={{textDecoration:"none"}}
+    >
+      Trang chủ
+    </Link>,
+    <Typography key='2' color='#999999'>
+      Giỏ hàng
+    </Typography>,
+  ];
   return (
     <div>
+      <Box sx={{backgroundColor: "#fafafa", padding:"10px 10px", borderRadius:'5px'}}>
+
+      <Breadcrumbs
+        separator={<NavigateNextIcon fontSize='small' />}
+        aria-label='breadcrumb'
+      >
+        {breadcrumbs}
+      </Breadcrumbs>
+      </Box>
       <Grid
         container
         sm={8}
@@ -31,6 +52,7 @@ export default function Page1() {
           justifyContent: 'center',
           alignItems: 'center',
           flexDirection: 'column',
+          marginTop:"20px"
         }}
       >
         <Typography
@@ -83,7 +105,7 @@ export default function Page1() {
               border: 1,
               padding: '10px 10px 15px 10px',
               borderColor: '#cfcfcf',
-              borderRadius: '10px',
+              borderRadius: '5px',
             }}
           >
             <Typography
@@ -131,7 +153,17 @@ export default function Page1() {
               Nếu bạn có mã giảm giá, vui lòng sử dụng nó ở trang thanh toán khi
               đặt hàng.
             </Typography>
-            <Button variant='contained' sx={{ width: '100%' }}>
+            <Button
+              variant='contained'
+              sx={{
+                width: '100%',
+                backgroundColor: '#000',
+                '&:hover': {
+                  backgroundColor:'#000',
+                  opacity: [0.9, 0.8, 0.7],
+                },
+              }}
+            >
               Đến trang thanh toán
             </Button>
           </Box>

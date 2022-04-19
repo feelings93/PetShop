@@ -1,9 +1,6 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import React, { Component } from 'react';
-// eslint-disable-next-line import/order
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { border, Box, fontWeight, ThemeProvider } from '@mui/system';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';

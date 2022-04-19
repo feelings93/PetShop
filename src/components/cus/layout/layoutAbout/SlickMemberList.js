@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/aria-role */
 import React from 'react';
 import Slider from 'react-slick';
 import MemberCard from './MemberCard';
@@ -39,7 +38,6 @@ const SlickMemberList = () => {
     ],
   };
   return (
-    // eslint-disable-next-line react/jsx-props-no-spreading
     <Slider {...settings}>
       <MemberCard
         name='Hao Dinh'

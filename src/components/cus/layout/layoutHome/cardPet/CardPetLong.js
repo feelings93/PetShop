@@ -1,13 +1,10 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable react/destructuring-assignment */
+
 import { React, useState } from 'react';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { border, Box, fontWeight, ThemeProvider } from '@mui/system';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
-// eslint-disable-next-line import/no-unresolved
 import { BsCart3 } from 'react-icons/bs';
 import SavedSearchIcon from '@mui/icons-material/SavedSearch';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -27,7 +24,6 @@ const CardPetLong = (props) => {
           height: 210,
           borderRadius: 2,
           boxShadow: 3,
-          // eslint-disable-next-line react/prop-types
           backgroundImage: `url("https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/best-girl-cat-names-1606245046.jpg?crop=0.668xw:1.00xh;0.126xw,0&resize=640:*")`,
           backgroundSize: ' cover',
           backgroundColor: '#f99',

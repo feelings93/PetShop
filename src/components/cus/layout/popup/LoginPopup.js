@@ -1,7 +1,4 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable react/destructuring-assignment */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/anchor-is-valid */
+
 import React from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -21,15 +18,12 @@ import { FcGoogle } from 'react-icons/fc';
 import SignupPopup from './SignupPopup';
 
 const Transition = React.forwardRef((props, ref) => {
-  // eslint-disable-next-line react/jsx-props-no-spreading
   return <Slide direction='up' ref={ref} {...props} />;
 });
 const Alert = React.forwardRef((props, ref) => {
-  // eslint-disable-next-line react/jsx-props-no-spreading
   return <MuiAlert elevation={6} ref={ref} variant='filled' {...props} />;
 });
 const sleep = (milliseconds) => {
-  // eslint-disable-next-line no-promise-executor-return
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
 };
 export default function FormDialog(props) {
@@ -43,10 +37,8 @@ export default function FormDialog(props) {
   const [password, setPassword] = React.useState(null);
   const [passwordValidate, setPasswordValidate] = React.useState(null);
 
-  // eslint-disable-next-line no-shadow
   function CheckValidate(email, password) {
     if (emailValidate && passwordValidate && email != null && password != null)
-      // eslint-disable-next-line no-use-before-define
       loginHandler();
   }
 
@@ -79,7 +71,6 @@ export default function FormDialog(props) {
     }
     if (
       email.match(
-        // eslint-disable-next-line no-useless-escape
         /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       )
     )
@@ -89,11 +80,9 @@ export default function FormDialog(props) {
 
   return (
     <Dialog
-      // eslint-disable-next-line react/prop-types
       open={props.open}
       TransitionComponent={Transition}
       keepMounted
-      // eslint-disable-next-line react/prop-types
       onClose={props.onClose}
       maxWidth='xs'
       fullWidth

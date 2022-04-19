@@ -12,21 +12,13 @@ import CardCart from '../../components/cus/layout/layoutCart/cardCart';
 import Header from '../../components/cus/layout/navbar/Header';
 import TotalCart from '../../components/cus/layout/layoutCart/totalCart';
 import ListStep from '../../components/cus/layout/layoutCart/ListStep';
+import Page1 from '../../components/cus/layout/layoutCart/Page1';
 
 export default function Cart() {
-  function renderRow() {
-    // const { index, style } = props;
-
-    return (
-      <ListItem style={{ width: '100%' }} component='div' disablePadding>
-        <CardCart />
-      </ListItem>
-    );
-  }
   return (
     <div>
       <Container fixed>
-        <ListStep />
+        <Page1 />
       </Container>
     </div>
   );

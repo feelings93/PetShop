@@ -1,8 +1,6 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable react/destructuring-assignment */
+
 import React from 'react';
-// eslint-disable-next-line no-unused-vars
-// eslint-disable-next-line import/no-extraneous-dependencies
+
 import { Box } from '@mui/system';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
