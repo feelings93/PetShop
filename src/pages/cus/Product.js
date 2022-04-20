@@ -104,24 +104,33 @@ export default function Products() {
             <Box
               sx={{
                 backgroundColor: 'white',
-                p: 2,
                 borderRadius: '7px',
+                padding: '5px 10px',
+                marginTop: '8px',
+                marginBottom: '10px',
               }}
             >
               <Box display='flex' sx={{ justifyContent: 'flex-end' }}>
-                <Box sx={{display:'flex', alignItems:"center",marginRight:'10px'}}>
-
-                <Typography sx={{marginRight:'5px'}}>Sắp xếp theo: </Typography>
-                <Autocomplete
-                  disablePortal
-                  id='combo-box-demo'
-                  options={topData}
-                  size='small'
-                  sx={{width:"150px", zIndex:'2'}}
-                  renderInput={(params) => (
-                    <TextField {...params} label='Quận, huyện' />
-                  )}
-                />
+                <Box
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    marginRight: '10px',
+                  }}
+                >
+                  <Typography sx={{ marginRight: '5px' }}>
+                    Sắp xếp theo:{' '}
+                  </Typography>
+                  <Autocomplete
+                    disablePortal
+                    id='combo-box-demo'
+                    options={topData}
+                    size='small'
+                    sx={{ width: '150px', zIndex: '2' }}
+                    renderInput={(params) => (
+                      <TextField {...params} label='Quận, huyện' />
+                    )}
+                  />
                 </Box>
                 <Box>
                   {shortPro ? (
