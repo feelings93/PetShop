@@ -98,10 +98,8 @@ const TourFilters = () => {
   return (
     <Box
       sx={{
-        width: '296px',
         backgroundColor: 'white',
         borderRadius: '7px',
-        mt: 1,
       }}
     >
       {/* Covid 19 */}
@@ -112,10 +110,10 @@ const TourFilters = () => {
       </Box>
       <Divider />
       <Box sx={{ m: 1, ml: 2, mr: 2 }}>
-        <TypographyMod fontSize='14px'>Danh mục</TypographyMod>
+        <TypographyMod sx={{fontSize:'14px', fontWeight:"bold"}}>Danh mục</TypographyMod>
         <FormGroup>
           <FormControlLabel
-            control={<Checkbox />}
+            control={<Button />}
             label={
               <Typographyf14medium>
                 Free cancellation{' '}

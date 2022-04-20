@@ -22,7 +22,10 @@ import Button from '@mui/material/Button';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import InfoCart from './inforCart';
-import ListProduct from './listProduct'
+import ListProduct from './listProduct';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import Link from '@mui/material/Link';
 
 export default function Page2() {
   const [value, setValue] = React.useState(new Date('2014-08-18T21:11:54'));
@@ -30,16 +33,50 @@ export default function Page2() {
   const handleChange = (newValue) => {
     setValue(newValue);
   };
+  const breadcrumbs = [
+    <Link
+      underline='hover'
+      key='1'
+      color='#000'
+      href='/gio-hang'
+      fontWeight='regular'
+      sx={{ textDecoration: 'none' }}
+    >
+      Giỏ hàng
+    </Link>,
+    <Typography key='2' color='#999999'>
+      Thanh toán
+    </Typography>,
+  ];
   return (
     <Container fixed>
-      <Grid container sm={12} spacing={2}>
-        <Grid item sm={6}>
-          <InfoCart/>
-         </Grid>
-        <Grid item sm={6} sx={{ backgroundColor:"#fafafa"}}>
-          <ListProduct/>
+      <Box
+        
+      >
+       
+      </Box>
+      <Grid container sm={12} spacing={2} >
+        <Grid item sm={12}>
+        <Breadcrumbs
+          separator={<NavigateNextIcon fontSize='small' />}
+          aria-label='breadcrumb'
+          sx={{
+            backgroundColor: '#fafafa',
+            padding: '10px 0px',
+            borderRadius: '5px',
+            marginBottom:'15px'
+          }}
+        >
+          {breadcrumbs}
+        </Breadcrumbs>
         </Grid>
-          {/* <Button
+        <Grid item sm={6}>
+          <InfoCart />
+        </Grid>
+        <Grid item sm={6} sx={{ backgroundColor: '#fafafa' }}>
+          <ListProduct />
+        </Grid>
+        {/* <Button
             variant='contained'
             endIcon={<ArrowDropDownIcon sx={{ color: '' }} />}
             size='medium'

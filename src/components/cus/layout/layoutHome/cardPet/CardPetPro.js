@@ -157,12 +157,12 @@ const CardPetPro = (props) => {
         </Grid>
       </Grid>
 
-      <Box backgroundColor='#fff' marginTop='5px'>
+      <Box backgroundColor='#fff' marginTop='5px' padding="4px">
         <Link
           href='/tours/detailtour'
           underline='none'
           fontWeight='bold'
-          fontSize='18px'
+          fontSize='15px'
           color={color1}
           sx={{
             '&:hover': {
@@ -241,19 +241,19 @@ const CardPetPro = (props) => {
           gutterBottom
           component='div'
           fontWeight='medium'
-          fontSize='16px'
+          fontSize='14px'
           color='#555555'
           margin='1px 0px 0px 0px'
         >
           Loại: {props.type}
         </Typography>
-        <Box display='flex' justifyContent='space-between'>
+        <Box display='flex' justifyContent='space-between' alignItems="center">
           <Typography
             variant='h6'
             gutterBottom
             component='div'
             fontWeight='bold'
-            fontSize='18px'
+            fontSize='14px'
             // color='#ff6b00'
             color={color2}
           >

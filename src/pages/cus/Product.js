@@ -27,6 +27,8 @@ import 'aos/dist/aos.css';
 import CardPetLong from '../../components/cus/layout/layoutHome/cardPet/CardPetLong';
 import CardPetPro from '../../components/cus/layout/layoutHome/cardPet/CardPetPro';
 import Header from '../../components/cus/layout/navbar/Header';
+import Autocomplete from '@mui/material/Autocomplete';
+import TextField from '@mui/material/TextField';
 
 const data = [
   {
@@ -72,7 +74,12 @@ const data = [
     price: '20.000.000',
   },
 ];
-
+const topData = [
+  { label: 'The Shawshank Redemption', year: 1994 },
+  { label: 'The Godfather', year: 1972 },
+  { label: 'The Godfather: Part II', year: 1974 },
+  { label: 'The Dark Knight', year: 2008 },
+];
 export default function Products() {
   React.useEffect(() => {
     Aos.init();
@@ -80,134 +87,104 @@ export default function Products() {
   }, []);
   const [shortPro, setShortPro] = React.useState(true);
   return (
-    <div className=''>
-      <Container fluid sx={{ mb: 2 }}>
-        <Box display='flex'>
-          <HomeIcon
-            sx={{ mr: 0.5, marginTop: 'auto', marginBottom: 'auto' }}
-            fontSize='inherit'
-          />
+    <Container fixed>
+      <Grid
+        container
+        xs={12}
+        md={12}
+        lg={12}
+        sx={{ backgroundColor: '#F6F9FC' }}
+        spacing={2}
+      >
+        <Grid item xs={12} md={4} lg={4}>
+          <TourFilters />
+        </Grid>
+        <Grid item xs={12} md={8} lg={8}>
+          <div data-aos='fade-up' data-aos-duration={1000}>
+            <Box
+              sx={{
+                backgroundColor: 'white',
+                p: 2,
+                borderRadius: '7px',
+              }}
+            >
+              <Box display='flex' sx={{ justifyContent: 'flex-end' }}>
+                <Box sx={{display:'flex', alignItems:"center",marginRight:'10px'}}>
 
-          <Breadcrumbs
-            separator={<NavigateNextIcon fontSize='small' />}
-            aria-label='breadcrumb'
-          >
-            <Link underline='hover' key='1' color='inherit' href='/'>
-              FoodRoad
-            </Link>
-            ,
-            <Link underline='hover' key='2' color='inherit' href='/tours'>
-              Tours
-            </Link>
-            ,
-          </Breadcrumbs>
-        </Box>
-      </Container>
-      <Box style={{ backgroundColor: '#F6F9FC', height: '100%' }}>
-        <Container fluid>
-          <Grid container xs={12} md={12} lg={12}>
-            <Grid item xs={12} md={4} lg={4}>
-              <TourFilters />
-            </Grid>
-            <Grid item xs={12} md={8} lg={8} sx={{ mb: 2 }}>
-              {/* Tour banner */}
-              <div data-aos='fade-up' data-aos-duration={1000}>
-                <Box
-                  sx={{
-                    backgroundColor: 'white',
-                    p: 2,
-                    m: '7px 0 7px 0',
-                    borderRadius: '7px',
-                  }}
-                >
-                  <Box display='flex' sx={{ justifyContent: 'space-between' }}>
-                    <div style={{ display: 'flex' }}>
-                      <LocalOfferIcon />
-                      <Typography
-                        variant='h6'
-                        component='h2'
-                        fontSize='18px'
-                        fontWeight='medium'
-                        color={red[600]}
-                        marginLeft='2px'
-                      >
-                        Hot deals
-                      </Typography>
-                    </div>
-
-                    <Box>
-                      <TypographyMod fontSize='1rem' fontWeight='light'>
-                        We offers variety of Food Tours which are suitable for
-                        everyone
-                      </TypographyMod>
-                    </Box>
-                    <Box>
-                      {shortPro ? (
-                        <>
-                          <IconButton size='small' disabled>
-                            <BorderAllIcon />
-                          </IconButton>
-                          <IconButton
-                            size='small'
-                            onClick={() => setShortPro(!shortPro)}
-                          >
-                            <DensityMediumIcon />
-                          </IconButton>
-                        </>
-                      ) : (
-                        <>
-                          <IconButton
-                            size='small'
-                            onClick={() => setShortPro(!shortPro)}
-                          >
-                            <BorderAllIcon />
-                          </IconButton>
-                          <IconButton size='small' disabled>
-                            <DensityMediumIcon />
-                          </IconButton>
-                        </>
-                      )}
-                    </Box>
-                  </Box>
+                <Typography sx={{marginRight:'5px'}}>Sắp xếp theo: </Typography>
+                <Autocomplete
+                  disablePortal
+                  id='combo-box-demo'
+                  options={topData}
+                  size='small'
+                  sx={{width:"150px", zIndex:'2'}}
+                  renderInput={(params) => (
+                    <TextField {...params} label='Quận, huyện' />
+                  )}
+                />
                 </Box>
-              </div>
-              <div data-aos='fade-up' data-aos-duration={1000}>
-                <Grid container sm={12} xs={12} md={12}>
-                  {shortPro
-                    ? data.map((item, index) => {
-                        return (
-                          <Grid item sm={4} md={4}>
-                            <CardPetPro
-                              url={item.url}
-                              title={item.title}
-                              type={item.type}
-                              price={item.price}
-                              new={false}
-                            />
-                            <hr width='95%' align='center' color='#d9d9d9' />
-                          </Grid>
-                        );
-                      })
-                    : data.map((item, index) => {
-                        return (
-                          <Box sx={{ mt: 1, mb: 1 }}>
-                            <CardPetLong />
-                            <hr width='95%' align='center' color='#d9d9d9' />
-                          </Box>
-                        );
-                      })}
-                </Grid>
-              </div>
-              <Box
-                display='flex'
-                sx={{ justifyContent: 'center', mb: 1, mt: 2 }}
-              >
-                <Pagination count={4} />
+                <Box>
+                  {shortPro ? (
+                    <>
+                      <IconButton size='small' disabled>
+                        <BorderAllIcon />
+                      </IconButton>
+                      <IconButton
+                        size='small'
+                        onClick={() => setShortPro(!shortPro)}
+                      >
+                        <DensityMediumIcon />
+                      </IconButton>
+                    </>
+                  ) : (
+                    <>
+                      <IconButton
+                        size='small'
+                        onClick={() => setShortPro(!shortPro)}
+                      >
+                        <BorderAllIcon />
+                      </IconButton>
+                      <IconButton size='small' disabled>
+                        <DensityMediumIcon />
+                      </IconButton>
+                    </>
+                  )}
+                </Box>
               </Box>
+            </Box>
+          </div>
+          <div data-aos='fade-up' data-aos-duration={1000}>
+            <Grid container xs={12} md={12} lg={12}>
+              {shortPro
+                ? data.map((item, index) => {
+                    return (
+                      <Grid item xs={4} md={4}>
+                        <CardPetPro
+                          url={item.url}
+                          title={item.title}
+                          type={item.type}
+                          price={item.price}
+                          new={false}
+                        />
+                        <hr width='95%' align='center' color='#d9d9d9' />
+                      </Grid>
+                    );
+                  })
+                : data.map((item, index) => {
+                    return (
+                      <Box sx={{ mt: 1, mb: 1 }}>
+                        <CardPetLong />
+                        <hr width='95%' align='center' color='#d9d9d9' />
+                      </Box>
+                    );
+                  })}
             </Grid>
-          </Grid>
-        </Container>
-      </Box>
-    </div>
+          </div>
+          <Box display='flex' sx={{ justifyContent: 'center', mb: 1, mt: 2 }}>
+            <Pagination count={4} />
+          </Box>
+        </Grid>
+      </Grid>
+    </Container>
   );
 }

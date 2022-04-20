@@ -152,7 +152,7 @@ const CardPetLong = (props) => {
       <Grid item sm={0.2}>
         <Box />
       </Grid>
-      <Grid item sm={7}>
+      <Grid item sm={7} sx={{padding:"0px 8px"}}>
         <Box
           item
           sx={{
