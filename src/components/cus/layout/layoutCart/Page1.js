@@ -35,7 +35,7 @@ export default function Page1() {
   ];
   return (
     <div>
-      <Box sx={{backgroundColor: "#fafafa", padding:"10px 10px", borderRadius:'5px'}}>
+      <Box sx={{backgroundColor: "#f7faff", padding:"10px 10px", borderRadius:'5px'}}>
 
       <Breadcrumbs
         separator={<NavigateNextIcon fontSize='small' />}
@@ -88,7 +88,7 @@ export default function Page1() {
               position: 'relative',
               overflow: 'auto',
               maxHeight: 600,
-              backgroundColor: '#fafafa',
+              backgroundColor: '#f7faff',
               borderRadius: '5px',
             }}
           >
@@ -155,6 +155,7 @@ export default function Page1() {
             </Typography>
             <Button
               variant='contained'
+              href="/thanh-toan"
               sx={{
                 width: '100%',
                 backgroundColor: '#000',

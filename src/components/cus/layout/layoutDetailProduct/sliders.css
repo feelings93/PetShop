@@ -1,6 +1,8 @@
 .sliders {
     position: relative;
     min-width: 330px;
+    background-color: #f7faff;
+    padding:20px 0px;
   }
   .slick-slide {
     padding: 0 10px;

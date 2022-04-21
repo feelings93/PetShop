@@ -23,6 +23,7 @@ const AllCardPets = () => {
     autoplaySpeed: 3000,
     pauseOnHover: true,
     className: 'sliders',
+    
     responsive: [
       {
         breakpoint: 1024,

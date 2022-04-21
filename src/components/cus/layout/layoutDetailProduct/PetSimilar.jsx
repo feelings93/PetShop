@@ -11,7 +11,7 @@ import Button from '@mui/material/Button';
 
 import Container from '@mui/material/Container';
 import CardPetPro from '../layoutHome/cardPet/CardPetPro';
-
+import './sliders.css'
 const AllCardSimilar = () => {
   const settings = {
     dots: true,
@@ -50,7 +50,7 @@ const AllCardSimilar = () => {
     ],
   };
   return (
-    <Box marginTop='15px' padding='0px 0px 0px 0px'>
+    <Box marginTop='15px' padding='0px 0px 0px 0px' >
       <Typography
         variant='h6'
         component='h2'

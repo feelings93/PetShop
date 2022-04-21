@@ -19,7 +19,7 @@ import IndeterminateCheckBoxRoundedIcon from '@mui/icons-material/IndeterminateC
 
 import './HeroSection.css';
 import Button from '@mui/material/Button';
-
+import Rating from '@mui/material/Rating';
 const HeroSectionProduct = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -59,7 +59,8 @@ const HeroSectionProduct = () => {
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
   const [color2, setColor2] = React.useState('#f2b203');
-  const [color1, setColor1] = React.useState('#ff6b00');
+  const [color1, setColor1] = React.useState('#faaf00');
+  const [valueRating, setValueRating] = React.useState(3);
 
   return (
     <Box margin=''>
@@ -72,8 +73,9 @@ const HeroSectionProduct = () => {
           display='flex'
           alignItems='center'
           justifyContent='space-between'
+          sx={{backgroundColor:'#f7faff'}}
         >
-          <Box display='flex' alignItems='center'>
+          <Box display='flex' alignItems='center' >
             <HomeIcon sx={{ mr: 0.5 }} fontSize='inherit' />
             <Breadcrumbs
               separator={<NavigateNextIcon fontSize='small' />}
@@ -147,104 +149,39 @@ const HeroSectionProduct = () => {
         >
           <Grid item md={12} sm={12} xs={12}>
             <Typography
-              variant='h6'
-              component='h2'
               style={{
                 fontSize: '35px',
-                fontWeight: 'bold',
+                fontWeight: 'regular',
               }}
             >
               ALASKA HỒNG PHẤN Ú NÙ
             </Typography>
-            <Box>
-              <IconButton
-                aria-label='delete'
-                sx={{
-                  marginRight: '2px',
-                  backgroundColor: '#00aa6c',
-                  borderRadius: 8,
-                  height: '20px',
-                  width: '20px',
-                }}
-              />
-              <IconButton
-                aria-label='delete'
-                sx={{
-                  marginRight: '2px',
-                  backgroundColor: '#00aa6c',
-                  borderRadius: 8,
-                  height: '20px',
-                  width: '20px',
-                }}
-              />
-              <IconButton
-                aria-label='delete'
-                sx={{
-                  marginRight: '2px',
-                  backgroundColor: '#00aa6c',
-                  borderRadius: 8,
-                  height: '20px',
-                  width: '20px',
-                }}
-              />
-              <IconButton
-                aria-label='delete'
-                sx={{
-                  marginRight: '2px',
-                  backgroundColor: '#00aa6c',
-                  borderRadius: 8,
-                  height: '20px',
-                  width: '20px',
-                }}
-              />
-              <IconButton
-                aria-label='delete'
-                sx={{
-                  marginRight: '10px',
-                  backgroundColor: '#00aa6c',
-                  borderRadius: 8,
-                  height: '20px',
-                  width: '20px',
-                }}
-              />
-              <Link href='/' color='#676767' marginRight='5px'>
-                92
-              </Link>
-              <Link href='/' color='#676767'>
-                Đánh giá
-              </Link>
-            </Box>
+            <Box display='flex' alignItems='center' sx={{justifyContent:'flex-start'}}>
+        <Rating name="read-only" value={valueRating} readOnly size="large" />
+
+
+          <Typography
+            gutterBottom
+            component='div'
+            fontWeight='regular'
+            fontSize='15px'
+            color='#555555'
+            margin='2px 0px 0px 2px'
+          >
+            1280 đánh giá
+          </Typography>
+        </Box>
+
           </Grid>
 
           <Grid container item xs={12} md={12} sm={12} marginTop='40px'>
             <Grid item xs={12} md={6.5}>
+             
               <div className='textLine'>
                 <Typography
                   variant='h6'
                   component='h2'
-                  style={{ fontSize: '15px', fontWeight: '500' }}
-                >
-                  Giá bán:
-                </Typography>
-                <Typography
-                  variant='h6'
-                  component='h2'
-                  sx={{
-                    fontSize: '30px',
-                    fontWeight: 'bold',
-                    color: color2,
-                    marginBottom: '10px',
-                    marginLeft: '10px',
-                  }}
-                >
-                  20.000.000 VND
-                </Typography>
-              </div>
-              <div className='textLine'>
-                <Typography
-                  variant='h6'
-                  component='h2'
-                  style={{ fontSize: '15px', fontWeight: '500' }}
+                  style={{ fontSize: '15px', fontWeight: 'light' }}
                 >
                   Mã hàng:
                 </Typography>
@@ -303,6 +240,27 @@ const HeroSectionProduct = () => {
                   Còn hàng
                 </Typography>
               </div>
+              <div className='textLine' style={{marginTop:'10px'}}>
+                <Typography
+                  variant='h6'
+                  component='h2'
+                  style={{ fontSize: '15px', fontWeight: 'light' }}
+                >
+                  Giá bán:
+                </Typography>
+                <Typography
+                  variant='h6'
+                  component='h2'
+                  sx={{
+                    fontSize: '25px',
+                    fontWeight: 'bold',
+                    marginBottom: '10px',
+                    marginLeft: '10px',
+                  }}
+                >
+                  20.000.000 VND
+                </Typography>
+              </div>
             </Grid>
             <Grid
               item
@@ -329,14 +287,14 @@ const HeroSectionProduct = () => {
                 variant='contained'
                 size='large'
                 sx={{
-                  backgroundColor: color2,
+                  backgroundColor: "#2196f3",
                   size: 'large',
                   width: '100%',
                   marginTop: '10px',
                   // opacity: [0.9, 0.8, 0.7],
 
                   '&:hover': {
-                    backgroundColor: '#f29903',
+                    backgroundColor: '#2196f3',
                     opacity: [0.9, 0.8, 0.7],
                   },
                 }}
@@ -347,12 +305,12 @@ const HeroSectionProduct = () => {
                 variant='contained'
                 size='large'
                 sx={{
-                  backgroundColor: '#ff6b00',
+                  backgroundColor: color2,
                   size: 'large',
                   width: '100%',
                   marginTop: '10px',
                   '&:hover': {
-                    backgroundColor: '#ff6b02',
+                    backgroundColor: color2,
                   },
                 }}
               >

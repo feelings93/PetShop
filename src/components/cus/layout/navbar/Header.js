@@ -259,7 +259,7 @@ const Header = (props) => {
                       : `${classes.link} ${classes['link--active']}`
                   }
                 >
-                  Sản phẩm
+                  Thú cưng
                 </NavLink>
 
                 <NavLink

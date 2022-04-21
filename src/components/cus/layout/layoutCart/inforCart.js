@@ -217,7 +217,7 @@ const InfoCart = () => {
               value='cash'
               control={<Radio />}
               label=''
-              sx={{ marginLeft: '0px', marginRight: '0px' }}
+              sx={{ marginLeft: '10px', marginRight: '0px' }}
             />
 
             <AccountBalanceWalletIcon />

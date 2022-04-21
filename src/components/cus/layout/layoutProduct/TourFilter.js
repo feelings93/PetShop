@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Box } from '@mui/system';
 import {
@@ -16,11 +15,13 @@ import {
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 
 import { styled } from '@mui/material/styles';
+
 import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined';
 import CircleIcon from '@mui/icons-material/Circle';
 import { grey } from '@mui/material/colors';
 import PeopleAltSharpIcon from '@mui/icons-material/PeopleAltSharp';
 import ChildCareSharpIcon from '@mui/icons-material/ChildCareSharp';
+import { set } from 'react-hook-form';
 
 const Typographyf14light = (props) => {
   return (
@@ -84,6 +85,9 @@ const TourFilters = () => {
   const [stars, setStars] = useState(4);
   const [childNum, setChildNum] = useState(1);
   const [adultNum, setAdultNum] = useState(1);
+  const [isClickInList, setIsClickInList] = useState(false);
+  const [ratingNumber, setRatingNumber] =useState(0);
+
   const handleChange = (event, newValue, activeThumb) => {
     if (!Array.isArray(newValue)) {
       return;
@@ -100,6 +104,7 @@ const TourFilters = () => {
       sx={{
         backgroundColor: 'white',
         borderRadius: '7px',
+        padding: '0px 0px 10px 0px',
       }}
     >
       {/* Covid 19 */}
@@ -110,8 +115,46 @@ const TourFilters = () => {
       </Box>
       <Divider />
       <Box sx={{ m: 1, ml: 2, mr: 2 }}>
-        <TypographyMod sx={{fontSize:'14px', fontWeight:"bold"}}>Danh mục</TypographyMod>
-        <FormGroup>
+        <Typography sx={{ fontSize: '16px', fontWeight: 'bold' }}>
+          Danh mục
+        </Typography>
+        {['Chó', 'Mèo', 'Nhím', 'Khác'].map((e) => (
+          <>
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                padding: '5px 10px',
+                cursor: 'pointer',
+                '&:hover': {
+                  opacity: [0.9, 0.8, 0.7],
+                },
+              }}
+              onClick={() => setIsClickInList(!isClickInList)}
+            >
+              <Typography>{e}</Typography>
+              <Typography>(12)</Typography>
+            </Box>
+          </>
+
+          // <Box
+          //   sx={{
+          //     display: 'flex',
+          //     justifyContent: 'space-between',
+          //     padding: '5px 20px',
+          //     cursor: 'pointer',
+          //     '&:hover': {
+          //       opacity: [0.9, 0.8, 0.7],
+          //     },
+          //   }}
+          //   onClick={() => console.log('Click item in list')}
+          // >
+          //   <Typography>{e}</Typography>
+          //   <Typography>(12)</Typography>
+          // </Box>
+        ))}
+
+        {/* <FormGroup>
           <FormControlLabel
             control={<Button />}
             label={
@@ -142,7 +185,7 @@ const TourFilters = () => {
               </Typographyf14light>
             }
           />
-        </FormGroup>
+        </FormGroup> */}
       </Box>
       <Divider />
       <Box sx={{ m: 1, ml: 2, mr: 2 }}>
@@ -162,7 +205,7 @@ const TourFilters = () => {
             max={200}
             valueLabelDisplay='auto'
             disableSwap
-            sx={{ color: '#00aa6c', ml: 1 }}
+            sx={{ color: '#2196f3', ml: 1 }}
           />
         </Box>
       </Box>
@@ -170,7 +213,7 @@ const TourFilters = () => {
       <Box sx={{ m: 1, ml: 2, mr: 2 }}>
         <TypographyMod fontSize='14px'>Phổ biến</TypographyMod>
         <Box textAlign='center'>
-          <TypographyMod fontSize='12px'>{stars} Đánh giá</TypographyMod>
+          <TypographyMod fontSize='12px'>{ratingNumber} Sao đánh giá</TypographyMod>
         </Box>
         <Box
           sx={{
@@ -179,16 +222,14 @@ const TourFilters = () => {
             alignItems: 'center',
           }}
         >
-          <StyledRating
-            name='customized-color'
-            defaultValue={stars}
-            onChange={(event, value) => setStars(value)}
-            precision={1}
-            icon={<CircleIcon fontSize='inherit' />}
-            emptyIcon={<CircleOutlinedIcon fontSize='inherit' />}
-            sx={{ mr: 2 }}
+          <Rating
+            name='simple-controlled'
+            value={ratingNumber}
+            onChange={(event, newValue) => {
+              setRatingNumber(newValue);
+            }}
           />
-          <TypographyMod fontSize='12px'>{labels[stars]}</TypographyMod>
+          <Typography fontSize='12px' sx={{marginLeft:'5px', fontWeight:'medium'}}>{labels[ratingNumber]}</Typography>
         </Box>
         <FormGroup>
           <FormControlLabel
@@ -200,6 +241,9 @@ const TourFilters = () => {
             label={<Typographyf14light>Sản phẩm bán chạy</Typographyf14light>}
           />
         </FormGroup>
+      </Box>
+      <Box sx={{ textAlign: 'end', padding: '5px 10px' }}>
+        <Button variant='contained'>Áp dụng lọc</Button>
       </Box>
     </Box>
   );

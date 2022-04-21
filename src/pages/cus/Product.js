@@ -32,37 +32,37 @@ import TextField from '@mui/material/TextField';
 
 const data = [
   {
-    url: 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/best-girl-cat-names-1606245046.jpg?crop=0.668xw:1.00xh;0.126xw,0&resize=640:*',
+    url: 'https://vpet.vn/upload/pet/pet-1617247618.jpg',
     title: 'MÈO TAI CỤP SIÊU ĐÁNG YÊU            ',
     type: 'Mèo',
     price: '20.000.000',
   },
   {
-    url: 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/best-girl-cat-names-1606245046.jpg?crop=0.668xw:1.00xh;0.126xw,0&resize=640:*',
+    url: 'https://vpet.vn/upload/pet/pet-1617247618.jpg',
     title: 'MÈO TAI CỤP SIÊU ĐÁNG YÊU            ',
     type: 'Mèo',
     price: '20.000.000',
   },
   {
-    url: 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/best-girl-cat-names-1606245046.jpg?crop=0.668xw:1.00xh;0.126xw,0&resize=640:*',
+    url: 'https://vpet.vn/upload/pet/pet-1617247618.jpg',
     title: 'MÈO TAI CỤP SIÊU ĐÁNG YÊU            ',
     type: 'Mèo',
     price: '20.000.000',
   },
   {
-    url: 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/best-girl-cat-names-1606245046.jpg?crop=0.668xw:1.00xh;0.126xw,0&resize=640:*',
+    url: 'https://vpet.vn/upload/pet/pet-1617247618.jpg',
     title: 'MÈO TAI CỤP SIÊU ĐÁNG YÊU            ',
     type: 'Mèo',
     price: '20.000.000',
   },
   {
-    url: 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/best-girl-cat-names-1606245046.jpg?crop=0.668xw:1.00xh;0.126xw,0&resize=640:*',
+    url: 'https://vpet.vn/upload/pet/pet-1617247618.jpg',
     title: 'MÈO TAI CỤP SIÊU ĐÁNG YÊU            ',
     type: 'Mèo',
     price: '20.000.000',
   },
   {
-    url: 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/best-girl-cat-names-1606245046.jpg?crop=0.668xw:1.00xh;0.126xw,0&resize=640:*',
+    url: 'https://vpet.vn/upload/pet/pet-1617247618.jpg',
     title: 'MÈO TAI CỤP SIÊU ĐÁNG YÊU            ',
     type: 'Mèo',
     price: '20.000.000',
@@ -163,7 +163,7 @@ export default function Products() {
             </Box>
           </div>
           <div data-aos='fade-up' data-aos-duration={1000}>
-            <Grid container xs={12} md={12} lg={12}>
+            <Grid container xs={12} md={12} lg={12} spacing={1}>
               {shortPro
                 ? data.map((item, index) => {
                     return (

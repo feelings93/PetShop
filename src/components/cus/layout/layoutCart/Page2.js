@@ -61,7 +61,7 @@ export default function Page2() {
           separator={<NavigateNextIcon fontSize='small' />}
           aria-label='breadcrumb'
           sx={{
-            backgroundColor: '#fafafa',
+            backgroundColor: '#f7faff',
             padding: '10px 0px',
             borderRadius: '5px',
             marginBottom:'15px'
@@ -73,7 +73,7 @@ export default function Page2() {
         <Grid item sm={6}>
           <InfoCart />
         </Grid>
-        <Grid item sm={6} sx={{ backgroundColor: '#fafafa' }}>
+        <Grid item sm={6} sx={{ backgroundColor: '#f7faff' }}>
           <ListProduct />
         </Grid>
         {/* <Button

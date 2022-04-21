@@ -14,6 +14,7 @@ import AllCardSimilar from '../../components/cus/layout/layoutDetailProduct/PetS
 // import Contribute from '../components/detailtour/Contribute';
 import 'aos/dist/aos.css';
 
+
 const DetailProduct = () => {
   React.useEffect(() => {
     Aos.init();

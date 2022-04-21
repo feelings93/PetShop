@@ -10,29 +10,64 @@ import SavedSearchIcon from '@mui/icons-material/SavedSearch';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import Link from '@mui/material/Link';
 import './cardpetpro.css';
-
+import Rating from '@mui/material/Rating';
+import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
+import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
 const CardPetPro = (props) => {
   const [hide, setHide] = useState(false);
-  const [color1, setColor1] = useState('#ff6b00');
-  const [color2, setColor2] = useState('#f2b203');
-
+  const [color1, setColor1] = useState('#f2b203');
+  const [color2, setColor2] = useState('#000');
+  const [valueRating, setValueRating] = useState(3);
   return (
-    <Box padding='8px'>
+    <Box padding='8px' sx={{backgroundColor:'#fff', borderRadius:'10px'}}>
+      <div style={{display:'flex', justifyContent:'space-between'}}>
+
+      <Box sx={{display:'flex', boxShadow:'3', borderRadius:'15px', padding:'5px 10px', alignItems:'center'}}>
+          <LocalOfferOutlinedIcon sx={{width:"15px", height:'15px'}}/>
+          <Typography sx={{fontSize:'12px'}}>{props.type}</Typography>
+      </Box>
+      {!hide ? (
+            <IconButton
+              aria-label='delete'
+              sx={{
+                margin: '5px 5px 0px 0px',
+                color: '#000000',
+                backgroundColor: '#fff',
+                borderRadius: 8,
+                height: '30px',
+                width: '30px',
+              }}
+            >
+              <BookmarkBorderOutlinedIcon sx={{width:"20px", height:'20px' }} />
+            </IconButton>
+          ) : (
+            <IconButton
+              aria-label='delete'
+              sx={{
+                margin: '5px 5px 0px 0px',
+                color: '#000000',
+                backgroundColor: '#fff',
+                borderRadius: 8,
+                height: '10px',
+                width: '10px',
+                display: 'none',
+              }}
+            >
+              <BookmarkBorderOutlinedIcon sx={{ color: '#00000', fontSize: '35px' }} />
+            </IconButton>
+          )}
+      </div>
       <Grid
         container
         sm={12}
         sx={{
           height: 300,
           borderRadius: 2,
-          boxShadow: 3,
           backgroundImage: `url(${props.url})`,
           backgroundSize: ' cover',
-          backgroundColor: '#f99',
           backgroundPosition: 'center',
-
+          marginTop:'5px',
           '&:hover': {
-            backgroundColor: '#ff6868',
-
             opacity: [0.9, 0.8, 0.7],
           },
         }}
@@ -54,13 +89,13 @@ const CardPetPro = (props) => {
                 height: '50px',
                 width: '50px',
                 '&:hover': {
-                  backgroundColor: '#ff3b00',
+                  backgroundColor: '#2196f3',
                 },
               }}
             >
               <FavoriteBorderIcon
                 sx={{
-                  color: '#ff3b00',
+                  color: '#2196f3',
                   fontSize: '35px',
                   '&:hover': {
                     color: '#fff',
@@ -69,7 +104,7 @@ const CardPetPro = (props) => {
               />
             </IconButton>
             <IconButton
-              aria-label='delete'
+              aria-label=''
               sx={{
                 margin: '5px 5px 0px 0px',
                 color: '#000000',
@@ -78,14 +113,14 @@ const CardPetPro = (props) => {
                 height: '50px',
                 width: '50px',
                 '&:hover': {
-                  backgroundColor: '#ff3b00',
+                  backgroundColor: '#2196f3',
                 },
               }}
               href='/san-pham'
             >
               <SavedSearchIcon
                 sx={{
-                  color: '#ff3b00',
+                  color: '#2196f3',
                   fontSize: '35px',
                   '&:hover': {
                     color: '#fff',
@@ -100,10 +135,10 @@ const CardPetPro = (props) => {
               borderRadius: '20px',
               display: 'flex',
               alignItems: 'center',
-              backgroundColor: '#ff3b00',
+              backgroundColor: '#2196f3',
               marginTop: '15px',
               '&:hover': {
-                backgroundColor: '#ff3b00',
+                backgroundColor: '#2196f3',
                 opacity: [0.9, 0.8, 0.7],
               },
             }}
@@ -124,46 +159,17 @@ const CardPetPro = (props) => {
           ) : (
             <div />
           )}
-          {!hide ? (
-            <IconButton
-              aria-label='delete'
-              sx={{
-                margin: '5px 5px 0px 0px',
-                color: '#000000',
-                backgroundColor: '#fff',
-                borderRadius: 8,
-                height: '50px',
-                width: '50px',
-              }}
-            >
-              <FavoriteBorderIcon sx={{ color: '#00000', fontSize: '35px' }} />
-            </IconButton>
-          ) : (
-            <IconButton
-              aria-label='delete'
-              sx={{
-                margin: '5px 5px 0px 0px',
-                color: '#000000',
-                backgroundColor: '#fff',
-                borderRadius: 8,
-                height: '50px',
-                width: '50px',
-                display: 'none',
-              }}
-            >
-              <FavoriteBorderIcon sx={{ color: '#00000', fontSize: '35px' }} />
-            </IconButton>
-          )}
+         
         </Grid>
       </Grid>
 
-      <Box backgroundColor='#fff' marginTop='5px' padding="4px">
+      <Box backgroundColor='#fff' marginTop='5px' padding="4px" sx={{textAlign:'center'}}>
         <Link
           href='/tours/detailtour'
           underline='none'
           fontWeight='bold'
-          fontSize='15px'
-          color={color1}
+          fontSize='14px'
+          color="#000"
           sx={{
             '&:hover': {
               color: '#c89300',
@@ -172,106 +178,40 @@ const CardPetPro = (props) => {
         >
           {props.title}
         </Link>
-        <Box display='flex' alignItems='center'>
-          <IconButton
-            aria-label='delete'
-            sx={{
-              marginRight: '2px',
-              backgroundColor: '#00aa6c',
-              borderRadius: 8,
-              height: '5px',
-              width: '5px',
-            }}
-          />
-          <IconButton
-            aria-label='delete'
-            sx={{
-              marginRight: '2px',
-              backgroundColor: '#00aa6c',
-              borderRadius: 8,
-              height: '5px',
-              width: '5px',
-            }}
-          />
-          <IconButton
-            aria-label='delete'
-            sx={{
-              marginRight: '2px',
-              backgroundColor: '#00aa6c',
-              borderRadius: 8,
-              height: '5px',
-              width: '5px',
-            }}
-          />
-          <IconButton
-            aria-label='delete'
-            sx={{
-              marginRight: '2px',
-              backgroundColor: '#00aa6c',
-              borderRadius: 8,
-              height: '5px',
-              width: '5px',
-            }}
-          />
-          <IconButton
-            aria-label='delete'
-            sx={{
-              marginRight: '10px',
-              backgroundColor: '#00aa6c',
-              borderRadius: 8,
-              height: '5px',
-              width: '5px',
-            }}
-          />
+        <Box display='flex' alignItems='center' sx={{justifyContent:'center'}}>
+        <Rating name="read-only" value={valueRating} readOnly size="small" />
+
 
           <Typography
-            variant='h6'
             gutterBottom
             component='div'
             fontWeight='regular'
-            fontSize='13px'
+            fontSize='12px'
             color='#555555'
-            margin='1px 0px 0px 0px'
+            margin='2px 0px 0px 2px'
           >
             1280 đánh giá
           </Typography>
         </Box>
-        <Typography
-          variant='h6'
-          gutterBottom
-          component='div'
-          fontWeight='medium'
-          fontSize='14px'
-          color='#555555'
-          margin='1px 0px 0px 0px'
-        >
-          Loại: {props.type}
-        </Typography>
-        <Box display='flex' justifyContent='space-between' alignItems="center">
-          <Typography
-            variant='h6'
-            gutterBottom
-            component='div'
-            fontWeight='bold'
-            fontSize='14px'
-            // color='#ff6b00'
-            color={color2}
-          >
-            Giá:
-          </Typography>
+
           <Typography
             variant='h6'
             gutterBottom
             component='div'
             fontWeight='bold'
             fontSize='18px'
+            sx={{marginTop:'5px'}}
             // color='#ff6b00'
             color={color2}
           >
             {props.price}Đ
           </Typography>
-        </Box>
       </Box>
+      <Box>
+      <Button variant="outlined" sx={{width:'100%', fontSize:'12px', color:'#000', borderColor:'#e7e7e7', fontWeight:'bold'}}>Thêm vào giỏ hàng</Button>
+
+      </Box>
+
     </Box>
   );
 };
