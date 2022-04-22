@@ -10,27 +10,26 @@ import SavedSearchIcon from '@mui/icons-material/SavedSearch';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import Link from '@mui/material/Link';
 import './cardpetpro.css';
+import Rating from '@mui/material/Rating';
 
 const CardPetLong = (props) => {
   const [hide, setHide] = useState(false);
   const [color2, setColor2] = useState('#f2b203');
   const [color1, setColor1] = useState('#ff6b00');
+  const [valueRating, setValueRating] = useState(3);
+
   return (
-    <Grid container sm={12}>
+    <Grid container sm={12} sx={{backgroundColor:'#fff'}}>
       <Grid
         item
-        sm={4.8}
+        sm={4}
         sx={{
-          height: 210,
           borderRadius: 2,
-          boxShadow: 3,
-          backgroundImage: `url("https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/best-girl-cat-names-1606245046.jpg?crop=0.668xw:1.00xh;0.126xw,0&resize=640:*")`,
+          backgroundImage: `url("https://vpet.vn/upload/pet/pet-1617247618.jpg")`,
           backgroundSize: ' cover',
-          backgroundColor: '#f99',
           backgroundPosition: 'center',
 
           '&:hover': {
-            backgroundColor: '#ff6868',
 
             opacity: [0.9, 0.8, 0.7],
           },
@@ -149,10 +148,8 @@ const CardPetLong = (props) => {
           )} */}
         </Box>
       </Grid>
-      <Grid item sm={0.2}>
-        <Box />
-      </Grid>
-      <Grid item sm={7} sx={{padding:"0px 8px"}}>
+
+      <Grid item sm={8} >
         <Box
           item
           sx={{
@@ -168,17 +165,20 @@ const CardPetLong = (props) => {
               alignItems: 'center',
             }}
           >
-            <Typography
-              sx={{
-                fontWeight: 'bold',
-                fontSize: '20px',
-                lineHeight: '22px',
-                marginTop: '0px',
-                color: color1,
-              }}
-            >
-              Alaska Hồng Ú Nụ
-            </Typography>
+             <Link
+          href='/tours/detailtour'
+          underline='none'
+          fontWeight='bold'
+          fontSize='14px'
+          color="#000"
+          sx={{
+            '&:hover': {
+              color: '#c89300',
+            },
+          }}
+        >
+          {props.title}
+        </Link>
             <IconButton
               aria-label='delete'
               sx={{
@@ -194,70 +194,21 @@ const CardPetLong = (props) => {
             </IconButton>
           </Box>
 
-          <Box display='flex' sx={{ marginTop: '5px' }}>
-            <IconButton
-              aria-label='delete'
-              sx={{
-                marginRight: '2px',
-                backgroundColor: '#00aa6c',
-                borderRadius: 8,
-                height: '5px',
-                width: '5px',
-              }}
-            />
-            <IconButton
-              aria-label='delete'
-              sx={{
-                marginRight: '2px',
-                backgroundColor: '#00aa6c',
-                borderRadius: 8,
-                height: '5px',
-                width: '5px',
-              }}
-            />
-            <IconButton
-              aria-label='delete'
-              sx={{
-                marginRight: '2px',
-                backgroundColor: '#00aa6c',
-                borderRadius: 8,
-                height: '5px',
-                width: '5px',
-              }}
-            />
-            <IconButton
-              aria-label='delete'
-              sx={{
-                marginRight: '2px',
-                backgroundColor: '#00aa6c',
-                borderRadius: 8,
-                height: '5px',
-                width: '5px',
-              }}
-            />
-            <IconButton
-              aria-label='delete'
-              sx={{
-                marginRight: '2px',
-                backgroundColor: '#00aa6c',
-                borderRadius: 8,
-                height: '5px',
-                width: '5px',
-              }}
-            />
+          <Box display='flex' alignItems='center'>
+          <Rating name="read-only" value={valueRating} readOnly size="small" />
 
-            <Typography
-              variant='h6'
-              gutterBottom
-              component='div'
-              fontWeight='regular'
-              fontSize='13px'
-              color='#555555'
-              margin='0px 0px 0px 2px'
-            >
-              1280 đánh giá
-            </Typography>
-          </Box>
+
+          <Typography
+            gutterBottom
+            component='div'
+            fontWeight='regular'
+            fontSize='12px'
+            color='#555555'
+            margin='2px 0px 0px 2px'
+          >
+            1280 đánh giá
+          </Typography>
+        </Box>
           <Typography
             sx={{
               width: '100%',

@@ -182,7 +182,13 @@ export default function Products() {
                 : data.map((item, index) => {
                     return (
                       <Box sx={{ mt: 1, mb: 1 }}>
-                        <CardPetLong />
+                        <CardPetLong
+                          url={item.url}
+                          title={item.title}
+                          type={item.type}
+                          price={item.price}
+                          new={false}
+                        />
                         <hr width='95%' align='center' color='#d9d9d9' />
                       </Box>
                     );
