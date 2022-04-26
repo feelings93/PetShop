@@ -1,6 +1,6 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   Breadcrumbs,
   Link,
@@ -29,50 +29,119 @@ import CardPetPro from '../../components/cus/layout/layoutHome/cardPet/CardPetPr
 import Header from '../../components/cus/layout/navbar/Header';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
-
+import useHttp from '../../hooks/use-http';
+import { getPets } from '../../lib/api/pet';
+import { PetContext } from '../../store/pet-context';
 const data = [
   {
-    url: 'https://vpet.vn/upload/pet/pet-1617247618.jpg',
-    title: 'MÈO TAI CỤP SIÊU ĐÁNG YÊU            ',
-    type: 'Mèo',
-    price: '20.000.000',
+    id:1,
+    name:"MÈO TAI CỤP SIÊU ĐÁNG YÊU ",
+    age:1,
+    gender:"Đực",
+    price:2000000,
+    status:"New",
+    describe:"Chó cảnh",
+    type:{
+      id:1,
+      name:"Chó"
+    },
+    breed:{
+      id:1,
+      name:"Chó cảnh khuyển",
+    },
+    photos:[
+      {
+        id:1,
+        url:'https://vpet.vn/upload/pet/pet-1617247618.jpg'
+      },
+      {
+        id:2,
+        url:'https://firebasestorage.googleapis.com/v0/b/doan1-343302.appspot.com/o/images%2Fpets%2Fundefined%2FScreenshot%20(3).png?alt=media&token=ac43c80a-11e7-4ab5-a0cf-6f288b242f94'
+      }
+    ]
   },
   {
-    url: 'https://vpet.vn/upload/pet/pet-1617247618.jpg',
-    title: 'MÈO TAI CỤP SIÊU ĐÁNG YÊU            ',
-    type: 'Mèo',
-    price: '20.000.000',
+    id:2,
+    name:"MÈO TAI CỤP SIÊU ĐÁNG YÊU ",
+    age:1,
+    gender:"Đực",
+    price:2000000,
+    status:"New",
+    describe:"Chó cảnh",
+    type:{
+      id:1,
+      name:"Chó"
+    },
+    breed:{
+      id:1,
+      name:"Chó cảnh khuyển",
+    },
+    photos:[
+      {
+        id:1,
+        url:'https://vpet.vn/upload/pet/pet-1617247618.jpg'
+      },
+      {
+        id:2,
+        url:'https://firebasestorage.googleapis.com/v0/b/doan1-343302.appspot.com/o/images%2Fpets%2Fundefined%2FScreenshot%20(3).png?alt=media&token=ac43c80a-11e7-4ab5-a0cf-6f288b242f94'
+      }
+    ]
   },
   {
-    url: 'https://vpet.vn/upload/pet/pet-1617247618.jpg',
-    title: 'MÈO TAI CỤP SIÊU ĐÁNG YÊU            ',
-    type: 'Mèo',
-    price: '20.000.000',
+    id:3,
+    name:"MÈO TAI CỤP SIÊU ĐÁNG YÊU ",
+    age:1,
+    gender:"Đực",
+    price:2000000,
+    status:"New",
+    describe:"Chó cảnh",
+    type:{
+      id:1,
+      name:"Chó"
+    },
+    breed:{
+      id:1,
+      name:"Chó cảnh khuyển",
+    },
+    photos:[
+      {
+        id:1,
+        url:'https://vpet.vn/upload/pet/pet-1617247618.jpg'
+      },
+      {
+        id:2,
+        url:'https://firebasestorage.googleapis.com/v0/b/doan1-343302.appspot.com/o/images%2Fpets%2Fundefined%2FScreenshot%20(3).png?alt=media&token=ac43c80a-11e7-4ab5-a0cf-6f288b242f94'
+      }
+    ]
   },
   {
-    url: 'https://vpet.vn/upload/pet/pet-1617247618.jpg',
-    title: 'MÈO TAI CỤP SIÊU ĐÁNG YÊU            ',
-    type: 'Mèo',
-    price: '20.000.000',
+    id:4,
+    name:"MÈO TAI CỤP SIÊU ĐÁNG YÊU ",
+    age:1,
+    gender:"Đực",
+    price:2000000,
+    status:"New",
+    describe:"Chó cảnh",
+    type:{
+      id:1,
+      name:"Chó"
+    },
+    breed:{
+      id:1,
+      name:"Chó cảnh khuyển",
+    },
+    photos:[
+      {
+        id:1,
+        url:'https://vpet.vn/upload/pet/pet-1617247618.jpg'
+      },
+      {
+        id:2,
+        url:'https://firebasestorage.googleapis.com/v0/b/doan1-343302.appspot.com/o/images%2Fpets%2Fundefined%2FScreenshot%20(3).png?alt=media&token=ac43c80a-11e7-4ab5-a0cf-6f288b242f94'
+      }
+    ]
   },
-  {
-    url: 'https://vpet.vn/upload/pet/pet-1617247618.jpg',
-    title: 'MÈO TAI CỤP SIÊU ĐÁNG YÊU            ',
-    type: 'Mèo',
-    price: '20.000.000',
-  },
-  {
-    url: 'https://vpet.vn/upload/pet/pet-1617247618.jpg',
-    title: 'MÈO TAI CỤP SIÊU ĐÁNG YÊU            ',
-    type: 'Mèo',
-    price: '20.000.000',
-  },
-  {
-    url: 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/best-girl-cat-names-1606245046.jpg?crop=0.668xw:1.00xh;0.126xw,0&resize=640:*',
-    title: 'MÈO TAI CỤP SIÊU ĐÁNG YÊU            ',
-    type: 'Mèo',
-    price: '20.000.000',
-  },
+
 ];
 const topData = [
   { label: 'The Shawshank Redemption', year: 1994 },
@@ -80,12 +149,27 @@ const topData = [
   { label: 'The Godfather: Part II', year: 1974 },
   { label: 'The Dark Knight', year: 2008 },
 ];
-export default function Products() {
-  React.useEffect(() => {
-    Aos.init();
-    Aos.refresh();
-  }, []);
+const Pets = () => {
   const [shortPro, setShortPro] = React.useState(true);
+  const { data, error, status, sendRequest } = useHttp(getPets, true);
+  // const petCtx = useContext(PetContext);
+  // const { setPets } = petCtx;
+  // React.useEffect(() => {
+  //   sendRequest();
+  // }, [sendRequest]);
+  // React.useEffect(() => {
+  //   if (status === 'completed' && data) {
+  //     setPets(data);
+  //   }
+  // }, [data, status, setPets]);
+
+  // React.useEffect(() => {
+  //   Aos.init();
+  //   Aos.refresh();
+  // }, []);
+  // if (status === 'pending') return <h1>Loading...</h1>;
+  // if (error) return <h1>Đã có lỗi xảy ra</h1>;
+
   return (
     <Container fixed>
       <Grid
@@ -170,8 +254,8 @@ export default function Products() {
                       <Grid item xs={4} md={4}>
                         <CardPetPro
                           url={item.url}
-                          title={item.title}
-                          type={item.type}
+                          title={item.name}
+                          type={item.type.name}
                           price={item.price}
                           new={false}
                         />
@@ -202,4 +286,5 @@ export default function Products() {
       </Grid>
     </Container>
   );
-}
+};
+export default Pets;

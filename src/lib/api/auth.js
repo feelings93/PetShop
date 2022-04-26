@@ -2,38 +2,16 @@ import { axios, bearerHeader } from '../config';
 
 export const login = async ({ email, password }) => {
   try {
-    const response = await axios.post('/auth/login', { email, password }, {});
-    return response.data.accessToken;
+    const response = await axios.post('/admin-auth/login', { email, password });
+    return response.data;
   } catch (err) {
     throw new Error(err);
   }
 };
 
-export const loginGoogle = async ({ tokenId }) => {
-  try {
-    const response = await axios.post('/auth/google-login', { tokenId }, {});
-    return response.data.accessToken;
-  } catch (err) {
-    throw new Error(err.response.data.message);
-  }
-};
-
-export const signup = async ({ email, password, name }) => {
-  try {
-    const response = await axios.post(
-      '/auth/signup',
-      { email, password, name },
-      {}
-    );
-    return response.data.accessToken;
-  } catch (err) {
-    throw new Error(err.response.data.message);
-  }
-};
-
 export const getProfile = async () => {
   try {
-    const response = await axios.get('/auth/profile', {
+    const response = await axios.get('/admin-auth/profile', {
       headers: {
         Authorization: bearerHeader,
       },
@@ -50,11 +28,8 @@ export const logout = async () => {
 };
 
 export const updateProfile = async (data) => {
-  const formData = new FormData();
-  formData.append('name', data.name);
-  formData.append('file', data.file);
   try {
-    const response = await axios.patch('/auth/profile', formData, {
+    const response = await axios.patch('/admin-auth/profile', data, {
       headers: {
         Authorization: bearerHeader,
       },
@@ -67,7 +42,7 @@ export const updateProfile = async (data) => {
 
 export const changePassword = async (data) => {
   try {
-    const response = await axios.patch('/auth/password', data, {
+    const response = await axios.patch('/admin-auth/password', data, {
       headers: {
         Authorization: bearerHeader,
       },
@@ -76,9 +51,4 @@ export const changePassword = async (data) => {
   } catch (err) {
     throw new Error(err);
   }
-};
-
-export default {
-  login,
-  signup,
 };

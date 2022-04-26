@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 export const AuthContext = React.createContext({
   user: null,
+  setUser: () => {},
 });
 
 const AuthContextProvider = ({ children }) => {

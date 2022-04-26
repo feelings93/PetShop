@@ -21,7 +21,7 @@ import { MdPets } from 'react-icons/md';
 import SignupPopup from '../popup/SignupPopup';
 import LoginPopup from '../popup/LoginPopup';
 import classes from './Header.module.css';
-import Logo from '../../../admin/layout/SideBar/Logo';
+import Logo from './Logo';
 import Badge from '@mui/material/Badge';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import CartNof from './CartHeader';
