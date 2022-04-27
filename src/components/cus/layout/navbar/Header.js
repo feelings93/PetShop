@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react';
+import React,{useContext} from 'react';
 import AppBar from '@mui/material/AppBar';
 import PropTypes from 'prop-types';
 import Toolbar from '@mui/material/Toolbar';
@@ -25,6 +25,8 @@ import Logo from './Logo';
 import Badge from '@mui/material/Badge';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import CartNof from './CartHeader';
+import {PetCartContext} from "../../../../store/petCart-context";
+
 function ElevationScroll(props) {
   const { children, window } = props;
   // Note that you normally won't need to set the window ref as useScrollTrigger
@@ -67,6 +69,9 @@ const Header = (props) => {
   const [openSignup, setOpenSignup] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileOpen, setMobileOpen] = React.useState(false);
+
+  const petCartCtx = useContext(PetCartContext);
+  const { items } = petCartCtx;
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -183,7 +188,7 @@ const Header = (props) => {
           <Button fullWidth href='/sign-up' variant='contained'>
             Đăng ký
           </Button>
-          <CartNof />
+          <CartNof countItem={items.length}/>
         </Stack>
       )}
       {localStorage.getItem('isLogin') && (
@@ -203,7 +208,7 @@ const Header = (props) => {
           >
             Đăng xuất
           </Button>
-          <CartNof />
+          <CartNof countItem={items.length}/>
         </Stack>
       )}
     </div>
@@ -312,7 +317,7 @@ const Header = (props) => {
                 >
                   Đăng ký
                 </Button>
-                <CartNof />
+                <CartNof countItem={items.length}/>
               </Stack>
             </Toolbar>
           </Container>
