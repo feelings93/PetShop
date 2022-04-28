@@ -15,7 +15,7 @@ import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import Link from '@mui/material/Link';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 
-export default function Page1() {
+export default function CartPage() {
 
 
   const breadcrumbs = [

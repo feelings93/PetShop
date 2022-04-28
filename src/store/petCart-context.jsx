@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
-
+import { ItemCart } from './dto/api.dto.ts';
 
 
 export const PetCartContext = React.createContext({
@@ -18,7 +18,14 @@ const PetCartContextProvider = (props) => {
 
   const handleAddToCart = useCallback((Item) => {
     if(items.indexOf(Item)<0)
-    setItems([...items, Item]);
+    {
+      let itemCart= new ItemCart(Item);
+      // itemCart=Item;
+      console.log(itemCart);
+
+      setItems([...items, Item]);
+
+    }
     else console.log("Khong co them");
   });
 

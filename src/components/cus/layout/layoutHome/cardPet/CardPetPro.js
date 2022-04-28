@@ -161,7 +161,6 @@ const CardPetPro = (props) => {
             endIcon={<BsCart3 />}
             onClick={() => {
               handleAddToCart(props);
-              console.log(props);
             }}
           >
             Thêm vào giỏ

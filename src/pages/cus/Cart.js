@@ -12,13 +12,13 @@ import CardCart from '../../components/cus/layout/layoutCart/cardCart';
 import Header from '../../components/cus/layout/navbar/Header';
 import TotalCart from '../../components/cus/layout/layoutCart/totalCart';
 import ListStep from '../../components/cus/layout/layoutCart/ListStep';
-import Page1 from '../../components/cus/layout/layoutCart/Page1';
+import CartPage from '../../components/cus/layout/layoutCart/CartPage';
 
 export default function Cart() {
   return (
     <div>
       <Container fixed>
-        <Page1 />
+        <CartPage />
       </Container>
     </div>
   );
