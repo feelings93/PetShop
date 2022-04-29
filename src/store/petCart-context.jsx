@@ -9,6 +9,9 @@ export const PetCartContext = React.createContext({
   handleAddToCart: () => {},
   handleOpenAdd: () => {},
   handleCloseAdd: () => {},
+  handleDeleteItem:()=>{},
+  handleUpQuantity:()=>{},
+  handleDowQuantity:()=>{},
 });
 
 const PetCartContextProvider = (props) => {
@@ -19,10 +22,7 @@ const PetCartContextProvider = (props) => {
   const handleAddToCart = useCallback((Item) => {
     if(items.indexOf(Item)<0)
     {
-      let itemCart= new ItemCart(Item);
-      // itemCart=Item;
-      console.log(itemCart);
-
+      let itemCart= Item.photos ? new ItemCart(Item.id,1,Item.name,Item.price,Item.photos[0].url) : new ItemCart(Item.id,1,Item.name,Item.price,"https://p.kindpng.com/picc/s/264-2642768_shopping-icon-vector-and-shopping-cart-hd-png.png")
       setItems([...items, Item]);
 
     }
@@ -37,6 +37,9 @@ const PetCartContextProvider = (props) => {
     setOpenAdd(false);
   }, []);
 
+  const handleDeleteItem = useCallback(()=>{
+    
+  })
   // React.useEffect(() => {
   //   if (query === '' || !query) {
   //     setSearchPets(pets);
@@ -55,12 +58,18 @@ const PetCartContextProvider = (props) => {
       handleCloseAdd,
       handleOpenAdd,
       handleAddToCart,
+      handleDeleteItem,
+      handleUpQuantity,
+      handleDowQuantity,
     }),
     [
       items,
       handleAddToCart,
       handleCloseAdd,
       handleOpenAdd,
+      handleDeleteItem,
+      handleUpQuantity,
+      handleDowQuantity,
     ]
   );
 

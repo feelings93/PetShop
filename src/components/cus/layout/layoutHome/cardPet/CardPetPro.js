@@ -36,7 +36,7 @@ const CardPetPro = (props) => {
           }}
         >
           <LocalOfferOutlinedIcon sx={{ width: '15px', height: '15px' }} />
-          <Typography sx={{ fontSize: '12px' }}>{props.type}</Typography>
+          <Typography sx={{ fontSize: '12px' }}>{props.type.name}</Typography>
         </Box>
         {!hide ? (
           <IconButton
@@ -79,7 +79,7 @@ const CardPetPro = (props) => {
         sx={{
           height: 300,
           borderRadius: 2,
-          backgroundImage: `url(${props.url})`,
+          backgroundImage: `url(${props.photos[0].url})`,
           backgroundSize: ' cover',
           backgroundPosition: 'center',
           marginTop: '5px',
@@ -161,6 +161,7 @@ const CardPetPro = (props) => {
             endIcon={<BsCart3 />}
             onClick={() => {
               handleAddToCart(props);
+              console.log(props);
             }}
           >
             Thêm vào giỏ
@@ -173,13 +174,13 @@ const CardPetPro = (props) => {
           display='flex'
           justifyContent='space-between'
         >
-          {props.new === 'true' ? (
+          {props.status === 'New' ? (
             <div className='image__title'>NEW</div>
           ) : (
             <div />
           )}
         </Grid>
-      </Grid>
+      </Grid> 
 
       <Box
         backgroundColor='#fff'
@@ -199,7 +200,7 @@ const CardPetPro = (props) => {
             },
           }}
         >
-          {props.title}
+          {props.name}
         </Link>
         <Box
           display='flex'

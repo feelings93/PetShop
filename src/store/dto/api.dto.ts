@@ -6,13 +6,15 @@ export class ItemCart
     public cartId:number;
     public name:string ="name";
     public price:number=0;
+    public url :string;
     public quantity:number =0;
-    constructor (petId,carId,name="name",price=0,quantity=1)
+    constructor (petId,cartId,name="name",price=0,url,quantity=1)
     {
         this.petId=petId;
-        this.cartId=carId;
+        this.cartId=cartId;
         this.name=name;
         this.price=price;
+        this.url=url;
         this.quantity=quantity;
     }
  

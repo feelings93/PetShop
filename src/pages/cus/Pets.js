@@ -39,7 +39,7 @@ const data = [
     age:1,
     gender:"Đực",
     price:2000000,
-    status:"New",
+    status:"",
     describe:"Chó cảnh",
     type:{
       id:1,
@@ -66,7 +66,7 @@ const data = [
     age:1,
     gender:"Đực",
     price:2000000,
-    status:"New",
+    status:"",
     describe:"Chó cảnh",
     type:{
       id:1,
@@ -93,7 +93,7 @@ const data = [
     age:1,
     gender:"Đực",
     price:2000000,
-    status:"New",
+    status:"",
     describe:"Chó cảnh",
     type:{
       id:1,
@@ -120,7 +120,7 @@ const data = [
     age:1,
     gender:"Đực",
     price:2000000,
-    status:"New",
+    status:"",
     describe:"Chó cảnh",
     type:{
       id:1,
@@ -253,10 +253,7 @@ const Pets = () => {
                     return (
                       <Grid item xs={4} md={4} >
                         <CardPetPro
-                          url={pet.photos[0].url}
-                          title={pet.name}
-                          type={pet.type.name}
-                          price={pet.price}
+                         {...pet}
                           // new={false}
                         />
                         <hr width='95%' align='center' color='#d9d9d9' />

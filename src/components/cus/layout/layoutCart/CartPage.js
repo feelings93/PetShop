@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useContext} from 'react';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
@@ -14,9 +14,17 @@ import TotalCart from './totalCart';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import Link from '@mui/material/Link';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
+import { PetCartContext } from '../../../../store/petCart-context';
 
 export default function CartPage() {
+  const petCartCtx = useContext(PetCartContext);
+  const { items, setItems } = petCartCtx;
 
+  React.useEffect(() => {
+    if (status === 'completed' && data) {
+      setPets(data);
+    }
+  }, [data, status, setPets]);
 
   const breadcrumbs = [
     <Link
