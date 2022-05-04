@@ -15,7 +15,7 @@ import AllCardSimilar from '../../components/cus/layout/layoutDetailProduct/PetS
 import 'aos/dist/aos.css';
 
 
-const DetailProduct = () => {
+const DetailProduct = (props) => {
   React.useEffect(() => {
     Aos.init();
     Aos.refresh();

@@ -74,14 +74,12 @@ function App() {
           <Route path='/' element={<InnerContent />}>
             <Route exact path='/' element={<Navigate to='/trang-chu' />} />
             <Route exact path='/trang-chu' element={<Home />} />
-            <Route exact path='/san-pham' element={<DetailProduct />} />
+            <Route exact path='/san-pham/:id' element={<DetailProduct />} />
             <Route exact path='/gioi-thieu' element={<About />} />
             <Route exact path='/thu-cung' element={<Pets />} />
             <Route exact path='/gio-hang' element={<Cart />} />
-            <Route exact path='/san-pham' element={<DetailProduct />} />
-            <Route exact path='/thanh-toan' element={<Checkout/>} />
-            <Route exact path="/lien-he" element={<Contact/>}/>
-
+            <Route exact path='/thanh-toan' element={<Checkout />} />
+            <Route exact path='/lien-he' element={<Contact />} />
           </Route>
 
           <Route path='*' element={<h1> NOT FOUND</h1>} />

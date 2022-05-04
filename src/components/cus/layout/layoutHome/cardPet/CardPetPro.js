@@ -13,6 +13,7 @@ import Rating from '@mui/material/Rating';
 import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
 import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
 import { PetCartContext } from '../../../../../store/petCart-context';
+import { useNavigate } from 'react-router-dom';
 
 const CardPetPro = (props) => {
   const [hide, setHide] = useState(false);
@@ -22,6 +23,7 @@ const CardPetPro = (props) => {
 
   const petCartCtx = useContext(PetCartContext);
   const { items, setItems, handleAddToCart } = petCartCtx;
+  let navigate = useNavigate();
 
   return (
     <Box padding='8px' sx={{ backgroundColor: '#fff', borderRadius: '10px' }}>
@@ -132,7 +134,7 @@ const CardPetPro = (props) => {
                   backgroundColor: '#2196f3',
                 },
               }}
-              href='/san-pham'
+              onClick={()=> navigate(`/san-pham/${props.id}`)}
             >
               <SavedSearchIcon
                 sx={{
@@ -161,7 +163,6 @@ const CardPetPro = (props) => {
             endIcon={<BsCart3 />}
             onClick={() => {
               handleAddToCart(props);
-              console.log(props);
             }}
           >
             Thêm vào giỏ

@@ -19,18 +19,22 @@ const PetCartContextProvider = (props) => {
   const [openAdd, setOpenAdd] = useState(false);
 
   const handleAddToCart = useCallback((Item) => {
-    if (items.indexOf(Item) < 0) {
-      let itemCart = Item.photos
-        ? new ItemCart(Item.id, 1, Item.name, Item.price, Item.photos[0].url)
-        : new ItemCart(
-            Item.id,
-            1,
-            Item.name,
-            Item.price,
-            'https://p.kindpng.com/picc/s/264-2642768_shopping-icon-vector-and-shopping-cart-hd-png.png'
-          );
-      setItems([...items, Item]);
-    } else console.log('Khong co them');
+    let checkHaving = false;
+    let itemCart = Item.photos
+      ? new ItemCart(Item.id, 1, Item.name, Item.price, Item.photos[0].url)
+      : new ItemCart(
+          Item.id,
+          1,
+          Item.name,
+          Item.price,
+          'https://p.kindpng.com/picc/s/264-2642768_shopping-icon-vector-and-shopping-cart-hd-png.png'
+        );
+    items.map((item) => {
+      if (item.petId === itemCart.petId) {
+        checkHaving = true;
+      }
+    });
+    if (!checkHaving) setItems([...items, itemCart]);
   });
 
   const handleOpenAdd = useCallback(() => {
@@ -41,9 +45,22 @@ const PetCartContextProvider = (props) => {
     setOpenAdd(false);
   }, []);
 
-  const handleDeleteItem = useCallback(() => {});
-  const handleUpQuantity = useCallback(() => {});
-  const handleDowQuantity = useCallback(() => {});
+  const handleDeleteItem = useCallback(() => {
+    setItems(items?.filter((item) => item.quantity > 0));
+  });
+  const handleUpQuantity = useCallback((id) => {
+    items?.map((item) => {
+      if (item.petId == id) {
+        item.quantity += 1;
+        item.price = (item.price / (item.quantity - 1)) * item.quantity;
+      }
+    });
+  });
+  const handleDowQuantity = useCallback((id) => {
+    items?.map((item) => {
+      if (item.petId == id && item.quantity > 0) item.quantity -= 1;
+    });
+  });
   // React.useEffect(() => {
   //   if (query === '' || !query) {
   //     setSearchPets(pets);

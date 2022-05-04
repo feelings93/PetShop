@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext,  useState } from 'react';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
@@ -18,13 +18,10 @@ import { PetCartContext } from '../../../../store/petCart-context';
 
 export default function CartPage() {
   const petCartCtx = useContext(PetCartContext);
-  const { items, setItems } = petCartCtx;
+  let { items,handleUpQuantity,handleDowQuantity } = petCartCtx;
+  
 
-  // React.useEffect(() => {
-  //   if (status === 'completed' && data) {
-  //     setPets(data);
-  //   }
-  // }, [data, status, setPets]);
+
 
   const breadcrumbs = [
     <Link
@@ -43,6 +40,8 @@ export default function CartPage() {
   ];
   return (
     <div>
+          {console.log(items)}
+
       <Box
         sx={{
           backgroundColor: '#f7faff',
@@ -83,7 +82,7 @@ export default function CartPage() {
             color: '#5e5e5e',
           }}
         >
-          Bạn có 4 mặt hàng muốn mua đang chờ được thanh toán
+          Bạn có {items.length} mặt hàng muốn mua đang chờ được thanh toán
         </Typography>
       </Grid>
       <Grid
@@ -105,9 +104,9 @@ export default function CartPage() {
               borderRadius: '5px',
             }}
           >
-            {[1, 2, 3, 4, 5, 6, 7].map((value) => (
+            {petCartCtx.items?.map((item) => (
               <Grid item sm={12} sx={{ marginBottom: '10px' }}>
-                <CardCart />
+                <CardCart {...item} />
               </Grid>
             ))}
           </Grid>

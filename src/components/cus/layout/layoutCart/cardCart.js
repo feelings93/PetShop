@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useContext, useState } from 'react';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
@@ -8,8 +8,32 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import TextField from '@mui/material/TextField';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import { PetCartContext } from '../../../../store/petCart-context';
+import { set } from 'react-hook-form';
 
-const CardCart = () => {
+const CardCart = (props) => {
+  const petCartCtx = useContext(PetCartContext);
+  const { items,handleUpQuantity,handleDowQuantity,handleDeleteItem } = petCartCtx;
+  const [quantity,setQuantity]= useState(props.quantity);
+  const [price,setPrice]= useState(props.price);
+
+
+  const handleUp =() => {
+      setPrice((price/(quantity)*(quantity+1)));
+      setQuantity(quantity+1);
+  }
+  const handleDown = () =>{
+    if(quantity>1){
+      setPrice((price/(quantity)*(quantity-1)));
+      setQuantity(quantity-1);
+
+    }
+    else{
+      setQuantity(quantity-1);
+      handleDeleteItem();
+    } 
+
+  }
   return (
     <Box
       sx={{
@@ -19,6 +43,7 @@ const CardCart = () => {
         backgroundColor: '#fff',
       }}
     >
+      {/* {console.log(items)} */}
       <Grid
         container
         xs={12}
@@ -33,23 +58,22 @@ const CardCart = () => {
               height: '80px',
               borderRadius: 2,
               boxShadow: 3,
-              backgroundImage: `url('https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/best-girl-cat-names-1606245046.jpg?crop=0.668xw:1.00xh;0.126xw,0&resize=640:*')`,
+              backgroundImage: `url(${props.url})`,
               backgroundSize: ' cover',
-              backgroundColor: '#f99',
               backgroundPosition: 'center',
             }}
           />
         </Grid>
         <Grid item sm={3.5} sx={{ textAlign: 'start' }}>
           <Typography sx={{ fontWeight: 'Medium', fontStyle: 'Monospace' }}>
-            Mèo lông vàng siêu đáng yêu
+            {props.name}
           </Typography>
           <Typography sx={{ fontWeight: 'Light', fontSize: '12px' }}>
-            ID: 167DE906
+           ID: {props.petId}
           </Typography>
         </Grid>
         <Grid item sm={3.5} sx={{ display: 'flex', alignItems: 'center' }}>
-          <IconButton aria-label='increase item' component='span'>
+          <IconButton aria-label='increase item' component='span' onClick={()=>{handleUpQuantity(props.petId);handleUp()}}>
             <AddCircleIcon />
           </IconButton>
           <TextField
@@ -60,7 +84,7 @@ const CardCart = () => {
               min: 0,
               style: { textAlign: 'center', height: '50%' },
             }} // the change is here
-            value={1}
+            value={quantity}
             sx={{
               width: '50px',
               height: '50%',
@@ -68,12 +92,12 @@ const CardCart = () => {
               alignItems: 'center',
             }}
           />
-          <IconButton aria-label='decrease item' component='span'>
+          <IconButton aria-label='decrease item' component='span'  onClick={()=>{handleDowQuantity(props.petId);handleDown()}}>
             <RemoveCircleIcon />
           </IconButton>
         </Grid>
         <Grid item sm={2.5}>
-          <Typography sx={{ fontWeight: 'bold' }}>10.000.000 VNĐ</Typography>
+          <Typography sx={{ fontWeight: 'bold' }}>{price} VNĐ</Typography>
         </Grid>
         <Grid item sm={0.5}>
           <IconButton aria-label='delete item' component='span'>

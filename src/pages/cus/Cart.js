@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
@@ -15,6 +15,7 @@ import ListStep from '../../components/cus/layout/layoutCart/ListStep';
 import CartPage from '../../components/cus/layout/layoutCart/CartPage';
 
 export default function Cart() {
+
   return (
     <div>
       <Container fixed>
