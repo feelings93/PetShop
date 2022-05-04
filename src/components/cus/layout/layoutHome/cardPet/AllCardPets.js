@@ -23,7 +23,7 @@ const AllCardPets = () => {
     autoplaySpeed: 3000,
     pauseOnHover: true,
     className: 'sliders',
-    
+
     responsive: [
       {
         breakpoint: 1024,
@@ -130,30 +130,14 @@ const AllCardPets = () => {
         </Grid>
 
         <Slider {...settings}>
-          <CardPetPro
-            url='https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/best-girl-cat-names-1606245046.jpg?crop=0.668xw:1.00xh;0.126xw,0&resize=640:*'
-            title='MÈO TAI CỤP SIÊU ĐÁNG YÊU            '
-            type='Mèo'
-            price='20.000.000'
-          />
-          <CardPetPro
-            url='https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/best-girl-cat-names-1606245046.jpg?crop=0.668xw:1.00xh;0.126xw,0&resize=640:*'
-            title='MÈO TAI CỤP SIÊU ĐÁNG YÊU            '
-            type='Mèo'
-            price='20.000.000'
-          />
-          <CardPetPro
-            url='https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/best-girl-cat-names-1606245046.jpg?crop=0.668xw:1.00xh;0.126xw,0&resize=640:*'
-            title='MÈO TAI CỤP SIÊU ĐÁNG YÊU            '
-            type='Mèo'
-            price='20.000.000'
-          />
-          <CardPetPro
-            url='https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/best-girl-cat-names-1606245046.jpg?crop=0.668xw:1.00xh;0.126xw,0&resize=640:*'
-            title='MÈO TAI CỤP SIÊU ĐÁNG YÊU            '
-            type='Mèo'
-            price='20.000.000'
-          />
+          {data.map((pet, index) => {
+            return (
+              <CardPetPro
+                {...pet}
+                // new={false}
+              />
+            );
+          })}
         </Slider>
         <Box height='50px' />
         {/* THU CUNG MOI RAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA */}
@@ -227,34 +211,14 @@ const AllCardPets = () => {
         </Grid>
 
         <Slider {...settings}>
-          <CardPetPro
-            url='https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/best-girl-cat-names-1606245046.jpg?crop=0.668xw:1.00xh;0.126xw,0&resize=640:*'
-            title='MÈO TAI CỤP SIÊU ĐÁNG YÊU            '
-            type='Mèo'
-            price='20.000.000'
-            new='true'
-          />
-          <CardPetPro
-            url='https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/best-girl-cat-names-1606245046.jpg?crop=0.668xw:1.00xh;0.126xw,0&resize=640:*'
-            title='MÈO TAI CỤP SIÊU ĐÁNG YÊU            '
-            type='Mèo'
-            price='20.000.000'
-            new='true'
-          />
-          <CardPetPro
-            url='https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/best-girl-cat-names-1606245046.jpg?crop=0.668xw:1.00xh;0.126xw,0&resize=640:*'
-            title='MÈO TAI CỤP SIÊU ĐÁNG YÊU            '
-            type='Mèo'
-            price='20.000.000'
-            new='true'
-          />
-          <CardPetPro
-            url='https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/best-girl-cat-names-1606245046.jpg?crop=0.668xw:1.00xh;0.126xw,0&resize=640:*'
-            title='MÈO TAI CỤP SIÊU ĐÁNG YÊU            '
-            type='Mèo'
-            price='20.000.000'
-            new='true'
-          />
+          {data.map((pet, index) => {
+            return (
+              <CardPetPro
+                {...pet}
+                // new={false}
+              />
+            );
+          })}
         </Slider>
         <Box height='50px' />
 
@@ -329,30 +293,14 @@ const AllCardPets = () => {
         </Grid>
 
         <Slider {...settings}>
-          <CardPetPro
-            url='https://cf.shopee.vn/file/e264dfaf492c333f8d2dd516aa2f4255'
-            title='BÁT SỨ SIÊU YÊU            '
-            type='Phụ kiện'
-            price='200.000'
-          />
-          <CardPetPro
-            url='https://cf.shopee.vn/file/e264dfaf492c333f8d2dd516aa2f4255'
-            title='BÁT SỨ SIÊU YÊU            '
-            type='Phụ kiện'
-            price='200.000'
-          />
-          <CardPetPro
-            url='https://cf.shopee.vn/file/e264dfaf492c333f8d2dd516aa2f4255'
-            title='BÁT SỨ SIÊU YÊU            '
-            type='Phụ kiện'
-            price='200.000'
-          />
-          <CardPetPro
-            url='https://cf.shopee.vn/file/e264dfaf492c333f8d2dd516aa2f4255'
-            title='BÁT SỨ SIÊU YÊU            '
-            type='Phụ kiện'
-            price='200.000'
-          />
+          {data.map((pet, index) => {
+            return (
+              <CardPetPro
+                {...pet}
+                // new={false}
+              />
+            );
+          })}
         </Slider>
         <Box height='50px' />
 
@@ -427,30 +375,14 @@ const AllCardPets = () => {
         </Grid>
 
         <Slider {...settings}>
-          <CardPetPro
-            url='https://dreampet.com.vn/wp-content/uploads/2021/01/khach-san-thu-cung-2.jpg'
-            title='VẮT TUYẾN HÔI + CẮT LÔNG CHỖ VỆ SINH            '
-            type='Dịch vụ'
-            price='50.000'
-          />
-          <CardPetPro
-            url='https://dreampet.com.vn/wp-content/uploads/2021/01/khach-san-thu-cung-2.jpg'
-            title='VẮT TUYẾN HÔI + CẮT LÔNG CHỖ VỆ SINH            '
-            type='Dịch vụ'
-            price='50.000'
-          />
-          <CardPetPro
-            url='https://dreampet.com.vn/wp-content/uploads/2021/01/khach-san-thu-cung-2.jpg'
-            title='VẮT TUYẾN HÔI + CẮT LÔNG CHỖ VỆ SINH            '
-            type='Dịch vụ'
-            price='50.000'
-          />
-          <CardPetPro
-            url='https://dreampet.com.vn/wp-content/uploads/2021/01/khach-san-thu-cung-2.jpg'
-            title='VẮT TUYẾN HÔI + CẮT LÔNG CHỖ VỆ SINH            '
-            type='Dịch vụ'
-            price='50.000'
-          />
+          {data.map((pet, index) => {
+            return (
+              <CardPetPro
+                {...pet}
+                // new={false}
+              />
+            );
+          })}
         </Slider>
       </Box>
     </Container>
@@ -458,3 +390,113 @@ const AllCardPets = () => {
 };
 
 export default AllCardPets;
+const data = [
+  {
+    id: 1,
+    name: 'MÈO TAI CỤP SIÊU ĐÁNG YÊU 1 ',
+    age: 1,
+    gender: 'Đực',
+    price: 2000000,
+    status: '',
+    describe: 'Chó cảnh',
+    type: {
+      id: 1,
+      name: 'Chó',
+    },
+    breed: {
+      id: 1,
+      name: 'Chó cảnh khuyển',
+    },
+    photos: [
+      {
+        id: 1,
+        url: 'https://vpet.vn/upload/pet/pet-1617247618.jpg',
+      },
+      {
+        id: 2,
+        url: 'https://firebasestorage.googleapis.com/v0/b/doan1-343302.appspot.com/o/images%2Fpets%2Fundefined%2FScreenshot%20(3).png?alt=media&token=ac43c80a-11e7-4ab5-a0cf-6f288b242f94',
+      },
+    ],
+  },
+  {
+    id: 2,
+    name: 'MÈO TAI CỤP SIÊU ĐÁNG YÊU 2',
+    age: 1,
+    gender: 'Đực',
+    price: 2000000,
+    status: '',
+    describe: 'Chó cảnh',
+    type: {
+      id: 1,
+      name: 'Chó',
+    },
+    breed: {
+      id: 1,
+      name: 'Chó cảnh khuyển',
+    },
+    photos: [
+      {
+        id: 1,
+        url: 'https://vpet.vn/upload/pet/pet-1617247618.jpg',
+      },
+      {
+        id: 2,
+        url: 'https://firebasestorage.googleapis.com/v0/b/doan1-343302.appspot.com/o/images%2Fpets%2Fundefined%2FScreenshot%20(3).png?alt=media&token=ac43c80a-11e7-4ab5-a0cf-6f288b242f94',
+      },
+    ],
+  },
+  {
+    id: 3,
+    name: 'MÈO TAI CỤP SIÊU ĐÁNG YÊU 3',
+    age: 1,
+    gender: 'Đực',
+    price: 2000000,
+    status: '',
+    describe: 'Chó cảnh',
+    type: {
+      id: 1,
+      name: 'Chó',
+    },
+    breed: {
+      id: 1,
+      name: 'Chó cảnh khuyển',
+    },
+    photos: [
+      {
+        id: 1,
+        url: 'https://vpet.vn/upload/pet/pet-1617247618.jpg',
+      },
+      {
+        id: 2,
+        url: 'https://firebasestorage.googleapis.com/v0/b/doan1-343302.appspot.com/o/images%2Fpets%2Fundefined%2FScreenshot%20(3).png?alt=media&token=ac43c80a-11e7-4ab5-a0cf-6f288b242f94',
+      },
+    ],
+  },
+  {
+    id: 4,
+    name: 'MÈO TAI CỤP SIÊU ĐÁNG YÊU 4',
+    age: 1,
+    gender: 'Đực',
+    price: 2000000,
+    status: '',
+    describe: 'Chó cảnh',
+    type: {
+      id: 1,
+      name: 'Chó',
+    },
+    breed: {
+      id: 1,
+      name: 'Chó cảnh khuyển',
+    },
+    photos: [
+      {
+        id: 1,
+        url: 'https://vpet.vn/upload/pet/pet-1617247618.jpg',
+      },
+      {
+        id: 2,
+        url: 'https://firebasestorage.googleapis.com/v0/b/doan1-343302.appspot.com/o/images%2Fpets%2Fundefined%2FScreenshot%20(3).png?alt=media&token=ac43c80a-11e7-4ab5-a0cf-6f288b242f94',
+      },
+    ],
+  },
+];

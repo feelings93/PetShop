@@ -1,4 +1,4 @@
-import React,{useContext} from 'react';
+import React, { useContext } from 'react';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
@@ -20,11 +20,11 @@ export default function CartPage() {
   const petCartCtx = useContext(PetCartContext);
   const { items, setItems } = petCartCtx;
 
-  React.useEffect(() => {
-    if (status === 'completed' && data) {
-      setPets(data);
-    }
-  }, [data, status, setPets]);
+  // React.useEffect(() => {
+  //   if (status === 'completed' && data) {
+  //     setPets(data);
+  //   }
+  // }, [data, status, setPets]);
 
   const breadcrumbs = [
     <Link
@@ -33,7 +33,7 @@ export default function CartPage() {
       color='#000'
       href='/'
       fontWeight='regular'
-      sx={{textDecoration:"none"}}
+      sx={{ textDecoration: 'none' }}
     >
       Trang chủ
     </Link>,
@@ -43,14 +43,19 @@ export default function CartPage() {
   ];
   return (
     <div>
-      <Box sx={{backgroundColor: "#f7faff", padding:"10px 10px", borderRadius:'5px'}}>
-
-      <Breadcrumbs
-        separator={<NavigateNextIcon fontSize='small' />}
-        aria-label='breadcrumb'
+      <Box
+        sx={{
+          backgroundColor: '#f7faff',
+          padding: '10px 10px',
+          borderRadius: '5px',
+        }}
       >
-        {breadcrumbs}
-      </Breadcrumbs>
+        <Breadcrumbs
+          separator={<NavigateNextIcon fontSize='small' />}
+          aria-label='breadcrumb'
+        >
+          {breadcrumbs}
+        </Breadcrumbs>
       </Box>
       <Grid
         container
@@ -60,7 +65,7 @@ export default function CartPage() {
           justifyContent: 'center',
           alignItems: 'center',
           flexDirection: 'column',
-          marginTop:"20px"
+          marginTop: '20px',
         }}
       >
         <Typography
@@ -163,12 +168,12 @@ export default function CartPage() {
             </Typography>
             <Button
               variant='contained'
-              href="/thanh-toan"
+              href='/thanh-toan'
               sx={{
                 width: '100%',
                 backgroundColor: '#000',
                 '&:hover': {
-                  backgroundColor:'#000',
+                  backgroundColor: '#000',
                   opacity: [0.9, 0.8, 0.7],
                 },
               }}

@@ -180,7 +180,7 @@ const CardPetPro = (props) => {
             <div />
           )}
         </Grid>
-      </Grid> 
+      </Grid>
 
       <Box
         backgroundColor='#fff'
