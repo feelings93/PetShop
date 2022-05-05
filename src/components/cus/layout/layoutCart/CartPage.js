@@ -18,11 +18,8 @@ import { PetCartContext } from '../../../../store/petCart-context';
 
 export default function CartPage() {
   const petCartCtx = useContext(PetCartContext);
-  let { items,handleUpQuantity,handleDowQuantity } = petCartCtx;
+  let { items,handleUpQuantity,handleDowQuantity, handleGetTotal } = petCartCtx;
   
-
-
-
   const breadcrumbs = [
     <Link
       underline='hover'
@@ -40,8 +37,6 @@ export default function CartPage() {
   ];
   return (
     <div>
-          {console.log(items)}
-
       <Box
         sx={{
           backgroundColor: '#f7faff',
@@ -148,7 +143,7 @@ export default function CartPage() {
                   color: '#ff0404',
                 }}
               >
-                10.000.000 VNĐ
+                {handleGetTotal()} VNĐ
               </Typography>
             </Box>
 

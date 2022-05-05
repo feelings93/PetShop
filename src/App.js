@@ -69,7 +69,6 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <AuthContextProvider>
         <Routes>
           <Route path='/' element={<InnerContent />}>
             <Route exact path='/' element={<Navigate to='/trang-chu' />} />
@@ -84,7 +83,6 @@ function App() {
 
           <Route path='*' element={<h1> NOT FOUND</h1>} />
         </Routes>
-      </AuthContextProvider>
     </ThemeProvider>
   );
 }

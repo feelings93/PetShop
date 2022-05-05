@@ -13,7 +13,7 @@ import { set } from 'react-hook-form';
 
 const CardCart = (props) => {
   const petCartCtx = useContext(PetCartContext);
-  const { items,handleUpQuantity,handleDowQuantity,handleDeleteItem } = petCartCtx;
+  const { items,handleUpQuantity,handleDowQuantity,handleDeleteItem, handleGetTotal } = petCartCtx;
   const [quantity,setQuantity]= useState(props.quantity);
   const [price,setPrice]= useState(props.price);
 

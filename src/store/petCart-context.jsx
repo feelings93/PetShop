@@ -11,6 +11,7 @@ export const PetCartContext = React.createContext({
   handleDeleteItem: () => {},
   handleUpQuantity: () => {},
   handleDowQuantity: () => {},
+  handleGetTotal:()=>{},
 });
 
 const PetCartContextProvider = (props) => {
@@ -61,6 +62,12 @@ const PetCartContextProvider = (props) => {
       if (item.petId == id && item.quantity > 0) item.quantity -= 1;
     });
   });
+  const handleGetTotal = (() => {
+    let total = 0;
+    items.forEach((item)=>total+=item.price);
+    return total;
+    
+  });
   // React.useEffect(() => {
   //   if (query === '' || !query) {
   //     setSearchPets(pets);
@@ -82,6 +89,7 @@ const PetCartContextProvider = (props) => {
       handleDeleteItem,
       handleUpQuantity,
       handleDowQuantity,
+      handleGetTotal
     }),
     [
       items,
@@ -91,6 +99,7 @@ const PetCartContextProvider = (props) => {
       handleDeleteItem,
       handleUpQuantity,
       handleDowQuantity,
+      handleGetTotal
     ]
   );
 

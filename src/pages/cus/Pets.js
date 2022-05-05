@@ -152,26 +152,27 @@ const topData = [
 const Pets = () => {
   const [shortPro, setShortPro] = React.useState(true);
   const { error, status, sendRequest } = useHttp(getPets, true);
-  // const petCtx = useContext(PetContext);
-  // const { setPets } = petCtx;
-  // React.useEffect(() => {
-  //   sendRequest();
-  // }, [sendRequest]);
-  // React.useEffect(() => {
-  //   if (status === 'completed' && data) {
-  //     setPets(data);
-  //   }
-  // }, [data, status, setPets]);
+  const petCtx = useContext(PetContext);
+  const { setPets } = petCtx;
+  React.useEffect(() => {
+    sendRequest();
+  }, [sendRequest]);
+  React.useEffect(() => {
+    if (status === 'completed' && data) {
+      setPets(data);
+    }
+  }, [data, status, setPets]);
 
-  // React.useEffect(() => {
-  //   Aos.init();
-  //   Aos.refresh();
-  // }, []);
-  // if (status === 'pending') return <h1>Loading...</h1>;
-  // if (error) return <h1>Đã có lỗi xảy ra</h1>;
+  React.useEffect(() => {
+    Aos.init();
+    Aos.refresh();
+  }, []);
+  if (status === 'pending') return <h1>Loading...</h1>;
+  if (error) return <h1>Đã có lỗi xảy ra</h1>;
 
   return (
     <Container fixed>
+      {/* {console.log(data)} */}
       <Grid
         container
         xs={12}
