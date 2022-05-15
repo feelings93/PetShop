@@ -1,4 +1,4 @@
-import React, { Component, useContext, useState } from 'react';
+import React, { Component, useContext, useState, useEffect } from 'react';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
@@ -13,27 +13,32 @@ import { set } from 'react-hook-form';
 
 const CardCart = (props) => {
   const petCartCtx = useContext(PetCartContext);
-  const { items,handleUpQuantity,handleDowQuantity,handleDeleteItem, handleGetTotal } = petCartCtx;
-  const [quantity,setQuantity]= useState(props.quantity);
-  const [price,setPrice]= useState(props.price);
-
-
-  const handleUp =() => {
-      setPrice((price/(quantity)*(quantity+1)));
-      setQuantity(quantity+1);
-  }
-  const handleDown = () =>{
-    if(quantity>1){
-      setPrice((price/(quantity)*(quantity-1)));
-      setQuantity(quantity-1);
-
-    }
-    else{
-      setQuantity(quantity-1);
-      handleDeleteItem();
-    } 
-
-  }
+  const {
+    items,
+    handleUpQuantity,
+    handleDowQuantity,
+    handleDeleteItem,
+    handleGetTotal,
+    getItem,
+  } = petCartCtx;
+  const [itemCart, setItemCart] = useState(getItem(props.petId));
+  useEffect(() => {
+    console.log('Vo duoc chua');
+    setItemCart(getItem(props.petId));
+  });
+  // const handleUp = () => {
+  //   setPrice((price / quantity) * (quantity + 1));
+  //   setQuantity(quantity + 1);
+  // };
+  // const handleDown = () => {
+  //   if (quantity > 1) {
+  //     setPrice((price / quantity) * (quantity - 1));
+  //     setQuantity(quantity - 1);
+  //   } else {
+  //     setQuantity(quantity - 1);
+  //     handleDeleteItem();
+  //   }
+  // };
   return (
     <Box
       sx={{
@@ -43,7 +48,8 @@ const CardCart = (props) => {
         backgroundColor: '#fff',
       }}
     >
-      {/* {console.log(items)} */}
+      {console.log(props.petId)}
+      {console.log(itemCart)}
       <Grid
         container
         xs={12}
@@ -66,14 +72,21 @@ const CardCart = (props) => {
         </Grid>
         <Grid item sm={3.5} sx={{ textAlign: 'start' }}>
           <Typography sx={{ fontWeight: 'Medium', fontStyle: 'Monospace' }}>
-            {props.name}
+            {itemCart.name}
           </Typography>
           <Typography sx={{ fontWeight: 'Light', fontSize: '12px' }}>
-           ID: {props.petId}
+            ID: {props.petId}
           </Typography>
         </Grid>
         <Grid item sm={3.5} sx={{ display: 'flex', alignItems: 'center' }}>
-          <IconButton aria-label='increase item' component='span' onClick={()=>{handleUpQuantity(props.petId);handleUp()}}>
+          <IconButton
+            aria-label='increase item'
+            component='span'
+            onClick={() => {
+              handleUpQuantity(props.petId);
+              setItemCart(getItem(props.petId));
+            }}
+          >
             <AddCircleIcon />
           </IconButton>
           <TextField
@@ -84,7 +97,7 @@ const CardCart = (props) => {
               min: 0,
               style: { textAlign: 'center', height: '50%' },
             }} // the change is here
-            value={quantity}
+            value={itemCart.quantity}
             sx={{
               width: '50px',
               height: '50%',
@@ -92,15 +105,28 @@ const CardCart = (props) => {
               alignItems: 'center',
             }}
           />
-          <IconButton aria-label='decrease item' component='span'  onClick={()=>{handleDowQuantity(props.petId);handleDown()}}>
+          <IconButton
+            aria-label='decrease item'
+            component='span'
+            onClick={() => {
+              handleDowQuantity(props.petId);
+              setItemCart(getItem(props.petId));
+            }}
+          >
             <RemoveCircleIcon />
           </IconButton>
         </Grid>
         <Grid item sm={2.5}>
-          <Typography sx={{ fontWeight: 'bold' }}>{price} VNĐ</Typography>
+          <Typography sx={{ fontWeight: 'bold' }}>
+            {itemCart.price} VNĐ
+          </Typography>
         </Grid>
         <Grid item sm={0.5}>
-          <IconButton aria-label='delete item' component='span'>
+          <IconButton
+            aria-label='delete item'
+            component='span'
+            onClick={() => handleDeleteItem(props.petId)}
+          >
             <DeleteForeverIcon />
           </IconButton>
         </Grid>

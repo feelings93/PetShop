@@ -11,7 +11,8 @@ export const PetCartContext = React.createContext({
   handleDeleteItem: () => {},
   handleUpQuantity: () => {},
   handleDowQuantity: () => {},
-  handleGetTotal:()=>{},
+  handleGetTotal: () => {},
+  getItem: () => {},
 });
 
 const PetCartContextProvider = (props) => {
@@ -46,28 +47,39 @@ const PetCartContextProvider = (props) => {
     setOpenAdd(false);
   }, []);
 
-  const handleDeleteItem = useCallback(() => {
-    setItems(items?.filter((item) => item.quantity > 0));
+  const handleDeleteItem = useCallback((id) => {
+    setItems(items.filter((item) => item.petId != id));
+    console.log(items);
+  });
+  const getItem = useCallback((id) => {
+    const newItem = items?.filter((item) => item.petId == id);
+    return newItem[0];
   });
   const handleUpQuantity = useCallback((id) => {
-    items?.map((item) => {
+    const newItems = items?.map((item) => {
       if (item.petId == id) {
         item.quantity += 1;
         item.price = (item.price / (item.quantity - 1)) * item.quantity;
       }
+      return item;
     });
+    setItems(newItems?.filter((item) => item.quantity > 0));
   });
   const handleDowQuantity = useCallback((id) => {
-    items?.map((item) => {
-      if (item.petId == id && item.quantity > 0) item.quantity -= 1;
+    const newItems = items?.map((item) => {
+      if (item.petId == id && item.quantity > 0) {
+        item.quantity -= 1;
+        item.price = (item.price / (item.quantity + 1)) * item.quantity;
+      }
+      return item;
     });
+    setItems(newItems?.filter((item) => item.quantity > 0));
   });
-  const handleGetTotal = (() => {
+  const handleGetTotal = () => {
     let total = 0;
-    items.forEach((item)=>total+=item.price);
+    items.forEach((item) => (total += item.price));
     return total;
-    
-  });
+  };
   // React.useEffect(() => {
   //   if (query === '' || !query) {
   //     setSearchPets(pets);
@@ -89,7 +101,8 @@ const PetCartContextProvider = (props) => {
       handleDeleteItem,
       handleUpQuantity,
       handleDowQuantity,
-      handleGetTotal
+      handleGetTotal,
+      getItem,
     }),
     [
       items,
@@ -99,7 +112,8 @@ const PetCartContextProvider = (props) => {
       handleDeleteItem,
       handleUpQuantity,
       handleDowQuantity,
-      handleGetTotal
+      handleGetTotal,
+      getItem,
     ]
   );
 
