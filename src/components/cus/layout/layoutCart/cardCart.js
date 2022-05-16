@@ -23,7 +23,6 @@ const CardCart = (props) => {
   } = petCartCtx;
   const [itemCart, setItemCart] = useState(getItem(props.petId));
   useEffect(() => {
-    console.log('Vo duoc chua');
     setItemCart(getItem(props.petId));
   });
   // const handleUp = () => {
@@ -64,7 +63,7 @@ const CardCart = (props) => {
               height: '80px',
               borderRadius: 2,
               boxShadow: 3,
-              backgroundImage: `url(${props.url})`,
+              backgroundImage: `url(${itemCart.url})`,
               backgroundSize: ' cover',
               backgroundPosition: 'center',
             }}

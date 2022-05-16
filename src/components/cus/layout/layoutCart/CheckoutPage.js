@@ -27,7 +27,7 @@ import Breadcrumbs from '@mui/material/Breadcrumbs';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import Link from '@mui/material/Link';
 
-export default function Page2() {
+export default function CheckoutPage() {
   const [value, setValue] = React.useState(new Date('2014-08-18T21:11:54'));
   const [hideDiscout, setHideDiscount] = React.useState(true);
   const handleChange = (newValue) => {

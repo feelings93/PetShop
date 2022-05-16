@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component, useContext, useState, useEffect } from 'react';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
@@ -23,36 +23,50 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import InfoCart from './inforCart';
 import Badge from '@mui/material/Badge';
+import { PetCartContext } from '../../../../store/petCart-context';
 
-const CardMini = () =>{
-    return(
-<>
+const CardMini = (props) => {
+  const petCartCtx = useContext(PetCartContext);
+  const {
+    items,
+    handleUpQuantity,
+    handleDowQuantity,
+    handleDeleteItem,
+    handleGetTotal,
+    getItem,
+  } = petCartCtx;
+  const [itemCart, setItemCart] = useState(getItem(props.petId));
+  useEffect(() => {
+    setItemCart(getItem(props.petId));
+  });
+  return (
+    <>
       <Grid container sm={12} sx={{ display: 'flex', alignItems: 'center' }}>
-          <Grid item sm={2}>
-          <Badge badgeContent={4} color="warning">
-          <Box
-            sx={{
-              height: '50px',
-              width: '50px',
-              borderRadius: 2,
-              boxShadow: 3,
-              backgroundImage: `url('https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/best-girl-cat-names-1606245046.jpg?crop=0.668xw:1.00xh;0.126xw,0&resize=640:*')`,
-              backgroundSize: ' cover',
-              backgroundColor: '#f99',
-              backgroundPosition: 'center',
-            }}
-          />
-        </Badge>
-          </Grid>
+        {console.log(itemCart)}
+        <Grid item sm={2}>
+          <Badge badgeContent={itemCart.quantity} color='warning'>
+            <Box
+              sx={{
+                height: '50px',
+                width: '50px',
+                borderRadius: 2,
+                boxShadow: 3,
+                backgroundImage: `url(${itemCart.url})`,
+                backgroundSize: ' cover',
+                backgroundPosition: 'center',
+              }}
+            />
+          </Badge>
+        </Grid>
         <Grid item sm={8}>
-        <Typography
+          <Typography
             sx={{
               fontWeight: 'regular',
               fontStyle: 'Monospace',
               fontSize: '16px',
             }}
           >
-            Mèo lông vàng siêu đáng yêu
+            {itemCart.name}
           </Typography>
           <Typography
             sx={{
@@ -61,20 +75,17 @@ const CardMini = () =>{
               fontSize: '14px',
             }}
           >
-            Loại: Mèo
+            PetID: {itemCart.petId}
           </Typography>
-
-       
         </Grid>
 
         <Grid item sm={2}>
-        <Typography sx={{ fontWeight: 'medium', fontSize: '14px' }}>
-          10.000.000 VNĐ
-        </Typography>
+          <Typography sx={{ fontWeight: 'medium', fontSize: '14px' }}>
+            {itemCart.price} VNĐ
+          </Typography>
         </Grid>
       </Grid>
     </>
-    );
-    
-}
+  );
+};
 export default CardMini;

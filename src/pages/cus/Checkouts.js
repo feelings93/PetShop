@@ -1,9 +1,9 @@
-import Page2 from '../../components/cus/layout/layoutCart/Page2';
+import CheckoutPage from '../../components/cus/layout/layoutCart/CheckoutPage';
 import React from 'react';
 const Checkout = () => {
   return (
     <div>
-      <Page2/>
+      <CheckoutPage/>
     </div>
   );
 };

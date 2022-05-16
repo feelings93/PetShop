@@ -15,11 +15,13 @@ import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import Link from '@mui/material/Link';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import { PetCartContext } from '../../../../store/petCart-context';
+import { useNavigate } from 'react-router-dom';
 
 export default function CartPage() {
   const petCartCtx = useContext(PetCartContext);
   let { items,handleUpQuantity,handleDowQuantity, handleGetTotal } = petCartCtx;
-  
+  let navigate = useNavigate();
+
   const breadcrumbs = [
     <Link
       underline='hover'
@@ -162,7 +164,6 @@ export default function CartPage() {
             </Typography>
             <Button
               variant='contained'
-              href='/thanh-toan'
               sx={{
                 width: '100%',
                 backgroundColor: '#000',
@@ -171,6 +172,7 @@ export default function CartPage() {
                   opacity: [0.9, 0.8, 0.7],
                 },
               }}
+              onClick={()=> navigate('/thanh-toan')}
             >
               Đến trang thanh toán
             </Button>

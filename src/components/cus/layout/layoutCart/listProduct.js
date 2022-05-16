@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext,  useState } from 'react';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
@@ -24,18 +24,18 @@ import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import InfoCart from './inforCart';
 import Badge from '@mui/material/Badge';
 import CardMini from './cardMini';
+import {PetCartContext} from "../../../../store/petCart-context";
 const ListProduct = () => {
-  const [value, setValue] = React.useState(new Date('2014-08-18T21:11:54'));
-  const [hideDiscout, setHideDiscount] = React.useState(true);
-  const handleChange = (newValue) => {
-    setValue(newValue);
-  };
+  const petCartCtx = useContext(PetCartContext);
+  let { items,handleUpQuantity,handleDowQuantity, handleGetTotal } = petCartCtx;
+  const [hideDiscout, setHideDiscount] = useState(true);
+
   return (
     <Box>
       <Grid container sm={12} spacing={2} sx={{ padding: '15px 15px' }}>
-        {[1, 2, 3, 4, 5, 6, 7].map((value) => (
+        {items.map((value) => (
           <Grid item sm={12}>
-            <CardMini />
+            <CardMini {...value}/>
           </Grid>
         ))}
         <hr width='100%' align='center' color='#dadada' />
