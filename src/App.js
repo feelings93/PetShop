@@ -16,6 +16,8 @@ import AuthContextProvider from './store/auth-context';
 import Header from './components/cus/layout/navbar/Header';
 import Checkout from './pages/cus/Checkouts';
 import Contact from './pages/cus/Contact';
+import Service from './pages/cus/Service';
+import Accessoire from './pages/cus/Accessoire';
 const theme = createTheme({
   palette: {
     primary: {
@@ -69,20 +71,22 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-        <Routes>
-          <Route path='/' element={<InnerContent />}>
-            <Route exact path='/' element={<Navigate to='/trang-chu' />} />
-            <Route exact path='/trang-chu' element={<Home />} />
-            <Route exact path='/san-pham/:id' element={<DetailProduct />} />
-            <Route exact path='/gioi-thieu' element={<About />} />
-            <Route exact path='/thu-cung' element={<Pets />} />
-            <Route exact path='/gio-hang' element={<Cart />} />
-            <Route exact path='/thanh-toan' element={<Checkout />} />
-            <Route exact path='/lien-he' element={<Contact />} />
-          </Route>
+      <Routes>
+        <Route path='/' element={<InnerContent />}>
+          <Route exact path='/' element={<Navigate to='/trang-chu' />} />
+          <Route exact path='/trang-chu' element={<Home />} />
+          <Route exact path='/san-pham/:id' element={<DetailProduct />} />
+          <Route exact path='/gioi-thieu' element={<About />} />
+          <Route exact path='/thu-cung' element={<Pets />} />
+          <Route exact path='/gio-hang' element={<Cart />} />
+          <Route exact path='/thanh-toan' element={<Checkout />} />
+          <Route exact path='/lien-he' element={<Contact />} />
+          <Route exact path='/dich-vu' element={<Service />} />
+          <Route exact path='/phu-kien' element={<Accessoire />} />
+        </Route>
 
-          <Route path='*' element={<h1> NOT FOUND</h1>} />
-        </Routes>
+        <Route path='*' element={<h1> NOT FOUND</h1>} />
+      </Routes>
     </ThemeProvider>
   );
 }

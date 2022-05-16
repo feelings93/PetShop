@@ -21,6 +21,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
+import { useNavigate } from 'react-router-dom';
 
 const InfoCart = () => {
   const [value, setValue] = React.useState(new Date('2014-08-18T21:11:54'));
@@ -28,6 +29,8 @@ const InfoCart = () => {
   const handleChange = (newValue) => {
     setValue(newValue);
   };
+  let navigate = useNavigate();
+
   return (
     <>
       <Typography
@@ -167,7 +170,7 @@ const InfoCart = () => {
                   borderRadius: '5px',
                   padding: '0px 15px',
                   marginRight: '0px',
-                  marginLeft:'0px',
+                  marginLeft: '0px',
                   color: '#999',
                   borderColor: '#c4c4c4',
                 }}
@@ -181,7 +184,7 @@ const InfoCart = () => {
                   borderRadius: '5px',
                   padding: '0px 15px',
                   marginRight: '0px',
-                  marginLeft:'0px',
+                  marginLeft: '0px',
                   color: '#999',
                   borderColor: '#c4c4c4',
                   marginTop: '15px',
@@ -235,12 +238,12 @@ const InfoCart = () => {
           }}
         >
           <a
-            href='/gio-hang'
             style={{
               fontSize: '15px',
               color: '#2196f3',
               textDecoration: 'none',
             }}
+            onClick={() => navigate('/gio-hang')}
           >
             {' '}
             Giỏ hàng

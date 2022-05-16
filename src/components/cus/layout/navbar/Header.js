@@ -1,5 +1,4 @@
-/* eslint-disable react/jsx-props-no-spreading */
-import React,{useContext} from 'react';
+import React, { useContext } from 'react';
 import AppBar from '@mui/material/AppBar';
 import PropTypes from 'prop-types';
 import Toolbar from '@mui/material/Toolbar';
@@ -25,7 +24,7 @@ import Logo from './Logo';
 import Badge from '@mui/material/Badge';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import CartNof from './CartHeader';
-import {PetCartContext} from "../../../../store/petCart-context";
+import { PetCartContext } from '../../../../store/petCart-context';
 
 function ElevationScroll(props) {
   const { children, window } = props;
@@ -130,13 +129,6 @@ const Header = (props) => {
         </NavLink>
         <NavLink
           activeClassName={classes['link--active']}
-          to='/gioi-thieu'
-          className={classes.link}
-        >
-          Giới thiệu
-        </NavLink>
-        <NavLink
-          activeClassName={classes['link--active']}
           to='/lien-he'
           className={classes.link}
         >
@@ -148,13 +140,6 @@ const Header = (props) => {
           className={classes.link}
         >
           FAQ
-        </NavLink>
-        <NavLink
-          activeClassName={classes['link--active']}
-          to='/thu-vien-anh'
-          className={classes.link}
-        >
-          Thư viện ảnh
         </NavLink>
         <NavLink
           activeClassName={classes['link--active']}
@@ -188,7 +173,7 @@ const Header = (props) => {
           <Button fullWidth href='/sign-up' variant='contained'>
             Đăng ký
           </Button>
-          <CartNof countItem={items.length}/>
+          <CartNof countItem={items.length} />
         </Stack>
       )}
       {localStorage.getItem('isLogin') && (
@@ -208,7 +193,7 @@ const Header = (props) => {
           >
             Đăng xuất
           </Button>
-          <CartNof countItem={items.length}/>
+          <CartNof countItem={items.length} />
         </Stack>
       )}
     </div>
@@ -266,7 +251,26 @@ const Header = (props) => {
                 >
                   Thú cưng
                 </NavLink>
-
+                <NavLink
+                  to='/phu-kien'
+                  className={({ isActive }) =>
+                    !isActive
+                      ? classes.link
+                      : `${classes.link} ${classes['link--active']}`
+                  }
+                >
+                  Phụ kiện
+                </NavLink>
+                <NavLink
+                  to='/dich-vu'
+                  className={({ isActive }) =>
+                    !isActive
+                      ? classes.link
+                      : `${classes.link} ${classes['link--active']}`
+                  }
+                >
+                  Dịch vụ
+                </NavLink>
                 <NavLink
                   to='/lien-he'
                   className={({ isActive }) =>
@@ -317,7 +321,7 @@ const Header = (props) => {
                 >
                   Đăng ký
                 </Button>
-                <CartNof countItem={items.length}/>
+                <CartNof countItem={items.length} />
               </Stack>
             </Toolbar>
           </Container>

@@ -1,4 +1,4 @@
-import React, { useContext,  useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
@@ -24,10 +24,11 @@ import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import InfoCart from './inforCart';
 import Badge from '@mui/material/Badge';
 import CardMini from './cardMini';
-import {PetCartContext} from "../../../../store/petCart-context";
+import { PetCartContext } from '../../../../store/petCart-context';
 const ListProduct = () => {
   const petCartCtx = useContext(PetCartContext);
-  let { items,handleUpQuantity,handleDowQuantity, handleGetTotal } = petCartCtx;
+  let { items, handleUpQuantity, handleDowQuantity, handleGetTotal } =
+    petCartCtx;
   const [hideDiscout, setHideDiscount] = useState(true);
 
   return (
@@ -35,7 +36,7 @@ const ListProduct = () => {
       <Grid container sm={12} spacing={2} sx={{ padding: '15px 15px' }}>
         {items.map((value) => (
           <Grid item sm={12}>
-            <CardMini {...value}/>
+            <CardMini {...value} />
           </Grid>
         ))}
         <hr width='100%' align='center' color='#dadada' />
@@ -90,7 +91,7 @@ const ListProduct = () => {
             sx={{ display: 'flex', justifyContent: 'space-between' }}
           >
             <Typography>Tạm tính</Typography>
-            <Typography>2.150.000 VNĐ</Typography>
+            <Typography>{handleGetTotal()} VNĐ</Typography>
           </Grid>
           <Grid
             item
@@ -98,7 +99,7 @@ const ListProduct = () => {
             sx={{ display: 'flex', justifyContent: 'space-between' }}
           >
             <Typography>Phí vận chuyển</Typography>
-            <Typography>40.000 VNĐ</Typography>
+            <Typography>0.000 VNĐ</Typography>
           </Grid>
           <hr width='100%' align='center' color='#dadada' />
           <Grid
@@ -107,7 +108,7 @@ const ListProduct = () => {
             sx={{ display: 'flex', justifyContent: 'space-between' }}
           >
             <Typography>Tổng cộng</Typography>
-            <Typography>2.550.000 VNĐ</Typography>
+            <Typography>{handleGetTotal()} VNĐ</Typography>
           </Grid>
         </Grid>
       </Grid>

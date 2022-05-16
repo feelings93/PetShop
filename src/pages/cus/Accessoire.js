@@ -146,7 +146,7 @@ const topData = [
   { label: 'The Godfather: Part II', year: 1974 },
   { label: 'The Dark Knight', year: 2008 },
 ];
-const Pets = () => {
+const Accessoire = () => {
   const [shortPro, setShortPro] = React.useState(true);
   // const { error, status, sendRequest } = useHttp(getPets, true);
   const petCtx = useContext(PetContext);
@@ -282,4 +282,4 @@ const Pets = () => {
     </Container>
   );
 };
-export default Pets;
+export default Accessoire;

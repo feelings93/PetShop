@@ -2,25 +2,9 @@ import React from 'react';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
+
 import Container from '@mui/material/Container';
-import List from '@mui/material/List';
-import BillCart from './billCart';
-import CardCart from './cardCart';
-import TotalCart from './totalCart';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
-import MenuItem from '@mui/material/MenuItem';
-import Button from '@mui/material/Button';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
+
 import InfoCart from './inforCart';
 import ListProduct from './listProduct';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
@@ -50,25 +34,21 @@ export default function CheckoutPage() {
   ];
   return (
     <Container fixed>
-      <Box
-        
-      >
-       
-      </Box>
-      <Grid container sm={12} spacing={2} >
+      <Box></Box>
+      <Grid container sm={12} spacing={2}>
         <Grid item sm={12}>
-        <Breadcrumbs
-          separator={<NavigateNextIcon fontSize='small' />}
-          aria-label='breadcrumb'
-          sx={{
-            backgroundColor: '#f7faff',
-            padding: '10px 0px',
-            borderRadius: '5px',
-            marginBottom:'15px'
-          }}
-        >
-          {breadcrumbs}
-        </Breadcrumbs>
+          <Breadcrumbs
+            separator={<NavigateNextIcon fontSize='small' />}
+            aria-label='breadcrumb'
+            sx={{
+              backgroundColor: '#f7faff',
+              padding: '10px 0px',
+              borderRadius: '5px',
+              marginBottom: '15px',
+            }}
+          >
+            {breadcrumbs}
+          </Breadcrumbs>
         </Grid>
         <Grid item sm={6}>
           <InfoCart />
