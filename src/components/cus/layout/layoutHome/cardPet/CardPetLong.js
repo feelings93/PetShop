@@ -1,4 +1,3 @@
-
 import { React, useState } from 'react';
 import { border, Box, fontWeight, ThemeProvider } from '@mui/system';
 import Grid from '@mui/material/Grid';
@@ -11,26 +10,32 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import Link from '@mui/material/Link';
 import './cardpetpro.css';
 import Rating from '@mui/material/Rating';
+import logo from '../../../../../assets/images/logo.png';
+import { useNavigate } from 'react-router-dom';
 
 const CardPetLong = (props) => {
   const [hide, setHide] = useState(false);
-  const [color2, setColor2] = useState('#f2b203');
+  const [color2, setColor2] = useState('#000');
   const [color1, setColor1] = useState('#ff6b00');
   const [valueRating, setValueRating] = useState(3);
+  let navigate = useNavigate();
 
   return (
-    <Grid container sm={12} sx={{backgroundColor:'#fff'}}>
+    <Grid container sm={12} sx={{ backgroundColor: '#fff' }}>
       <Grid
         item
         sm={4}
         sx={{
           borderRadius: 2,
-          backgroundImage: `url("https://vpet.vn/upload/pet/pet-1617247618.jpg")`,
+          backgroundImage: `${
+            props.photos.length > 0
+              ? `url(${props.photos[0].url})`
+              : `url(${logo})`
+          }`,
           backgroundSize: ' cover',
           backgroundPosition: 'center',
 
           '&:hover': {
-
             opacity: [0.9, 0.8, 0.7],
           },
         }}
@@ -52,13 +57,13 @@ const CardPetLong = (props) => {
                 height: '50px',
                 width: '50px',
                 '&:hover': {
-                  backgroundColor: '#ff3b00',
+                  backgroundColor: '#2196f3',
                 },
               }}
             >
               <FavoriteBorderIcon
                 sx={{
-                  color: '#ff3b00',
+                  color: '#2196f3',
                   fontSize: '35px',
                   '&:hover': {
                     color: '#fff',
@@ -76,14 +81,14 @@ const CardPetLong = (props) => {
                 height: '50px',
                 width: '50px',
                 '&:hover': {
-                  backgroundColor: '#ff3b00',
+                  backgroundColor: '#2196f3',
                 },
               }}
               href='/san-pham'
             >
               <SavedSearchIcon
                 sx={{
-                  color: '#ff3b00',
+                  color: '#2196f3',
                   fontSize: '35px',
                   '&:hover': {
                     color: '#fff',
@@ -98,10 +103,10 @@ const CardPetLong = (props) => {
               borderRadius: '20px',
               display: 'flex',
               alignItems: 'center',
-              backgroundColor: '#ff3b00',
+              backgroundColor: '#2196f3',
               marginTop: '15px',
               '&:hover': {
-                backgroundColor: '#ff3b00',
+                backgroundColor: '#2196f3',
                 opacity: [0.9, 0.8, 0.7],
               },
             }}
@@ -111,11 +116,11 @@ const CardPetLong = (props) => {
           </Button>
         </div>
         <Box display='flex' justifyContent='space-between'>
-          {props.new === 'true' ? (
+          {/* {props.new === 'true' ? (
             <div className='image__title'>NEW</div>
           ) : (
             <div />
-          )}
+          )} */}
           {/* {!hide ? (
             <IconButton
               aria-label='delete'
@@ -149,13 +154,14 @@ const CardPetLong = (props) => {
         </Box>
       </Grid>
 
-      <Grid item sm={8} >
+      <Grid item sm={8}>
         <Box
           item
           sx={{
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'space-around',
+            padding: '10px 10px',
           }}
         >
           <Box
@@ -165,20 +171,20 @@ const CardPetLong = (props) => {
               alignItems: 'center',
             }}
           >
-             <Link
-          href='/tours/detailtour'
-          underline='none'
-          fontWeight='bold'
-          fontSize='14px'
-          color="#000"
-          sx={{
-            '&:hover': {
-              color: '#c89300',
-            },
-          }}
-        >
-          {props.title}
-        </Link>
+            <Link
+              underline='none'
+              fontWeight='bold'
+              fontSize='22px'
+              color='#000'
+              sx={{
+                '&:hover': {
+                  color: '#c89300',
+                },
+              }}
+              onClick={() => navigate(`/san-pham/${props.id}`)}
+            >
+              {props.name}
+            </Link>
             <IconButton
               aria-label='delete'
               sx={{
@@ -195,20 +201,24 @@ const CardPetLong = (props) => {
           </Box>
 
           <Box display='flex' alignItems='center'>
-          <Rating name="read-only" value={valueRating} readOnly size="small" />
+            <Rating
+              name='read-only'
+              value={valueRating}
+              readOnly
+              size='small'
+            />
 
-
-          <Typography
-            gutterBottom
-            component='div'
-            fontWeight='regular'
-            fontSize='12px'
-            color='#555555'
-            margin='2px 0px 0px 2px'
-          >
-            1280 đánh giá
-          </Typography>
-        </Box>
+            <Typography
+              gutterBottom
+              component='div'
+              fontWeight='regular'
+              fontSize='12px'
+              color='#555555'
+              margin='2px 0px 0px 2px'
+            >
+              1280 đánh giá
+            </Typography>
+          </Box>
           <Typography
             sx={{
               width: '100%',
@@ -217,12 +227,10 @@ const CardPetLong = (props) => {
               marginTop: '10px',
             }}
           >
-            Giống chó alaska thuần chủng, được sinh ra từ bố và mẹ đều là
-            alaska. Cam kết uy tín
+            {props.describe}
           </Typography>
         </Box>
         <Link
-          href='/'
           style={{
             display: 'flex',
             justifyContent: 'flex-end',
@@ -232,19 +240,28 @@ const CardPetLong = (props) => {
             textDecoration: 'none',
             width: '100%',
             marginTop: '5px',
+            padding: '10px 10px',
+            cursor:'pointer'
           }}
+          onClick={() => navigate(`/san-pham/${props.id}`)}
         >
           Xem thêm ...
         </Link>
-        <Box sx={{ alignItems: 'flex-end', marginTop: '20px' }}>
+        <Box
+          sx={{
+            alignItems: 'flex-end',
+            marginTop: '20px',
+            padding: '10px 10px',
+          }}
+        >
           <Typography
             style={{
-              fontSize: '28px',
+              fontSize: '20px',
               fontWeight: 'bold',
               color: color2,
             }}
           >
-            20.000.000 VND
+            {props.price} VND
           </Typography>
         </Box>
       </Grid>

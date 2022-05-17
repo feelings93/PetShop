@@ -10,6 +10,7 @@ import TextField from '@mui/material/TextField';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { PetCartContext } from '../../../../store/petCart-context';
 import { set } from 'react-hook-form';
+import logo from '../../../../assets/images/logo.png';
 
 const CardCart = (props) => {
   const petCartCtx = useContext(PetCartContext);
@@ -63,7 +64,9 @@ const CardCart = (props) => {
               height: '80px',
               borderRadius: 2,
               boxShadow: 3,
-              backgroundImage: `url(${itemCart.url})`,
+              backgroundImage: `${
+                itemCart.url ? `url(${itemCart.url})` : `url(${logo})`
+              }`,
               backgroundSize: ' cover',
               backgroundPosition: 'center',
             }}

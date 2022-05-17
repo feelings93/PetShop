@@ -14,6 +14,7 @@ import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
 import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
 import { PetCartContext } from '../../../../../store/petCart-context';
 import { useNavigate } from 'react-router-dom';
+import logo from '../../../../../assets/images/logo.png';
 
 const CardPetPro = (props) => {
   const [hide, setHide] = useState(false);
@@ -38,7 +39,7 @@ const CardPetPro = (props) => {
           }}
         >
           <LocalOfferOutlinedIcon sx={{ width: '15px', height: '15px' }} />
-          <Typography sx={{ fontSize: '12px' }}>{props.type.name}</Typography>
+          <Typography sx={{ fontSize: '12px' }}>{props.breed.name}</Typography>
         </Box>
         {!hide ? (
           <IconButton
@@ -81,7 +82,11 @@ const CardPetPro = (props) => {
         sx={{
           height: 300,
           borderRadius: 2,
-          backgroundImage: `url(${props.photos[0].url})`,
+          backgroundImage: `${
+            props.photos.length > 0
+              ? `url(${props.photos[0].url})`
+              : `url(${logo})`
+          }`,
           backgroundSize: ' cover',
           backgroundPosition: 'center',
           marginTop: '5px',
@@ -134,7 +139,7 @@ const CardPetPro = (props) => {
                   backgroundColor: '#2196f3',
                 },
               }}
-              onClick={()=> navigate(`/san-pham/${props.id}`)}
+              onClick={() => navigate(`/san-pham/${props.id}`)}
             >
               <SavedSearchIcon
                 sx={{
@@ -175,11 +180,11 @@ const CardPetPro = (props) => {
           display='flex'
           justifyContent='space-between'
         >
-          {props.status === 'New' ? (
+          {/* {props.status === 'Còn hàng' ? (
             <div className='image__title'>NEW</div>
           ) : (
             <div />
-          )}
+          )} */}
         </Grid>
       </Grid>
 
@@ -190,7 +195,6 @@ const CardPetPro = (props) => {
         sx={{ textAlign: 'center' }}
       >
         <Link
-          href='/tours/detailtour'
           underline='none'
           fontWeight='bold'
           fontSize='14px'
@@ -200,6 +204,7 @@ const CardPetPro = (props) => {
               color: '#c89300',
             },
           }}
+          onClick={() => navigate(`/san-pham/${props.id}`)}
         >
           {props.name}
         </Link>

@@ -24,7 +24,7 @@ import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import InfoCart from './inforCart';
 import Badge from '@mui/material/Badge';
 import { PetCartContext } from '../../../../store/petCart-context';
-
+import logo from "../../../../assets/images/logo.png";
 const CardMini = (props) => {
   const petCartCtx = useContext(PetCartContext);
   const {
@@ -51,8 +51,9 @@ const CardMini = (props) => {
                 width: '50px',
                 borderRadius: 2,
                 boxShadow: 3,
-                backgroundImage: `url(${itemCart.url})`,
-                backgroundSize: ' cover',
+                backgroundImage: `${
+                  itemCart.url ? `url(${itemCart.url})` : `url(${logo})`
+                }`,                backgroundSize: ' cover',
                 backgroundPosition: 'center',
               }}
             />

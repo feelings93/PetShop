@@ -22,14 +22,15 @@ const PetCartContextProvider = (props) => {
 
   const handleAddToCart = useCallback((Item) => {
     let checkHaving = false;
-    let itemCart = Item.photos
+    console.log(Item);
+    let itemCart = Item?.photos.length > 0
       ? new ItemCart(Item.id, 1, Item.name, Item.price, Item.photos[0].url)
       : new ItemCart(
           Item.id,
           1,
           Item.name,
           Item.price,
-          'https://p.kindpng.com/picc/s/264-2642768_shopping-icon-vector-and-shopping-cart-hd-png.png'
+          // 'https://p.kindpng.com/picc/s/264-2642768_shopping-icon-vector-and-shopping-cart-hd-png.png'
         );
     items.map((item) => {
       if (item.petId === itemCart.petId) {

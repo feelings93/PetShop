@@ -30,7 +30,7 @@ import TextField from '@mui/material/TextField';
 import useHttp from '../../hooks/use-http';
 import { getPets } from '../../lib/api/pet';
 import { PetContext } from '../../store/pet-context';
-const data = [
+const data1 = [
   {
     id: 1,
     name: 'MÈO TAI CỤP SIÊU ĐÁNG YÊU 1 ',
@@ -148,28 +148,28 @@ const topData = [
 ];
 const Pets = () => {
   const [shortPro, setShortPro] = React.useState(true);
-  // const { error, status, sendRequest } = useHttp(getPets, true);
+  const { error, status, sendRequest,data } = useHttp(getPets, true);
   const petCtx = useContext(PetContext);
   const { setPets } = petCtx;
-  // React.useEffect(() => {
-  //   sendRequest();
-  // }, [sendRequest]);
-  // React.useEffect(() => {
-  //   if (status === 'completed' && data) {
-  //     setPets(data);
-  //   }
-  // }, [data, status, setPets]);
+  React.useEffect(() => {
+    sendRequest();
+  }, [sendRequest]);
+  React.useEffect(() => {
+    if (status === 'completed' && data) {
+      console.log(data);
+      setPets(data);
+    }
+  }, [ status, setPets, data]);
 
   React.useEffect(() => {
     Aos.init();
     Aos.refresh();
   }, []);
-  // if (status === 'pending') return <h1>Loading...</h1>;
-  // if (error) return <h1>Đã có lỗi xảy ra</h1>;
+  if (status === 'pending') return <h1>Loading...</h1>;
+  if (error) return <h1>Đã có lỗi xảy ra</h1>;
 
   return (
     <Container fixed>
-      {/* {console.log(data)} */}
       <Grid
         container
         xs={12}
@@ -247,7 +247,7 @@ const Pets = () => {
           {/* <div data-aos='fade-up' data-aos-duration={1000}> */}
           <Grid container xs={12} md={12} lg={12} spacing={1}>
             {shortPro
-              ? data.map((pet, index) => {
+              ? data?.map((pet, index) => {
                   return (
                     <Grid item xs={4} md={4}>
                       <CardPetPro
@@ -258,18 +258,14 @@ const Pets = () => {
                     </Grid>
                   );
                 })
-              : data.map((pet, index) => {
+              : data?.map((pet, index) => {
                   return (
-                    <Box sx={{ mt: 1, mb: 1 }}>
+                    <Grid item xs={12} md={12}>
                       <CardPetLong
-                        url={pet.photos[0].url}
-                        title={pet.name}
-                        type={pet.type.name}
-                        price={pet.price}
-                        new={false}
+                       {...pet}
                       />
                       <hr width='95%' align='center' color='#d9d9d9' />
-                    </Box>
+                    </Grid>
                   );
                 })}
           </Grid>
