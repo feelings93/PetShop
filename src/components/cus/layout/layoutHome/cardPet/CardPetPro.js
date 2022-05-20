@@ -39,7 +39,9 @@ const CardPetPro = (props) => {
           }}
         >
           <LocalOfferOutlinedIcon sx={{ width: '15px', height: '15px' }} />
-          <Typography sx={{ fontSize: '12px' }}>{props.breed.name}</Typography>
+          <Typography sx={{ fontSize: '12px' }}>
+            {props.typeP == 'Pet' ? props.breed.name : props.category.name}
+          </Typography>
         </Box>
         {!hide ? (
           <IconButton
@@ -139,8 +141,10 @@ const CardPetPro = (props) => {
                   backgroundColor: '#2196f3',
                 },
               }}
-              onClick={() => navigate(`/san-pham/${props.id}`)}
-            >
+              onClick={() => {
+                if (props.typeP == 'Pet') navigate(`/thu-cung/${props.id}`);
+                else navigate(`/san-pham/${props.id}`);
+              }}            >
               <SavedSearchIcon
                 sx={{
                   color: '#2196f3',
@@ -204,7 +208,10 @@ const CardPetPro = (props) => {
               color: '#c89300',
             },
           }}
-          onClick={() => navigate(`/san-pham/${props.id}`)}
+          onClick={() => {
+            if (props.typeP == 'Pet') navigate(`/thu-cung/${props.id}`);
+            else navigate(`/san-pham/${props.id}`);
+          }}
         >
           {props.name}
         </Link>

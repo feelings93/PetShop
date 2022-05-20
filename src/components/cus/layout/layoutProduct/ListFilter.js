@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Box } from '@mui/system';
 import {
   FormControlLabel,
@@ -16,12 +16,13 @@ import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 
 import { styled } from '@mui/material/styles';
 
-import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined';
-import CircleIcon from '@mui/icons-material/Circle';
-import { grey } from '@mui/material/colors';
-import PeopleAltSharpIcon from '@mui/icons-material/PeopleAltSharp';
-import ChildCareSharpIcon from '@mui/icons-material/ChildCareSharp';
-import { set } from 'react-hook-form';
+import useHttp from '../../../../hooks/use-http';
+import { getPetTypes } from '../../../../lib/api/pet-type';
+import { getCategories } from '../../../../lib/api/category';
+
+import { PetTypeContext } from '../../../../store/pet-type-context';
+import Dialog from '@mui/material/Dialog';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const Typographyf14light = (props) => {
   return (
@@ -80,13 +81,36 @@ const labels = {
   5: 'Excellent',
 };
 
-const TourFilters = () => {
-  const [price, setPrice] = useState([40, 100]);
-  const [stars, setStars] = useState(4);
-  const [childNum, setChildNum] = useState(1);
-  const [adultNum, setAdultNum] = useState(1);
+const ListFilters = (props) => {
+  const [price, setPrice] = useState([100000, 10000000]);
+
   const [isClickInList, setIsClickInList] = useState(false);
-  const [ratingNumber, setRatingNumber] =useState(0);
+  const [ratingNumber, setRatingNumber] = useState(0);
+
+  const { error, status, sendRequest, data } =
+    props.typeP == 'Pet'
+      ? useHttp(getPetTypes, true)
+      : useHttp(getCategories, true);
+  const petTypeCtx = useContext(PetTypeContext);
+  const { setPetTypes } = petTypeCtx;
+
+  useEffect(() => {
+    sendRequest();
+  }, [sendRequest]);
+
+  useEffect(() => {
+    if (status === 'completed' && data) {
+      setPetTypes(data);
+    }
+  }, [status, setPetTypes, data]);
+
+  if (status === 'pending')
+    return (
+      <Dialog open={true}>
+        <CircularProgress />
+      </Dialog>
+    );
+  if (error) return <h1>Đã có lỗi xảy ra</h1>;
 
   const handleChange = (event, newValue, activeThumb) => {
     if (!Array.isArray(newValue)) {
@@ -118,7 +142,7 @@ const TourFilters = () => {
         <Typography sx={{ fontSize: '16px', fontWeight: 'bold' }}>
           Danh mục
         </Typography>
-        {['Chó', 'Mèo', 'Nhím', 'Khác'].map((e) => (
+        {data.map((e) => (
           <>
             <Box
               sx={{
@@ -132,8 +156,10 @@ const TourFilters = () => {
               }}
               onClick={() => setIsClickInList(!isClickInList)}
             >
-              <Typography>{e}</Typography>
-              <Typography>(12)</Typography>
+              <Typography>{e.name}</Typography>
+              <Typography>
+                ({props.typeP == 'Pet' ? e.pets?.length : e.category?.length})
+              </Typography>
             </Box>
           </>
 
@@ -197,12 +223,12 @@ const TourFilters = () => {
         </Box>
         <Box>
           <Slider
-            defaultValue={40}
+            defaultValue={500000}
             onChange={handleChange}
             value={price}
-            step={1}
-            min={40}
-            max={200}
+            step={100000}
+            min={100000}
+            max={10000000}
             valueLabelDisplay='auto'
             disableSwap
             sx={{ color: '#2196f3', ml: 1 }}
@@ -213,7 +239,9 @@ const TourFilters = () => {
       <Box sx={{ m: 1, ml: 2, mr: 2 }}>
         <TypographyMod fontSize='14px'>Phổ biến</TypographyMod>
         <Box textAlign='center'>
-          <TypographyMod fontSize='12px'>{ratingNumber} Sao đánh giá</TypographyMod>
+          <TypographyMod fontSize='12px'>
+            {ratingNumber} Sao đánh giá
+          </TypographyMod>
         </Box>
         <Box
           sx={{
@@ -229,7 +257,12 @@ const TourFilters = () => {
               setRatingNumber(newValue);
             }}
           />
-          <Typography fontSize='12px' sx={{marginLeft:'5px', fontWeight:'medium'}}>{labels[ratingNumber]}</Typography>
+          <Typography
+            fontSize='12px'
+            sx={{ marginLeft: '5px', fontWeight: 'medium' }}
+          >
+            {labels[ratingNumber]}
+          </Typography>
         </Box>
         <FormGroup>
           <FormControlLabel
@@ -249,4 +282,4 @@ const TourFilters = () => {
   );
 };
 
-export default TourFilters;
+export default ListFilters;

@@ -20,7 +20,7 @@ import DensityMediumIcon from '@mui/icons-material/DensityMedium';
 import IconButton from '@mui/material/IconButton';
 
 import { TypographyMod } from '../../components/cus/layout/layoutProduct/TypoUtils';
-import TourFilters from '../../components/cus/layout/layoutProduct/TourFilter';
+import ListFilters from '../../components/cus/layout/layoutProduct/ListFilter';
 import 'aos/dist/aos.css';
 import CardPetLong from '../../components/cus/layout/layoutHome/cardPet/CardPetLong';
 import CardPetPro from '../../components/cus/layout/layoutHome/cardPet/CardPetPro';
@@ -141,10 +141,9 @@ const data1 = [
   },
 ];
 const topData = [
-  { label: 'The Shawshank Redemption', year: 1994 },
-  { label: 'The Godfather', year: 1972 },
-  { label: 'The Godfather: Part II', year: 1974 },
-  { label: 'The Dark Knight', year: 2008 },
+  { label: 'Giá tăng dần', type: "asc" },
+  { label: 'Giá giảm dần', type: "desc" },
+  { label: 'Mới nhất', type: "new" },
 ];
 const Pets = () => {
   const [shortPro, setShortPro] = React.useState(true);
@@ -179,7 +178,7 @@ const Pets = () => {
         spacing={2}
       >
         <Grid item xs={12} md={4} lg={4}>
-          <TourFilters />
+          <ListFilters typeP="Pet" />
         </Grid>
         <Grid item xs={12} md={8} lg={8}>
           {/* <div data-aos='fade-up' data-aos-duration={1000}> */}
@@ -210,7 +209,7 @@ const Pets = () => {
                   size='small'
                   sx={{ width: '150px', zIndex: '2' }}
                   renderInput={(params) => (
-                    <TextField {...params} label='Quận, huyện' />
+                    <TextField {...params} label='Chọn loại sắp xếp' />
                   )}
                 />
               </Box>
@@ -252,6 +251,7 @@ const Pets = () => {
                     <Grid item xs={4} md={4}>
                       <CardPetPro
                         {...pet}
+                        typeP="Pet"
                         // new={false}
                       />
                       <hr width='95%' align='center' color='#d9d9d9' />
@@ -263,6 +263,8 @@ const Pets = () => {
                     <Grid item xs={12} md={12}>
                       <CardPetLong
                        {...pet}
+                       typeP="Pet"
+
                       />
                       <hr width='95%' align='center' color='#d9d9d9' />
                     </Grid>

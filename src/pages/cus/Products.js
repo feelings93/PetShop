@@ -20,7 +20,7 @@ import DensityMediumIcon from '@mui/icons-material/DensityMedium';
 import IconButton from '@mui/material/IconButton';
 
 import { TypographyMod } from '../../components/cus/layout/layoutProduct/TypoUtils';
-import TourFilters from '../../components/cus/layout/layoutProduct/TourFilter';
+import ListFilters from '../../components/cus/layout/layoutProduct/ListFilter';
 import 'aos/dist/aos.css';
 import CardPetLong from '../../components/cus/layout/layoutHome/cardPet/CardPetLong';
 import CardPetPro from '../../components/cus/layout/layoutHome/cardPet/CardPetPro';
@@ -28,9 +28,11 @@ import Header from '../../components/cus/layout/navbar/Header';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import useHttp from '../../hooks/use-http';
-import { getPets } from '../../lib/api/pet';
-import { PetContext } from '../../store/pet-context';
-const data = [
+import { getProducts } from '../../lib/api/product';
+import { ProductContext } from '../../store/product-context';
+import Dialog from '@mui/material/Dialog';
+import CircularProgress from '@mui/material/CircularProgress';
+const data1 = [
   {
     id: 1,
     name: 'MÈO TAI CỤP SIÊU ĐÁNG YÊU 1 ',
@@ -146,26 +148,35 @@ const topData = [
   { label: 'The Godfather: Part II', year: 1974 },
   { label: 'The Dark Knight', year: 2008 },
 ];
-const Accessoire = () => {
+const Products = () => {
   const [shortPro, setShortPro] = React.useState(true);
-  // const { error, status, sendRequest } = useHttp(getPets, true);
-  const petCtx = useContext(PetContext);
-  const { setPets } = petCtx;
-  // React.useEffect(() => {
-  //   sendRequest();
-  // }, [sendRequest]);
-  // React.useEffect(() => {
-  //   if (status === 'completed' && data) {
-  //     setPets(data);
-  //   }
-  // }, [data, status, setPets]);
+  const { error, status, sendRequest,data } = useHttp(getProducts, true);
+  const productCtx = useContext(ProductContext);
+  const { setProducts } = productCtx;
+  React.useEffect(() => {
+    sendRequest();
+  }, [sendRequest]);
+  React.useEffect(() => {
+    if (status === 'completed' && data) {
+      console.log(data);
+      setProducts(data);
+    }
+  }, [data, status, setProducts]);
 
   React.useEffect(() => {
     Aos.init();
     Aos.refresh();
   }, []);
-  // if (status === 'pending') return <h1>Loading...</h1>;
-  // if (error) return <h1>Đã có lỗi xảy ra</h1>;
+  if (status === 'pending')
+  return (
+    <Dialog
+          isOpen={true}
+          style={{display:"flex", justifyContent:"center", background:"transparent"}}
+          >
+          <CircularProgress />
+    </Dialog>
+  );
+  if (error) return <h1>Đã có lỗi xảy ra</h1>;
 
   return (
     <Container fixed>
@@ -179,7 +190,7 @@ const Accessoire = () => {
         spacing={2}
       >
         <Grid item xs={12} md={4} lg={4}>
-          <TourFilters />
+          <ListFilters typeP="Product"/>
         </Grid>
         <Grid item xs={12} md={8} lg={8}>
           {/* <div data-aos='fade-up' data-aos-duration={1000}> */}
@@ -247,29 +258,25 @@ const Accessoire = () => {
           {/* <div data-aos='fade-up' data-aos-duration={1000}> */}
           <Grid container xs={12} md={12} lg={12} spacing={1}>
             {shortPro
-              ? data.map((pet, index) => {
+              ? data?.map((product, index) => {
                   return (
                     <Grid item xs={4} md={4}>
                       <CardPetPro
-                        {...pet}
+                        {...product}
                         // new={false}
                       />
                       <hr width='95%' align='center' color='#d9d9d9' />
                     </Grid>
                   );
                 })
-              : data.map((pet, index) => {
+              : data?.map((product, index) => {
                   return (
-                    <Box sx={{ mt: 1, mb: 1 }}>
+                    <Grid item xs={12} md={12}>
                       <CardPetLong
-                        url={pet.photos[0].url}
-                        title={pet.name}
-                        type={pet.type.name}
-                        price={pet.price}
-                        new={false}
+                       {...product}
                       />
                       <hr width='95%' align='center' color='#d9d9d9' />
-                    </Box>
+                    </Grid>
                   );
                 })}
           </Grid>
@@ -282,4 +289,4 @@ const Accessoire = () => {
     </Container>
   );
 };
-export default Accessoire;
+export default Products;
