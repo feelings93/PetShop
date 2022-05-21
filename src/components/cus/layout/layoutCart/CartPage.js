@@ -1,4 +1,4 @@
-import React, { useContext,  useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
@@ -19,7 +19,8 @@ import { useNavigate } from 'react-router-dom';
 
 export default function CartPage() {
   const petCartCtx = useContext(PetCartContext);
-  let { items,handleUpQuantity,handleDowQuantity, handleGetTotal } = petCartCtx;
+  let { items, handleUpQuantity, handleDowQuantity, handleGetTotal } =
+    petCartCtx;
   let navigate = useNavigate();
 
   const breadcrumbs = [
@@ -27,7 +28,7 @@ export default function CartPage() {
       underline='hover'
       key='1'
       color='#000'
-      href='/'
+      onClick={() => navigate('/')}
       fontWeight='regular'
       sx={{ textDecoration: 'none' }}
     >
@@ -172,7 +173,7 @@ export default function CartPage() {
                   opacity: [0.9, 0.8, 0.7],
                 },
               }}
-              onClick={()=> navigate('/thanh-toan')}
+              onClick={() => navigate('/thanh-toan')}
             >
               Đến trang thanh toán
             </Button>

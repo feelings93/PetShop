@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import { TabContext, TabList, TabPanel } from '@material-ui/lab';
 
-export default function LabTabs() {
+export default function LabTabs(props) {
   const [value, setValue] = React.useState('1');
   const [color2, setColor2] = React.useState('#f2b203');
   const handleChange = (event, newValue) => {
@@ -37,7 +37,7 @@ export default function LabTabs() {
           </TabList>
         </Box>
         <TabPanel value='1' style={{ backgroundColor: '#f9f9f9' }}>
-          Item One
+          {props?.describe}
         </TabPanel>
         <TabPanel value='2' style={{ backgroundColor: '#f9f9f9' }}>
           Item Two

@@ -22,9 +22,9 @@ const CardCart = (props) => {
     handleGetTotal,
     getItem,
   } = petCartCtx;
-  const [itemCart, setItemCart] = useState(getItem(props.petId));
+  const [itemCart, setItemCart] = useState(getItem(props));
   useEffect(() => {
-    setItemCart(getItem(props.petId));
+    setItemCart(getItem(props));
   });
   // const handleUp = () => {
   //   setPrice((price / quantity) * (quantity + 1));
@@ -65,7 +65,7 @@ const CardCart = (props) => {
               borderRadius: 2,
               boxShadow: 3,
               backgroundImage: `${
-                itemCart.url ? `url(${itemCart.url})` : `url(${logo})`
+                itemCart?.url ? `url(${itemCart.url})` : `url(${logo})`
               }`,
               backgroundSize: ' cover',
               backgroundPosition: 'center',
@@ -74,7 +74,7 @@ const CardCart = (props) => {
         </Grid>
         <Grid item sm={3.5} sx={{ textAlign: 'start' }}>
           <Typography sx={{ fontWeight: 'Medium', fontStyle: 'Monospace' }}>
-            {itemCart.name}
+            {itemCart?.name}
           </Typography>
           <Typography sx={{ fontWeight: 'Light', fontSize: '12px' }}>
             ID: {props.petId}
@@ -99,7 +99,7 @@ const CardCart = (props) => {
               min: 0,
               style: { textAlign: 'center', height: '50%' },
             }} // the change is here
-            value={itemCart.quantity}
+            value={itemCart?.quantity}
             sx={{
               width: '50px',
               height: '50%',
@@ -120,7 +120,7 @@ const CardCart = (props) => {
         </Grid>
         <Grid item sm={2.5}>
           <Typography sx={{ fontWeight: 'bold' }}>
-            {itemCart.price} VNĐ
+            {itemCart?.price} VNĐ
           </Typography>
         </Grid>
         <Grid item sm={0.5}>

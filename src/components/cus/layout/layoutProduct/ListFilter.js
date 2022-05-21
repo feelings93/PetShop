@@ -21,6 +21,8 @@ import { getPetTypes } from '../../../../lib/api/pet-type';
 import { getCategories } from '../../../../lib/api/category';
 
 import { PetTypeContext } from '../../../../store/pet-type-context';
+import { CategoryContext } from '../../../../store/category-context';
+
 import Dialog from '@mui/material/Dialog';
 import CircularProgress from '@mui/material/CircularProgress';
 
@@ -93,6 +95,8 @@ const ListFilters = (props) => {
       : useHttp(getCategories, true);
   const petTypeCtx = useContext(PetTypeContext);
   const { setPetTypes } = petTypeCtx;
+  const categoryCtx = useContext(CategoryContext);
+  const { setCategories } = categoryCtx;
 
   useEffect(() => {
     sendRequest();
@@ -100,9 +104,9 @@ const ListFilters = (props) => {
 
   useEffect(() => {
     if (status === 'completed' && data) {
-      setPetTypes(data);
+      props.typeP == 'Pet' ? setPetTypes(data) : setCategories(data);
     }
-  }, [status, setPetTypes, data]);
+  }, [status, setPetTypes, setCategories, data]);
 
   if (status === 'pending')
     return (
@@ -158,7 +162,7 @@ const ListFilters = (props) => {
             >
               <Typography>{e.name}</Typography>
               <Typography>
-                ({props.typeP == 'Pet' ? e.pets?.length : e.category?.length})
+                ({props.typeP == 'Pet' ? e.pets?.length : e.products?.length})
               </Typography>
             </Box>
           </>

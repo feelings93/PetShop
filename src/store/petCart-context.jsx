@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { ItemCart } from './dto/api.dto.ts';
-
+import logo from '../assets/images/logo.png';
 export const PetCartContext = React.createContext({
   items: [],
   setItems: () => {},
@@ -23,19 +23,22 @@ const PetCartContextProvider = (props) => {
   const handleAddToCart = useCallback((Item) => {
     let checkHaving = false;
     console.log(Item);
-    let itemCart = Item?.photos.length > 0
-      ? new ItemCart(Item.id, 1, Item.name, Item.price, Item.photos[0].url)
-      : new ItemCart(
-          Item.id,
-          1,
-          Item.name,
-          Item.price,
-          // 'https://p.kindpng.com/picc/s/264-2642768_shopping-icon-vector-and-shopping-cart-hd-png.png'
-        );
+    let itemCart =
+      Item?.photos.length > 0
+        ? new ItemCart(Item.id, 1, Item.name, Item.price, Item.photos[0].url)
+        : new ItemCart(
+            Item.id,
+            1,
+            Item.name,
+            Item.price,
+            logo
+            // 'https://p.kindpng.com/picc/s/264-2642768_shopping-icon-vector-and-shopping-cart-hd-png.png'
+          );
     items.map((item) => {
       if (item.petId === itemCart.petId) {
         checkHaving = true;
       }
+      return item;
     });
     if (!checkHaving) setItems([...items, itemCart]);
   });

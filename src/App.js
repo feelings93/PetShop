@@ -18,6 +18,7 @@ import Checkout from './pages/cus/Checkouts';
 import Contact from './pages/cus/Contact';
 import Service from './pages/cus/Service';
 import Products from './pages/cus/Products';
+import DetailPet from './pages/cus/DetailPet';
 const theme = createTheme({
   palette: {
     primary: {
@@ -75,6 +76,7 @@ function App() {
         <Route path='/' element={<InnerContent />}>
           <Route exact path='/' element={<Navigate to='/trang-chu' />} />
           <Route exact path='/trang-chu' element={<Home />} />
+          <Route exact path='/thu-cung/:id' element={<DetailPet />} />
           <Route exact path='/san-pham/:id' element={<DetailProduct />} />
           <Route exact path='/gioi-thieu' element={<About />} />
           <Route exact path='/thu-cung' element={<Pets />} />

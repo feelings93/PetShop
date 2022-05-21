@@ -27,11 +27,11 @@ import CardPetPro from '../../components/cus/layout/layoutHome/cardPet/CardPetPr
 import Header from '../../components/cus/layout/navbar/Header';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
+
 import useHttp from '../../hooks/use-http';
 import { getProducts } from '../../lib/api/product';
 import { ProductContext } from '../../store/product-context';
-import Dialog from '@mui/material/Dialog';
-import CircularProgress from '@mui/material/CircularProgress';
+import LoadingCom from '../../components/LoadingCom';
 const data1 = [
   {
     id: 1,
@@ -143,14 +143,13 @@ const data1 = [
   },
 ];
 const topData = [
-  { label: 'The Shawshank Redemption', year: 1994 },
-  { label: 'The Godfather', year: 1972 },
-  { label: 'The Godfather: Part II', year: 1974 },
-  { label: 'The Dark Knight', year: 2008 },
+  { label: 'Giá tăng dần', type: 'asc' },
+  { label: 'Giá giảm dần', type: 'desc' },
+  { label: 'Mới nhất', type: 'new' },
 ];
 const Products = () => {
   const [shortPro, setShortPro] = React.useState(true);
-  const { error, status, sendRequest,data } = useHttp(getProducts, true);
+  const { error, status, sendRequest, data } = useHttp(getProducts, true);
   const productCtx = useContext(ProductContext);
   const { setProducts } = productCtx;
   React.useEffect(() => {
@@ -167,15 +166,7 @@ const Products = () => {
     Aos.init();
     Aos.refresh();
   }, []);
-  if (status === 'pending')
-  return (
-    <Dialog
-          isOpen={true}
-          style={{display:"flex", justifyContent:"center", background:"transparent"}}
-          >
-          <CircularProgress />
-    </Dialog>
-  );
+  if (status === 'pending') return <LoadingCom />;
   if (error) return <h1>Đã có lỗi xảy ra</h1>;
 
   return (
@@ -190,7 +181,7 @@ const Products = () => {
         spacing={2}
       >
         <Grid item xs={12} md={4} lg={4}>
-          <ListFilters typeP="Product"/>
+          <ListFilters typeP='Product' />
         </Grid>
         <Grid item xs={12} md={8} lg={8}>
           {/* <div data-aos='fade-up' data-aos-duration={1000}> */}
@@ -272,9 +263,7 @@ const Products = () => {
               : data?.map((product, index) => {
                   return (
                     <Grid item xs={12} md={12}>
-                      <CardPetLong
-                       {...product}
-                      />
+                      <CardPetLong {...product} />
                       <hr width='95%' align='center' color='#d9d9d9' />
                     </Grid>
                   );
