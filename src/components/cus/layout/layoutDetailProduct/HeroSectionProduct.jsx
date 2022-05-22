@@ -231,38 +231,55 @@ const HeroSectionProduct = (props) => {
                 >
                   Danh mục:
                 </Typography>
-                <Typography
-                  variant='h6'
-                  component='h2'
-                  sx={{
-                    fontSize: '15px',
-                    marginLeft: '10px',
-                    color: '#676767',
-                  }}
-                >
-                  {props.category?.name}/{props.subCategory?.name}
-                </Typography>
+                {props.typeP == 'Pet' ? (
+                  <Typography
+                    variant='h6'
+                    component='h2'
+                    sx={{
+                      fontSize: '15px',
+                      marginLeft: '10px',
+                      color: '#676767',
+                    }}
+                  >
+                    {props.type?.name}/{props.breed?.name}
+                  </Typography>
+                ) : (
+                  <Typography
+                    variant='h6'
+                    component='h2'
+                    sx={{
+                      fontSize: '15px',
+                      marginLeft: '10px',
+                      color: '#676767',
+                    }}
+                  >
+                    {props.category?.name}/{props.subCategory?.name}
+                  </Typography>
+                )}
               </div>
-              <div className='textLine' style={{ marginTop: '10px' }}>
-                <Typography
-                  variant='h6'
-                  component='h2'
-                  style={{ fontSize: '15px', fontWeight: '500' }}
-                >
-                  Số lượng:
-                </Typography>
-                <Typography
-                  variant='h6'
-                  component='h2'
-                  sx={{
-                    fontSize: '15px',
-                    marginLeft: '10px',
-                    color: '#676767',
-                  }}
-                >
-                  {props?.quantity}
-                </Typography>
-              </div>
+              {props.typeP != 'Pet' && (
+                <div className='textLine' style={{ marginTop: '10px' }}>
+                  <Typography
+                    variant='h6'
+                    component='h2'
+                    style={{ fontSize: '15px', fontWeight: '500' }}
+                  >
+                    Số lượng:
+                  </Typography>
+                  <Typography
+                    variant='h6'
+                    component='h2'
+                    sx={{
+                      fontSize: '15px',
+                      marginLeft: '10px',
+                      color: '#676767',
+                    }}
+                  >
+                    {props?.quantity}
+                  </Typography>
+                </div>
+              )}
+
               <div className='textLine' style={{ marginTop: '10px' }}>
                 <Typography
                   variant='h6'
@@ -318,15 +335,18 @@ const HeroSectionProduct = (props) => {
                 borderColor: '#ededed',
               }}
             >
-              <TextField
-                id='outlined-number'
-                label='Số lượng'
-                type='number'
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                sx={{ width: '100%' }}
-              />
+              {props.typeP != 'Pet' && (
+                <TextField
+                  id='outlined-number'
+                  label='Số lượng'
+                  type='number'
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  sx={{ width: '100%' }}
+                />
+              )}
+
               <Button
                 variant='contained'
                 size='large'

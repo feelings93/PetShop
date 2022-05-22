@@ -115,10 +115,10 @@ const Header = (props) => {
         </NavLink>
         <NavLink
           activeClassName={classes['link--active']}
-          to='/phu-kien '
+          to='/san-pham '
           className={classes.link}
         >
-          Phụ kiện
+          Sản phẩm
         </NavLink>
         <NavLink
           activeClassName={classes['link--active']}
@@ -252,14 +252,14 @@ const Header = (props) => {
                   Thú cưng
                 </NavLink>
                 <NavLink
-                  to='/phu-kien'
+                  to='/san-pham'
                   className={({ isActive }) =>
                     !isActive
                       ? classes.link
                       : `${classes.link} ${classes['link--active']}`
                   }
                 >
-                  Phụ kiện
+                  Sản phẩm
                 </NavLink>
                 <NavLink
                   to='/dich-vu'

@@ -8,19 +8,32 @@ import ContentTab from '../../components/cus/layout/layoutDetailProduct/ContentT
 import Header from '../../components/cus/layout/navbar/Header';
 import AllCardSimilar from '../../components/cus/layout/layoutDetailProduct/PetSimilar';
 import 'aos/dist/aos.css';
+import { useParams } from 'react-router-dom';
+import useHttp from '../../hooks/use-http';
+import { getPet } from '../../lib/api/pet';
+import LoadingCom from '../../components/LoadingCom';
 
 const DetailPet = (props) => {
+  const params = useParams();
+  const { sendRequest, status, data, error } = useHttp(getPet, true);
+
+  React.useEffect(() => {
+    sendRequest(params.id);
+  }, [params.id, sendRequest]);
+
   React.useEffect(() => {
     Aos.init();
     Aos.refresh();
   }, []);
+  if (status === 'pending') return <LoadingCom />;
+  if (error) return <h1>Đã có lỗi xảy ra</h1>;
   return (
     <Grid marginTop='30px'>
       <Container fixed>
         <div data-aos='fade-up' data-aos-duration={1000}>
-          <HeroSectionProduct />
-          <ContentTab />
-          <AllCardSimilar />
+          <HeroSectionProduct {...data} typeP='Pet' />
+          <ContentTab {...data} />
+          {/* <AllCardSimilar /> */}
         </div>
 
         {/* <ListInfo></ListInfo>
