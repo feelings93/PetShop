@@ -2,27 +2,12 @@ import React, { useContext, useState } from 'react';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
-import Container from '@mui/material/Container';
-import List from '@mui/material/List';
-import BillCart from './billCart';
-import CardCart from './cardCart';
-import TotalCart from './totalCart';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
+
 import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
-import MenuItem from '@mui/material/MenuItem';
+
 import Button from '@mui/material/Button';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
-import InfoCart from './inforCart';
-import Badge from '@mui/material/Badge';
+
 import CardMini from './cardMini';
 import { PetCartContext } from '../../../../store/petCart-context';
 const ListProduct = () => {

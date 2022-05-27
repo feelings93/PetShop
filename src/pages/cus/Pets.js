@@ -178,7 +178,7 @@ const Pets = () => {
         spacing={2}
       >
         <Grid item xs={12} md={4} lg={4}>
-          <ListFilters typeP="Pet" />
+          <ListFilters typeP="pet" />
         </Grid>
         <Grid item xs={12} md={8} lg={8}>
           {/* <div data-aos='fade-up' data-aos-duration={1000}> */}
@@ -251,7 +251,7 @@ const Pets = () => {
                     <Grid item xs={4} md={4}>
                       <CardPetPro
                         {...pet}
-                        typeP="Pet"
+                        typeP="pet"
                         // new={false}
                       />
                       <hr width='95%' align='center' color='#d9d9d9' />
@@ -263,7 +263,7 @@ const Pets = () => {
                     <Grid item xs={12} md={12}>
                       <CardPetLong
                        {...pet}
-                       typeP="Pet"
+                       typeP="pet"
 
                       />
                       <hr width='95%' align='center' color='#d9d9d9' />

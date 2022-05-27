@@ -40,7 +40,7 @@ const CardPetPro = (props) => {
         >
           <LocalOfferOutlinedIcon sx={{ width: '15px', height: '15px' }} />
           <Typography sx={{ fontSize: '12px' }}>
-            {props.typeP == 'Pet' ? props.breed.name : props.category.name}
+            {props.typeP == 'pet' ? props.breed.name : props.category.name}
           </Typography>
         </Box>
         {!hide ? (
@@ -142,7 +142,7 @@ const CardPetPro = (props) => {
                 },
               }}
               onClick={() => {
-                if (props.typeP == 'Pet') navigate(`/thu-cung/${props.id}`);
+                if (props.typeP == 'pet') navigate(`/thu-cung/${props.id}`);
                 else navigate(`/san-pham/${props.id}`);
               }}            >
               <SavedSearchIcon
@@ -171,7 +171,7 @@ const CardPetPro = (props) => {
             }}
             endIcon={<BsCart3 />}
             onClick={() => {
-              handleAddToCart(props);
+              handleAddToCart(props,props.typeP);
             }}
           >
             Thêm vào giỏ
@@ -209,7 +209,7 @@ const CardPetPro = (props) => {
             },
           }}
           onClick={() => {
-            if (props.typeP == 'Pet') navigate(`/thu-cung/${props.id}`);
+            if (props.typeP == 'pet') navigate(`/thu-cung/${props.id}`);
             else navigate(`/san-pham/${props.id}`);
           }}
         >
@@ -258,7 +258,7 @@ const CardPetPro = (props) => {
             fontWeight: 'bold',
           }}
           onClick={() => {
-            handleAddToCart(props);
+            handleAddToCart(props,props.typeP);
           }}
         >
           Thêm vào giỏ hàng

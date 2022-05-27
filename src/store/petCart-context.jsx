@@ -1,6 +1,10 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
-import { ItemCart } from './dto/api.dto.ts';
+import {
+  ItemPetCart,
+  ItemProductCart,
+  ItemServiceOrder,
+} from './dto/api.dto.ts';
 import logo from '../assets/images/logo.png';
 export const PetCartContext = React.createContext({
   items: [],
@@ -20,27 +24,76 @@ const PetCartContextProvider = (props) => {
   const [items, setItems] = useState([]);
   const [openAdd, setOpenAdd] = useState(false);
 
-  const handleAddToCart = useCallback((Item) => {
+  const handleAddToCart = useCallback((Item, typeP) => {
     let checkHaving = false;
-    console.log(Item);
-    let itemCart =
-      Item?.photos.length > 0
-        ? new ItemCart(Item.id, 1, Item.name, Item.price, Item.photos[0].url)
-        : new ItemCart(
-            Item.id,
-            1,
-            Item.name,
-            Item.price,
-            logo
-            // 'https://p.kindpng.com/picc/s/264-2642768_shopping-icon-vector-and-shopping-cart-hd-png.png'
-          );
-    items.map((item) => {
-      if (item.petId === itemCart.petId) {
-        checkHaving = true;
-      }
-      return item;
-    });
-    if (!checkHaving) setItems([...items, itemCart]);
+    switch (typeP) {
+      case 'pet':
+        let itemPetCart =
+          Item?.photos.length > 0
+            ? new ItemPetCart(
+                Item.name,
+                Item.price,
+                Item.id,
+                1,
+                Item.photos[0].url
+              )
+            : new ItemPetCart(Item.name, Item.price, Item.id, 1, logo);
+        items.map((item) => {
+          if (item.petId === itemPetCart.petId) {
+            checkHaving = true;
+          }
+          return item;
+        });
+
+        if (!checkHaving) {
+          console.log(items);
+          setItems([...items, itemPetCart]);
+        }
+        break;
+      case 'product':
+        let itemProductCart =
+          Item?.photos.length > 0
+            ? new ItemProductCart(
+                Item.name,
+                1,
+                Item.price,
+                1,
+                Item.id,
+                Item.photos[0].url
+              )
+            : new ItemProductCart(Item.name, 1, Item.price, 1, Item.id, logo);
+        items.map((item) => {
+          if (item.productId === itemProductCart.productId) {
+            checkHaving = true;
+          }
+          return item;
+        });
+
+        if (!checkHaving) {
+          console.log(items);
+          setItems([...items, itemProductCart]);
+        }
+        break;
+      case 'service':
+        let itemServiceCart =
+          Item?.photos.length > 0
+            ? new ItemServiceOrder(Item.name, Item.id, 1, 1, Item.photos[0].url)
+            : new ItemServiceOrder(Item.name, Item.id, 1, 1, logo);
+        items.map((item) => {
+          if (item.serviceId === itemServiceCart.serviceId) {
+            checkHaving = true;
+          }
+          return item;
+        });
+
+        if (!checkHaving) {
+          console.log(items);
+          setItems([...items, itemServiceCart]);
+        }
+        break;
+      default:
+        break;
+    }
   });
 
   const handleOpenAdd = useCallback(() => {
@@ -51,13 +104,36 @@ const PetCartContextProvider = (props) => {
     setOpenAdd(false);
   }, []);
 
-  const handleDeleteItem = useCallback((id) => {
-    setItems(items.filter((item) => item.petId != id));
-    console.log(items);
+  const handleDeleteItem = useCallback((id, typeP) => {
+    switch (typeP) {
+      case 'pet':
+        setItems(items.filter((item) => item.petId != id));
+        break;
+      case 'product':
+        setItems(items.filter((item) => item.productId != id));
+        break;
+
+      case 'service':
+        setItems(items.filter((item) => item.serviceId != id));
+        break;
+      default:
+        break;
+    }
   });
-  const getItem = useCallback((id) => {
-    const newItem = items?.filter((item) => item.petId == id);
-    return newItem[0];
+  const getItem = useCallback((id, typeP) => {
+    console.log(typeP,id);
+
+    switch (typeP) {
+      case 'pet':
+        const newItem = items?.filter((item) => item.petId == id);
+        return newItem[0];
+      case 'product':
+        return (items?.filter((item) => item.productId == id))[0];
+      case 'service':
+        return (items?.filter((item) => item.serviceId == id))[0];
+      default:
+        break;
+    }
   });
   const handleUpQuantity = useCallback((id) => {
     const newItems = items?.map((item) => {
@@ -67,7 +143,7 @@ const PetCartContextProvider = (props) => {
       }
       return item;
     });
-    setItems(newItems?.filter((item) => item.quantity > 0));
+    setItems(newItems?.filter((item) => item.quantity > 0 && (item.type=="product" || item.type=="service")));
   });
   const handleDowQuantity = useCallback((id) => {
     const newItems = items?.map((item) => {
@@ -77,7 +153,7 @@ const PetCartContextProvider = (props) => {
       }
       return item;
     });
-    setItems(newItems?.filter((item) => item.quantity > 0));
+    setItems(newItems?.filter((item) => item.quantity > 0 && (item.type=="product" || item.type=="service")));
   });
   const handleGetTotal = () => {
     let total = 0;

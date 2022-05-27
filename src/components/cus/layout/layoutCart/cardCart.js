@@ -22,9 +22,9 @@ const CardCart = (props) => {
     handleGetTotal,
     getItem,
   } = petCartCtx;
-  const [itemCart, setItemCart] = useState(getItem(props));
+  const [itemCart, setItemCart] = useState(getItem(props.petId, props.type));
   useEffect(() => {
-    setItemCart(getItem(props));
+    setItemCart(getItem(props.petId, props.type));
   });
   // const handleUp = () => {
   //   setPrice((price / quantity) * (quantity + 1));
@@ -48,7 +48,6 @@ const CardCart = (props) => {
         backgroundColor: '#fff',
       }}
     >
-      {console.log(props.petId)}
       {console.log(itemCart)}
       <Grid
         container
@@ -80,44 +79,80 @@ const CardCart = (props) => {
             ID: {props.petId}
           </Typography>
         </Grid>
-        <Grid item sm={3.5} sx={{ display: 'flex', alignItems: 'center' }}>
-          <IconButton
-            aria-label='increase item'
-            component='span'
-            onClick={() => {
-              handleUpQuantity(props.petId);
-              setItemCart(getItem(props.petId));
-            }}
-          >
-            <AddCircleIcon />
-          </IconButton>
-          <TextField
-            id='outlined-basic'
-            variant='outlined'
-            disabled
-            inputProps={{
-              min: 0,
-              style: { textAlign: 'center', height: '50%' },
-            }} // the change is here
-            value={itemCart?.quantity}
-            sx={{
-              width: '50px',
-              height: '50%',
-              textAlign: 'center',
-              alignItems: 'center',
-            }}
-          />
-          <IconButton
-            aria-label='decrease item'
-            component='span'
-            onClick={() => {
-              handleDowQuantity(props.petId);
-              setItemCart(getItem(props.petId));
-            }}
-          >
-            <RemoveCircleIcon />
-          </IconButton>
-        </Grid>
+        {itemCart?.type != 'pet' ? (
+          <Grid item sm={3.5} sx={{ display: 'flex', alignItems: 'center' }}>
+            <IconButton
+              aria-label='increase item'
+              component='span'
+              onClick={() => {
+                handleUpQuantity(props.petId);
+                setItemCart(getItem(props.petId));
+              }}
+            >
+              <AddCircleIcon />
+            </IconButton>
+            <TextField
+              id='outlined-basic'
+              variant='outlined'
+              disabled
+              inputProps={{
+                min: 0,
+                style: { textAlign: 'center', height: '50%' },
+              }} // the change is here
+              value={itemCart?.quantity}
+              sx={{
+                width: '50px',
+                height: '50%',
+                textAlign: 'center',
+                alignItems: 'center',
+              }}
+            />
+            <IconButton
+              aria-label='decrease item'
+              component='span'
+              onClick={() => {
+                handleDowQuantity(props.petId);
+                setItemCart(getItem(props.petId));
+              }}
+            >
+              <RemoveCircleIcon />
+            </IconButton>
+          </Grid>
+        ) : (
+          <Grid item sm={3.5} sx={{ display: 'flex', alignItems: 'center' }}>
+             <IconButton
+              aria-label='increase item'
+              component='span'
+              disabled={true}
+            >
+              <AddCircleIcon />
+            </IconButton>
+            <TextField
+              id='outlined-basic'
+              variant='outlined'
+              disabled
+              inputProps={{
+                min: 0,
+                style: { textAlign: 'center', height: '50%' },
+              }} // the change is here
+              value={"NAN"}
+              sx={{
+                width: '50px',
+                height: '50%',
+                textAlign: 'center',
+                alignItems: 'center',
+              }}
+            />
+            <IconButton
+              aria-label='increase item'
+              component='span'
+              disabled={true}
+            >
+              <RemoveCircleIcon />
+            </IconButton>
+          </Grid>
+        )}
+
         <Grid item sm={2.5}>
           <Typography sx={{ fontWeight: 'bold' }}>
             {itemCart?.price} VNĐ

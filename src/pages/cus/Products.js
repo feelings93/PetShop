@@ -181,7 +181,7 @@ const Products = () => {
         spacing={2}
       >
         <Grid item xs={12} md={4} lg={4}>
-          <ListFilters typeP='Product' />
+          <ListFilters typeP='product' />
         </Grid>
         <Grid item xs={12} md={8} lg={8}>
           {/* <div data-aos='fade-up' data-aos-duration={1000}> */}
@@ -254,6 +254,7 @@ const Products = () => {
                     <Grid item xs={4} md={4}>
                       <CardPetPro
                         {...product}
+                        typeP='product'
                         // new={false}
                       />
                       <hr width='95%' align='center' color='#d9d9d9' />
@@ -263,7 +264,7 @@ const Products = () => {
               : data?.map((product, index) => {
                   return (
                     <Grid item xs={12} md={12}>
-                      <CardPetLong {...product} />
+                      <CardPetLong {...product} typeP='product' />
                       <hr width='95%' align='center' color='#d9d9d9' />
                     </Grid>
                   );
