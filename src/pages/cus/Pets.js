@@ -30,6 +30,8 @@ import TextField from '@mui/material/TextField';
 import useHttp from '../../hooks/use-http';
 import { getPets } from '../../lib/api/pet';
 import { PetContext } from '../../store/pet-context';
+import LoadingCom from '../../components/LoadingCom';
+
 const data1 = [
   {
     id: 1,
@@ -141,13 +143,13 @@ const data1 = [
   },
 ];
 const topData = [
-  { label: 'Giá tăng dần', type: "asc" },
-  { label: 'Giá giảm dần', type: "desc" },
-  { label: 'Mới nhất', type: "new" },
+  { label: 'Giá tăng dần', type: 'asc' },
+  { label: 'Giá giảm dần', type: 'desc' },
+  { label: 'Mới nhất', type: 'new' },
 ];
 const Pets = () => {
   const [shortPro, setShortPro] = React.useState(true);
-  const { error, status, sendRequest,data } = useHttp(getPets, true);
+  const { error, status, sendRequest, data } = useHttp(getPets, true);
   const petCtx = useContext(PetContext);
   const { setPets } = petCtx;
   React.useEffect(() => {
@@ -158,13 +160,13 @@ const Pets = () => {
       console.log(data);
       setPets(data);
     }
-  }, [ status, setPets, data]);
+  }, [status, setPets, data]);
 
   React.useEffect(() => {
     Aos.init();
     Aos.refresh();
   }, []);
-  if (status === 'pending') return <h1>Loading...</h1>;
+  if (status === 'pending') return <LoadingCom />;
   if (error) return <h1>Đã có lỗi xảy ra</h1>;
 
   return (
@@ -178,7 +180,7 @@ const Pets = () => {
         spacing={2}
       >
         <Grid item xs={12} md={4} lg={4}>
-          <ListFilters typeP="pet" />
+          <ListFilters typeP='pet' />
         </Grid>
         <Grid item xs={12} md={8} lg={8}>
           {/* <div data-aos='fade-up' data-aos-duration={1000}> */}
@@ -251,7 +253,7 @@ const Pets = () => {
                     <Grid item xs={4} md={4}>
                       <CardPetPro
                         {...pet}
-                        typeP="pet"
+                        typeP='pet'
                         // new={false}
                       />
                       <hr width='95%' align='center' color='#d9d9d9' />
@@ -261,11 +263,7 @@ const Pets = () => {
               : data?.map((pet, index) => {
                   return (
                     <Grid item xs={12} md={12}>
-                      <CardPetLong
-                       {...pet}
-                       typeP="pet"
-
-                      />
+                      <CardPetLong {...pet} typeP='pet' />
                       <hr width='95%' align='center' color='#d9d9d9' />
                     </Grid>
                   );

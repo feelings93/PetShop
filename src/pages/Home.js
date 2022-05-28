@@ -13,7 +13,7 @@ import Footer from '../components/cus/layout/footer/Footer';
 const Home = () => {
   return (
     <div>
-      <Box sx={{ overflow: 'hidden', backgroundColor:'#f7faff' }}>
+      <Box sx={{ overflow: 'hidden', backgroundColor: '#f7faff' }}>
         <HeroSection />
         <AllOurServices />
         {/* <AllSales /> */}

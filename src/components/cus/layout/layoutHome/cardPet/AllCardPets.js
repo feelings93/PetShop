@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { border, Box, fontWeight, ThemeProvider } from '@mui/system';
@@ -12,8 +12,44 @@ import Button from '@mui/material/Button';
 
 import Container from '@mui/material/Container';
 import CardPetPro from './CardPetPro';
+import { getPets } from '../../../../../lib/api/pet';
+import { getProducts } from '../../../../../lib/api/product';
+import { getServices } from '../../../../../lib/api/service';
+import useHttp from '../../../../../hooks/use-http';
+import LoadingCom from '../../../../LoadingCom';
+import swal from 'sweetalert';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const AllCardPets = () => {
+  const { error, status, sendRequest, data } = useHttp(getPets, true);
+  const {
+    data: dataProducts,
+    error: errorProducts,
+    sendRequest: sendProducts,
+    status: statusProducts,
+  } = useHttp(getProducts, true);
+  const {
+    data: dataServices,
+    error: errorServices,
+    sendRequest: sendServices,
+    status: statusServices,
+  } = useHttp(getServices, true);
+  React.useEffect(() => {
+    sendRequest();
+    sendProducts();
+    sendServices();
+  }, [sendRequest, sendProducts, sendServices]);
+
+  // React.useEffect(() => {
+  //   if (status === 'completed' && data) {
+  //     console.log(data);
+  //   }
+  // }, [status, data,dataProducts,statusProducts]);
+
+  if (error || errorProducts || errorServices) {
+    swal('Lỗi', 'Đã có lỗi xảy ra', 'error');
+  }
+
   const settings = {
     dots: true,
     infinite: true,
@@ -28,7 +64,7 @@ const AllCardPets = () => {
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 2,
+          slidesToShow: 4,
           slidesToScroll: 1,
           infinite: true,
           dots: true,
@@ -37,7 +73,7 @@ const AllCardPets = () => {
       {
         breakpoint: 600,
         settings: {
-          slidesToShow: 1,
+          slidesToShow: 2,
           slidesToScroll: 1,
           initialSlide: 2,
         },
@@ -129,16 +165,21 @@ const AllCardPets = () => {
           />
         </Grid>
 
-        <Slider {...settings}>
-          {data.map((pet, index) => {
-            return (
-              <CardPetPro
-                {...pet}
-                // new={false}
-              />
-            );
-          })}
-        </Slider>
+        {status == 'pending' ? (
+          <CircularProgress />
+        ) : (
+          <Slider {...settings}>
+            {data?.map((pet, index) => {
+              return (
+                <CardPetPro
+                  {...pet}
+                  typeP='pet'
+                  // new={false}
+                />
+              );
+            })}
+          </Slider>
+        )}
         <Box height='50px' />
         {/* THU CUNG MOI RAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA */}
         <Grid container sm={12} justifyContent='center' marginTop='10px'>
@@ -209,17 +250,22 @@ const AllCardPets = () => {
             }}
           />
         </Grid>
+        {status == 'pending' ? (
+          <CircularProgress />
+        ) : (
+          <Slider {...settings}>
+            {[...data]?.reverse().map((pet, index) => {
+              return (
+                <CardPetPro
+                  {...pet}
+                  typeP='pet'
+                  // new={false}
+                />
+              );
+            })}
+          </Slider>
+        )}
 
-        <Slider {...settings}>
-          {data.map((pet, index) => {
-            return (
-              <CardPetPro
-                {...pet}
-                // new={false}
-              />
-            );
-          })}
-        </Slider>
         <Box height='50px' />
 
         {/* PHỤ KIỆN THÚ CƯNGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG */}
@@ -233,7 +279,7 @@ const AllCardPets = () => {
               fontWeight: 'Medium',
             }}
           >
-            Nhiều lựa chọn về phụ kiện
+            Nhiều lựa chọn về sản phẩm
           </Typography>
           <Grid
             container
@@ -249,7 +295,7 @@ const AllCardPets = () => {
                 component='h2'
                 style={{ color: '#000', fontSize: '35px', fontWeight: 'bold' }}
               >
-                THÚ CƯNG PHỤ KIỆN
+                SẢN PHẨM HỖ TRỢ
               </Typography>
             </Grid>
             <Grid
@@ -291,17 +337,21 @@ const AllCardPets = () => {
             }}
           />
         </Grid>
-
-        <Slider {...settings}>
-          {data.map((pet, index) => {
-            return (
-              <CardPetPro
-                {...pet}
-                // new={false}
-              />
-            );
-          })}
-        </Slider>
+        {statusProducts == 'pending' ? (
+          <CircularProgress />
+        ) : (
+          <Slider {...settings}>
+            {dataProducts?.map((product, index) => {
+              return (
+                <CardPetPro
+                  {...product}
+                  typeP='product'
+                  // new={false}
+                />
+              );
+            })}
+          </Slider>
+        )}
         <Box height='50px' />
 
         {/* DỊCH VỤ THÚ CƯNG RAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA */}
@@ -315,7 +365,7 @@ const AllCardPets = () => {
               fontWeight: 'Medium',
             }}
           >
-            Nhiều lựa chọn về chăm sóc thú cưng
+            Nhiều lựa chọn về tiện ích thú cưng
           </Typography>
           <Grid
             container
@@ -331,7 +381,7 @@ const AllCardPets = () => {
                 component='h2'
                 style={{ color: '#000', fontSize: '35px', fontWeight: 'bold' }}
               >
-                THÚ CƯNG SPA-CARE
+                THÚ CƯNG TIỆN ÍCH
               </Typography>
             </Grid>
             <Grid
@@ -373,24 +423,22 @@ const AllCardPets = () => {
             }}
           />
         </Grid>
-
-        <Slider {...settings}>
-          {data.map((pet, index) => {
-            return (
-              <CardPetPro
-                {...pet}
-                // new={false}
-              />
-            );
-          })}
-        </Slider>
+        {statusServices == 'pending' ? (
+          <CircularProgress />
+        ) : (
+          <Slider {...settings}>
+            {dataServices?.map((service, index) => {
+              return <h1>Card service</h1>;
+            })}
+          </Slider>
+        )}
       </Box>
     </Container>
   );
 };
 
 export default AllCardPets;
-const data = [
+const data1 = [
   {
     id: 1,
     name: 'MÈO TAI CỤP SIÊU ĐÁNG YÊU 1 ',

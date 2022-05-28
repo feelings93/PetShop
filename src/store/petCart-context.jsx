@@ -39,7 +39,7 @@ const PetCartContextProvider = (props) => {
               )
             : new ItemPetCart(Item.name, Item.price, Item.id, 1, logo);
         items.map((item) => {
-          if (item.petId === itemPetCart.petId) {
+          if (item.itemId === itemPetCart.itemId && item.type == 'pet') {
             checkHaving = true;
           }
           return item;
@@ -63,7 +63,10 @@ const PetCartContextProvider = (props) => {
               )
             : new ItemProductCart(Item.name, 1, Item.price, 1, Item.id, logo);
         items.map((item) => {
-          if (item.productId === itemProductCart.productId) {
+          if (
+            item.itemId === itemProductCart.itemId &&
+            item.type == 'product'
+          ) {
             checkHaving = true;
           }
           return item;
@@ -80,7 +83,10 @@ const PetCartContextProvider = (props) => {
             ? new ItemServiceOrder(Item.name, Item.id, 1, 1, Item.photos[0].url)
             : new ItemServiceOrder(Item.name, Item.id, 1, 1, logo);
         items.map((item) => {
-          if (item.serviceId === itemServiceCart.serviceId) {
+          if (
+            item.itemId === itemServiceCart.itemId &&
+            item.type == 'service'
+          ) {
             checkHaving = true;
           }
           return item;
@@ -105,55 +111,37 @@ const PetCartContextProvider = (props) => {
   }, []);
 
   const handleDeleteItem = useCallback((id, typeP) => {
-    switch (typeP) {
-      case 'pet':
-        setItems(items.filter((item) => item.petId != id));
-        break;
-      case 'product':
-        setItems(items.filter((item) => item.productId != id));
-        break;
-
-      case 'service':
-        setItems(items.filter((item) => item.serviceId != id));
-        break;
-      default:
-        break;
-    }
+    setItems(
+      items.filter((item) => {
+        if (item.type == typeP && item.itemId == id) return false;
+        return true;
+      })
+    );
   });
   const getItem = useCallback((id, typeP) => {
-    console.log(typeP,id);
-
-    switch (typeP) {
-      case 'pet':
-        const newItem = items?.filter((item) => item.petId == id);
-        return newItem[0];
-      case 'product':
-        return (items?.filter((item) => item.productId == id))[0];
-      case 'service':
-        return (items?.filter((item) => item.serviceId == id))[0];
-      default:
-        break;
-    }
+    return (items?.filter(
+      (item) => item.itemId == id && item.type == typeP
+    ))[0];
   });
-  const handleUpQuantity = useCallback((id) => {
+  const handleUpQuantity = useCallback((id, typeP) => {
     const newItems = items?.map((item) => {
-      if (item.petId == id) {
+      if (item.itemId == id && item.type == typeP) {
         item.quantity += 1;
         item.price = (item.price / (item.quantity - 1)) * item.quantity;
       }
       return item;
     });
-    setItems(newItems?.filter((item) => item.quantity > 0 && (item.type=="product" || item.type=="service")));
+    setItems(newItems?.filter((item) => item.quantity > 0 || !item.quantity));
   });
-  const handleDowQuantity = useCallback((id) => {
+  const handleDowQuantity = useCallback((id, typeP) => {
     const newItems = items?.map((item) => {
-      if (item.petId == id && item.quantity > 0) {
+      if (item.itemId == id && item.quantity > 0 && item.type == typeP) {
         item.quantity -= 1;
         item.price = (item.price / (item.quantity + 1)) * item.quantity;
       }
       return item;
     });
-    setItems(newItems?.filter((item) => item.quantity > 0 && (item.type=="product" || item.type=="service")));
+    setItems(newItems?.filter((item) => item.quantity > 0 || !item.quantity));
   });
   const handleGetTotal = () => {
     let total = 0;

@@ -22,9 +22,9 @@ const CardCart = (props) => {
     handleGetTotal,
     getItem,
   } = petCartCtx;
-  const [itemCart, setItemCart] = useState(getItem(props.petId, props.type));
+  const [itemCart, setItemCart] = useState(getItem(props.itemId, props.type));
   useEffect(() => {
-    setItemCart(getItem(props.petId, props.type));
+    setItemCart(getItem(props.itemId, props.type));
   });
   // const handleUp = () => {
   //   setPrice((price / quantity) * (quantity + 1));
@@ -76,7 +76,7 @@ const CardCart = (props) => {
             {itemCart?.name}
           </Typography>
           <Typography sx={{ fontWeight: 'Light', fontSize: '12px' }}>
-            ID: {props.petId}
+            ID: {props.itemId}
           </Typography>
         </Grid>
         {itemCart?.type != 'pet' ? (
@@ -85,8 +85,8 @@ const CardCart = (props) => {
               aria-label='increase item'
               component='span'
               onClick={() => {
-                handleUpQuantity(props.petId);
-                setItemCart(getItem(props.petId));
+                handleUpQuantity(props.itemId, props.type);
+                setItemCart(getItem(props.itemId, props.type));
               }}
             >
               <AddCircleIcon />
@@ -111,8 +111,8 @@ const CardCart = (props) => {
               aria-label='decrease item'
               component='span'
               onClick={() => {
-                handleDowQuantity(props.petId);
-                setItemCart(getItem(props.petId));
+                handleDowQuantity(props.itemId, props.type);
+                setItemCart(getItem(props.itemId, props.type));
               }}
             >
               <RemoveCircleIcon />
@@ -120,7 +120,7 @@ const CardCart = (props) => {
           </Grid>
         ) : (
           <Grid item sm={3.5} sx={{ display: 'flex', alignItems: 'center' }}>
-             <IconButton
+            <IconButton
               aria-label='increase item'
               component='span'
               disabled={true}
@@ -135,7 +135,7 @@ const CardCart = (props) => {
                 min: 0,
                 style: { textAlign: 'center', height: '50%' },
               }} // the change is here
-              value={"NAN"}
+              value={'NAN'}
               sx={{
                 width: '50px',
                 height: '50%',
@@ -162,7 +162,7 @@ const CardCart = (props) => {
           <IconButton
             aria-label='delete item'
             component='span'
-            onClick={() => handleDeleteItem(props.petId)}
+            onClick={() => handleDeleteItem(props.itemId, props.type)}
           >
             <DeleteForeverIcon />
           </IconButton>

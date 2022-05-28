@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Badge from '@mui/material/Badge';
 import { PetCartContext } from '../../../../store/petCart-context';
-import logo from "../../../../assets/images/logo.png";
+import logo from '../../../../assets/images/logo.png';
 const CardMini = (props) => {
   const petCartCtx = useContext(PetCartContext);
   const {
@@ -15,9 +15,9 @@ const CardMini = (props) => {
     handleGetTotal,
     getItem,
   } = petCartCtx;
-  const [itemCart, setItemCart] = useState(getItem(props.petId,props.type));
+  const [itemCart, setItemCart] = useState(getItem(props.itemId, props.type));
   useEffect(() => {
-    setItemCart(getItem(props.petId,props.type));
+    setItemCart(getItem(props.itemId, props.type));
   });
   return (
     <>
@@ -33,7 +33,8 @@ const CardMini = (props) => {
                 boxShadow: 3,
                 backgroundImage: `${
                   itemCart.url ? `url(${itemCart.url})` : `url(${logo})`
-                }`,                backgroundSize: ' cover',
+                }`,
+                backgroundSize: ' cover',
                 backgroundPosition: 'center',
               }}
             />
@@ -56,7 +57,7 @@ const CardMini = (props) => {
               fontSize: '14px',
             }}
           >
-            PetID: {itemCart.petId}
+            PetID: {itemCart.itemId}
           </Typography>
         </Grid>
 

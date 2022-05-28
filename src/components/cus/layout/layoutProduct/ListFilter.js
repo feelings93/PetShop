@@ -90,7 +90,7 @@ const ListFilters = (props) => {
   const [ratingNumber, setRatingNumber] = useState(0);
 
   const { error, status, sendRequest, data } =
-    props.typeP == 'Pet'
+    props.typeP == 'pet'
       ? useHttp(getPetTypes, true)
       : useHttp(getCategories, true);
   const petTypeCtx = useContext(PetTypeContext);
@@ -104,7 +104,7 @@ const ListFilters = (props) => {
 
   useEffect(() => {
     if (status === 'completed' && data) {
-      props.typeP == 'Pet' ? setPetTypes(data) : setCategories(data);
+      props.typeP == 'pet' ? setPetTypes(data) : setCategories(data);
     }
   }, [status, setPetTypes, setCategories, data]);
 
@@ -146,7 +146,7 @@ const ListFilters = (props) => {
         <Typography sx={{ fontSize: '16px', fontWeight: 'bold' }}>
           Danh mục
         </Typography>
-        {data.map((e) => (
+        {data?.map((e) => (
           <>
             <Box
               sx={{
@@ -162,7 +162,7 @@ const ListFilters = (props) => {
             >
               <Typography>{e.name}</Typography>
               <Typography>
-                ({props.typeP == 'Pet' ? e.pets?.length : e.products?.length})
+                ({props.typeP == 'pet' ? e.pets?.length : e.products?.length})
               </Typography>
             </Box>
           </>
