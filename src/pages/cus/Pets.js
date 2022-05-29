@@ -31,6 +31,7 @@ import useHttp from '../../hooks/use-http';
 import { getPets } from '../../lib/api/pet';
 import { PetContext } from '../../store/pet-context';
 import LoadingCom from '../../components/LoadingCom';
+import { LegendToggle } from '@mui/icons-material';
 
 const data1 = [
   {
@@ -149,15 +150,15 @@ const topData = [
 ];
 const Pets = () => {
   const [shortPro, setShortPro] = React.useState(true);
+  const [label, setLabel] = React.useState('');
   const { error, status, sendRequest, data } = useHttp(getPets, true);
   const petCtx = useContext(PetContext);
-  const { setPets } = petCtx;
+  const { setPets, pets } = petCtx;
   React.useEffect(() => {
     sendRequest();
   }, [sendRequest]);
   React.useEffect(() => {
     if (status === 'completed' && data) {
-      console.log(data);
       setPets(data);
     }
   }, [status, setPets, data]);
@@ -169,6 +170,26 @@ const Pets = () => {
   if (status === 'pending') return <LoadingCom />;
   if (error) return <h1>Đã có lỗi xảy ra</h1>;
 
+  function handleChangeSort(title) {
+    switch (title) {
+      case 'Giá tăng dần':
+        setPets([...pets]?.sort((a, b) => (a.price > b.price ? 1 : -1)));
+        break;
+      case 'Giá giảm dần':
+        setPets([...pets]?.sort((a, b) => (a.price < b.price ? 1 : -1)));
+
+        break;
+      case 'Mới nhất':
+        setPets([...pets]?.reverse());
+
+        break;
+      default:
+        setPets(data);
+
+        break;
+    }
+    setLabel(title);
+  }
   return (
     <Container fixed>
       <Grid
@@ -213,6 +234,9 @@ const Pets = () => {
                   renderInput={(params) => (
                     <TextField {...params} label='Chọn loại sắp xếp' />
                   )}
+                  onChange={(e) => {
+                    handleChangeSort(e.target.textContent);
+                  }}
                 />
               </Box>
               <Box>
@@ -248,7 +272,7 @@ const Pets = () => {
           {/* <div data-aos='fade-up' data-aos-duration={1000}> */}
           <Grid container xs={12} md={12} lg={12} spacing={1}>
             {shortPro
-              ? data?.map((pet, index) => {
+              ? pets?.map((pet, index) => {
                   return (
                     <Grid item xs={4} md={4}>
                       <CardPetPro
@@ -260,7 +284,7 @@ const Pets = () => {
                     </Grid>
                   );
                 })
-              : data?.map((pet, index) => {
+              : pets?.map((pet, index) => {
                   return (
                     <Grid item xs={12} md={12}>
                       <CardPetLong {...pet} typeP='pet' />

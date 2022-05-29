@@ -19,6 +19,9 @@ import Contact from './pages/cus/Contact';
 import Service from './pages/cus/Service';
 import Products from './pages/cus/Products';
 import DetailPet from './pages/cus/DetailPet';
+import PetContextProvider from './store/pet-context';
+import ProductContextProvider from './store/product-context';
+import ServiceContextProvider from './store/service-context';
 const theme = createTheme({
   palette: {
     primary: {
@@ -79,12 +82,36 @@ function App() {
           <Route exact path='/thu-cung/:id' element={<DetailPet />} />
           <Route exact path='/san-pham/:id' element={<DetailProduct />} />
           <Route exact path='/gioi-thieu' element={<About />} />
-          <Route exact path='/thu-cung' element={<Pets />} />
+          <Route
+            exact
+            path='/thu-cung'
+            element={
+              <PetContextProvider>
+                <Pets />
+              </PetContextProvider>
+            }
+          />
           <Route exact path='/gio-hang' element={<Cart />} />
           <Route exact path='/thanh-toan' element={<Checkout />} />
           <Route exact path='/lien-he' element={<Contact />} />
-          <Route exact path='/dich-vu' element={<Service />} />
-          <Route exact path='/san-pham' element={<Products />} />
+          <Route
+            exact
+            path='/dich-vu'
+            element={
+              <ServiceContextProvider>
+                <Service />
+              </ServiceContextProvider>
+            }
+          />
+          <Route
+            exact
+            path='/san-pham'
+            element={
+              <ProductContextProvider>
+                <Products />
+              </ProductContextProvider>
+            }
+          />
         </Route>
 
         <Route path='*' element={<h1> NOT FOUND</h1>} />

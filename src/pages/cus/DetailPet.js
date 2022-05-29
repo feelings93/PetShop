@@ -31,7 +31,7 @@ const DetailPet = (props) => {
     <Grid marginTop='30px'>
       <Container fixed>
         <div data-aos='fade-up' data-aos-duration={1000}>
-          <HeroSectionProduct {...data} typeP='Pet' />
+          <HeroSectionProduct {...data} typeP='pet' />
           <ContentTab {...data} />
           {/* <AllCardSimilar /> */}
         </div>

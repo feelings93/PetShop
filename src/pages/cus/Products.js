@@ -149,9 +149,11 @@ const topData = [
 ];
 const Products = () => {
   const [shortPro, setShortPro] = React.useState(true);
+  const [label, setLabel] = React.useState('');
+
   const { error, status, sendRequest, data } = useHttp(getProducts, true);
   const productCtx = useContext(ProductContext);
-  const { setProducts } = productCtx;
+  const { setProducts, products } = productCtx;
   React.useEffect(() => {
     sendRequest();
   }, [sendRequest]);
@@ -168,7 +170,30 @@ const Products = () => {
   }, []);
   if (status === 'pending') return <LoadingCom />;
   if (error) return <h1>Đã có lỗi xảy ra</h1>;
+  function handleChangeSort(title) {
+    switch (title) {
+      case 'Giá tăng dần':
+        setProducts(
+          [...products]?.sort((a, b) => (a.price > b.price ? 1 : -1))
+        );
+        break;
+      case 'Giá giảm dần':
+        setProducts(
+          [...products]?.sort((a, b) => (a.price < b.price ? 1 : -1))
+        );
 
+        break;
+      case 'Mới nhất':
+        setProducts([...products]?.reverse());
+
+        break;
+      default:
+        setProducts(data);
+
+        break;
+    }
+    setLabel(title);
+  }
   return (
     <Container fixed>
       {/* {console.log(data)} */}
@@ -212,8 +237,11 @@ const Products = () => {
                   size='small'
                   sx={{ width: '150px', zIndex: '2' }}
                   renderInput={(params) => (
-                    <TextField {...params} label='Quận, huyện' />
+                    <TextField {...params} label='Chọn loại sắp xếp' />
                   )}
+                  onChange={(e) => {
+                    handleChangeSort(e.target.textContent);
+                  }}
                 />
               </Box>
               <Box>
@@ -249,7 +277,7 @@ const Products = () => {
           {/* <div data-aos='fade-up' data-aos-duration={1000}> */}
           <Grid container xs={12} md={12} lg={12} spacing={1}>
             {shortPro
-              ? data?.map((product, index) => {
+              ? products?.map((product, index) => {
                   return (
                     <Grid item xs={4} md={4}>
                       <CardPetPro
@@ -261,7 +289,7 @@ const Products = () => {
                     </Grid>
                   );
                 })
-              : data?.map((product, index) => {
+              : products?.map((product, index) => {
                   return (
                     <Grid item xs={12} md={12}>
                       <CardPetLong {...product} typeP='product' />

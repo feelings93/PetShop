@@ -231,7 +231,7 @@ const HeroSectionProduct = (props) => {
                 >
                   Danh mục:
                 </Typography>
-                {props.typeP == 'Pet' ? (
+                {props.typeP == 'pet' ? (
                   <Typography
                     variant='h6'
                     component='h2'
@@ -257,7 +257,7 @@ const HeroSectionProduct = (props) => {
                   </Typography>
                 )}
               </div>
-              {props.typeP != 'Pet' && (
+              {props.typeP != 'pet' && (
                 <div className='textLine' style={{ marginTop: '10px' }}>
                   <Typography
                     variant='h6'
@@ -269,6 +269,7 @@ const HeroSectionProduct = (props) => {
                   <Typography
                     variant='h6'
                     component='h2'
+                    defaultValue={1}
                     sx={{
                       fontSize: '15px',
                       marginLeft: '10px',
@@ -335,7 +336,7 @@ const HeroSectionProduct = (props) => {
                 borderColor: '#ededed',
               }}
             >
-              {props.typeP != 'Pet' && (
+              {props.typeP != 'pet' && (
                 <TextField
                   id='outlined-number'
                   label='Số lượng'
@@ -363,7 +364,7 @@ const HeroSectionProduct = (props) => {
                   },
                 }}
                 onClick={() => {
-                  handleAddToCart(props);
+                  handleAddToCart(props, props.typeP);
                 }}
               >
                 Thêm vào giỏ hàng

@@ -25,7 +25,10 @@ import { CategoryContext } from '../../../../store/category-context';
 
 import Dialog from '@mui/material/Dialog';
 import CircularProgress from '@mui/material/CircularProgress';
-
+import { PetContext } from '../../../../store/pet-context';
+import { getPets } from '../../../../lib/api/pet';
+import { ProductContext } from '../../../../store/product-context';
+import { getProducts } from '../../../../lib/api/product';
 const Typographyf14light = (props) => {
   return (
     <Typography
@@ -84,15 +87,33 @@ const labels = {
 };
 
 const ListFilters = (props) => {
-  const [price, setPrice] = useState([100000, 10000000]);
+  const [price, setPrice] = useState([100000, 50000000]);
 
   const [isClickInList, setIsClickInList] = useState(false);
   const [ratingNumber, setRatingNumber] = useState(0);
+
+  const petCtx = useContext(PetContext);
+  const { setPets, pets } = petCtx;
+  const productCtx = useContext(ProductContext);
+  const { setProducts, products } = productCtx;
 
   const { error, status, sendRequest, data } =
     props.typeP == 'pet'
       ? useHttp(getPetTypes, true)
       : useHttp(getCategories, true);
+  const {
+    error: errorPets,
+    status: statusPets,
+    sendRequest: sendRequestPets,
+    data: dataPets,
+  } = useHttp(getPets, true);
+  const {
+    error: errorProducts,
+    status: statusProducts,
+    sendRequest: sendRequestProducts,
+    data: dataProducts,
+  } = useHttp(getProducts, true);
+
   const petTypeCtx = useContext(PetTypeContext);
   const { setPetTypes } = petTypeCtx;
   const categoryCtx = useContext(CategoryContext);
@@ -100,21 +121,27 @@ const ListFilters = (props) => {
 
   useEffect(() => {
     sendRequest();
-  }, [sendRequest]);
+    sendRequestPets();
+    sendRequestProducts();
+  }, [sendRequest, sendRequestPets, sendRequestProducts]);
 
   useEffect(() => {
     if (status === 'completed' && data) {
       props.typeP == 'pet' ? setPetTypes(data) : setCategories(data);
     }
-  }, [status, setPetTypes, setCategories, data]);
+  }, [status, setPetTypes, setCategories, data, dataPets]);
 
-  if (status === 'pending')
+  if (
+    status === 'pending' ||
+    statusPets === 'pending' ||
+    statusProducts === 'pending'
+  )
     return (
       <Dialog open={true}>
         <CircularProgress />
       </Dialog>
     );
-  if (error) return <h1>Đã có lỗi xảy ra</h1>;
+  if (error || errorPets || errorProducts) return <h1>Đã có lỗi xảy ra</h1>;
 
   const handleChange = (event, newValue, activeThumb) => {
     if (!Array.isArray(newValue)) {
@@ -127,6 +154,29 @@ const ListFilters = (props) => {
       setPrice([price[0], Math.max(newValue[1], price[0] + 30)]);
     }
   };
+  const handleChangeType = (typeName) => {
+    if (props.typeP == 'pet') {
+      setPets([...dataPets]?.filter((e) => e.type.name == typeName));
+    } else if (props.typeP == 'product') {
+      console.log(dataProducts);
+      setProducts(
+        [...dataProducts]?.filter((e) => e.category.name == typeName)
+      );
+    }
+  };
+  const handleFilterPrice = () => {
+    if (props.typeP == 'pet') {
+      setPets(
+        [...dataPets]?.filter((e) => e.price >= price[0] && e.price <= price[1])
+      );
+    } else if (props.typeP == 'product') {
+      setProducts(
+        [...dataProducts]?.filter(
+          (e) => e.price >= price[0] && e.price <= price[1]
+        )
+      );
+    }
+  };
   return (
     <Box
       sx={{
@@ -135,6 +185,7 @@ const ListFilters = (props) => {
         padding: '0px 0px 10px 0px',
       }}
     >
+      {/* {console.log(pets)} */}
       {/* Covid 19 */}
       <Box sx={{ m: 1, ml: 2, mr: 2 }}>
         <TypographyMod fontSize='14px'>
@@ -160,7 +211,9 @@ const ListFilters = (props) => {
               }}
               onClick={() => setIsClickInList(!isClickInList)}
             >
-              <Typography>{e.name}</Typography>
+              <Typography onClick={() => handleChangeType(e.name)}>
+                {e.name}
+              </Typography>
               <Typography>
                 ({props.typeP == 'pet' ? e.pets?.length : e.products?.length})
               </Typography>
@@ -230,9 +283,9 @@ const ListFilters = (props) => {
             defaultValue={500000}
             onChange={handleChange}
             value={price}
-            step={100000}
+            step={1000000}
             min={100000}
-            max={10000000}
+            max={50000000}
             valueLabelDisplay='auto'
             disableSwap
             sx={{ color: '#2196f3', ml: 1 }}
@@ -280,7 +333,9 @@ const ListFilters = (props) => {
         </FormGroup>
       </Box>
       <Box sx={{ textAlign: 'end', padding: '5px 10px' }}>
-        <Button variant='contained'>Áp dụng lọc</Button>
+        <Button variant='contained' onClick={() => handleFilterPrice()}>
+          Áp dụng lọc
+        </Button>
       </Box>
     </Box>
   );

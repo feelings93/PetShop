@@ -12,6 +12,7 @@ import Button from '@mui/material/Button';
 
 import Container from '@mui/material/Container';
 import CardPetPro from './CardPetPro';
+import CardService from './CardService';
 import { getPets } from '../../../../../lib/api/pet';
 import { getProducts } from '../../../../../lib/api/product';
 import { getServices } from '../../../../../lib/api/service';
@@ -19,8 +20,11 @@ import useHttp from '../../../../../hooks/use-http';
 import LoadingCom from '../../../../LoadingCom';
 import swal from 'sweetalert';
 import CircularProgress from '@mui/material/CircularProgress';
+import { useNavigate } from 'react-router-dom';
 
 const AllCardPets = () => {
+  let navigate = useNavigate();
+
   const { error, status, sendRequest, data } = useHttp(getPets, true);
   const {
     data: dataProducts,
@@ -34,6 +38,7 @@ const AllCardPets = () => {
     sendRequest: sendServices,
     status: statusServices,
   } = useHttp(getServices, true);
+
   React.useEffect(() => {
     sendRequest();
     sendProducts();
@@ -144,7 +149,7 @@ const AllCardPets = () => {
                   justifyContent: 'flex-end',
                 }}
                 endIcon={<UilMessage />}
-                href='/tours'
+                onClick={() => navigate('/thu-cung')}
               >
                 Xem thêm
               </Button>
@@ -230,7 +235,7 @@ const AllCardPets = () => {
                   justifyContent: 'flex-end',
                 }}
                 endIcon={<UilMessage />}
-                href='/tours'
+                onClick={() => navigate('/thu-cung')}
               >
                 Xem thêm
               </Button>
@@ -317,7 +322,7 @@ const AllCardPets = () => {
                   justifyContent: 'flex-end',
                 }}
                 endIcon={<UilMessage />}
-                href='/tours'
+                onClick={() => navigate('/san-pham')}
               >
                 Xem thêm
               </Button>
@@ -403,7 +408,7 @@ const AllCardPets = () => {
                   justifyContent: 'flex-end',
                 }}
                 endIcon={<UilMessage />}
-                href='/tours'
+                onClick={() => navigate('/dich-vu')}
               >
                 Xem thêm
               </Button>
@@ -428,7 +433,13 @@ const AllCardPets = () => {
         ) : (
           <Slider {...settings}>
             {dataServices?.map((service, index) => {
-              return <h1>Card service</h1>;
+              return (
+                <CardService
+                  {...service}
+                  typeP='service'
+                  // new={false}
+                />
+              );
             })}
           </Slider>
         )}
