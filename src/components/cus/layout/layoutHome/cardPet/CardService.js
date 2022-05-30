@@ -15,6 +15,7 @@ import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlin
 import { PetCartContext } from '../../../../../store/petCart-context';
 import { useNavigate } from 'react-router-dom';
 import logo from '../../../../../assets/images/logo.png';
+import { Grid3x3Outlined } from '@mui/icons-material';
 
 const CardService = (props) => {
   const [hide, setHide] = useState(false);
@@ -101,7 +102,7 @@ const CardService = (props) => {
           onMouseEnter={() => setHide(true)}
           onMouseLeave={() => setHide(false)}
         >
-          <div display='flex' justifyContent='space-around'>
+          <div display='flex' justifyContent='flex-start'>
             <IconButton
               aria-label='delete'
               sx={{
@@ -169,7 +170,6 @@ const CardService = (props) => {
                 opacity: [0.9, 0.8, 0.7],
               },
             }}
-            endIcon={<BsCart3 />}
             onClick={() => {
               //   handleAddToCart(props, props.typeP);
             }}
@@ -192,31 +192,33 @@ const CardService = (props) => {
         </Grid>
       </Grid>
 
-      <Box
+      <Grid
+        container
         backgroundColor='#fff'
         marginTop='5px'
         padding='4px'
-        sx={{ textAlign: 'center' }}
+        sx={{ alignItems:'center' }}
       >
-        <Link
-          underline='none'
-          fontWeight='bold'
-          fontSize='14px'
-          color='#000'
-          sx={{
-            '&:hover': {
-              color: '#c89300',
-            },
-          }}
-          onClick={() => {
-            if (props?.typeP == 'pet') navigate(`/thu-cung/${props?.id}`);
-            else if (props?.typeP == 'product')
-              navigate(`/san-pham/${props?.id}`);
-          }}
-        >
-          {props?.name}
-        </Link>
-        {/* <Box
+        <Grid item xs={8}>
+          <Link
+            underline='none'
+            fontWeight='bold'
+            fontSize='18px'
+            color='#000'
+            sx={{
+              '&:hover': {
+                color: '#c89300',
+              },
+            }}
+            onClick={() => {
+              if (props?.typeP == 'pet') navigate(`/thu-cung/${props?.id}`);
+              else if (props?.typeP == 'product')
+                navigate(`/san-pham/${props?.id}`);
+            }}
+          >
+            {props?.name}
+          </Link>
+          {/* <Box
           display='flex'
           alignItems='center'
           sx={{ justifyContent: 'center' }}
@@ -234,20 +236,35 @@ const CardService = (props) => {
             1280 đánh giá
           </Typography>
         </Box> */}
+          <Typography
+            variant='h6'
+            gutterBottom
+            component='div'
+            fontWeight='regular'
+            fontSize='14px'
+            sx={{ marginTop: '5px' }}
+            // color='#ff6b00'
+            color={color2}
+          >
+            {props?.describe}
+          </Typography>
+        </Grid>
+        <Grid item xs={4}>
+          <Typography
+            variant='h6'
+            gutterBottom
+            component='div'
+            fontWeight='bold'
+            fontSize='18px'
+            sx={{ marginTop: '5px', textAlign: 'end', alignItems:'center' }}
+            // color='#ff6b00'
+            color={color2}
+          >
+            {props?.price}Đ
+          </Typography>
+        </Grid>
+      </Grid>
 
-        <Typography
-          variant='h6'
-          gutterBottom
-          component='div'
-          fontWeight='bold'
-          fontSize='18px'
-          sx={{ marginTop: '5px' }}
-          // color='#ff6b00'
-          color={color2}
-        >
-          {props?.price}Đ
-        </Typography>
-      </Box>
       <Box>
         <Button
           variant='outlined'

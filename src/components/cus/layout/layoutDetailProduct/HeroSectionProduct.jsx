@@ -26,7 +26,7 @@ const HeroSectionProduct = (props) => {
   let navigate = useNavigate();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
-
+  const [quantity, setQuantity] = React.useState(1);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -200,7 +200,7 @@ const HeroSectionProduct = (props) => {
             </Box>
           </Grid>
 
-          <Grid container item xs={12} md={12} sm={12} marginTop='40px'>
+          <Grid container item xs={12} md={12} sm={12} marginTop='30px'>
             <Grid item xs={12} md={6.5}>
               <div className='textLine'>
                 <Typography
@@ -257,6 +257,50 @@ const HeroSectionProduct = (props) => {
                   </Typography>
                 )}
               </div>
+              {props.typeP == 'pet' && (
+                <div className='textLine' style={{ marginTop: '10px' }}>
+                  <Typography
+                    variant='h6'
+                    component='h2'
+                    style={{ fontSize: '15px', fontWeight: '500' }}
+                  >
+                    Độ tuổi:
+                  </Typography>
+                  <Typography
+                    variant='h6'
+                    component='h2'
+                    sx={{
+                      fontSize: '15px',
+                      marginLeft: '10px',
+                      color: '#676767',
+                    }}
+                  >
+                    {props?.age} tuổi
+                  </Typography>
+                </div>
+              )}
+              {props.typeP == 'pet' && (
+                <div className='textLine' style={{ marginTop: '10px' }}>
+                  <Typography
+                    variant='h6'
+                    component='h2'
+                    style={{ fontSize: '15px', fontWeight: '500' }}
+                  >
+                    Giới tính:
+                  </Typography>
+                  <Typography
+                    variant='h6'
+                    component='h2'
+                    sx={{
+                      fontSize: '15px',
+                      marginLeft: '10px',
+                      color: '#676767',
+                    }}
+                  >
+                    {props?.gender}
+                  </Typography>
+                </div>
+              )}
               {props.typeP != 'pet' && (
                 <div className='textLine' style={{ marginTop: '10px' }}>
                   <Typography
@@ -269,7 +313,6 @@ const HeroSectionProduct = (props) => {
                   <Typography
                     variant='h6'
                     component='h2'
-                    defaultValue={1}
                     sx={{
                       fontSize: '15px',
                       marginLeft: '10px',
@@ -325,7 +368,7 @@ const HeroSectionProduct = (props) => {
               </div>
             </Grid>
             <Grid
-              item
+              container
               md={5.5}
               xs={12}
               sx={{
@@ -334,16 +377,24 @@ const HeroSectionProduct = (props) => {
                 padding: '10px 10px 20px 10px',
                 borderRadius: '5px',
                 borderColor: '#ededed',
+ 
+                height:'50%'
+                                
               }}
             >
-              {props.typeP != 'pet' && (
+              {props.typeP == 'product' && (
                 <TextField
                   id='outlined-number'
                   label='Số lượng'
                   type='number'
+                  defaultValue={quantity}
                   InputLabelProps={{
                     shrink: true,
                   }}
+                  value={quantity}
+                  onChange={(e) =>
+                    e.target.value > 0 && setQuantity(e.target.value)
+                  }
                   sx={{ width: '100%' }}
                 />
               )}
@@ -364,7 +415,7 @@ const HeroSectionProduct = (props) => {
                   },
                 }}
                 onClick={() => {
-                  handleAddToCart(props, props.typeP);
+                  handleAddToCart(props, props.typeP, quantity);
                 }}
               >
                 Thêm vào giỏ hàng

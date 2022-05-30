@@ -209,9 +209,9 @@ const ListFilters = (props) => {
                   opacity: [0.9, 0.8, 0.7],
                 },
               }}
-              onClick={() => setIsClickInList(!isClickInList)}
+              onClick={() => handleChangeType(e.name)}
             >
-              <Typography onClick={() => handleChangeType(e.name)}>
+              <Typography >
                 {e.name}
               </Typography>
               <Typography>

@@ -24,7 +24,7 @@ const PetCartContextProvider = (props) => {
   const [items, setItems] = useState([]);
   const [openAdd, setOpenAdd] = useState(false);
 
-  const handleAddToCart = useCallback((Item, typeP) => {
+  const handleAddToCart = useCallback((Item, typeP, quantity=0) => {
     let checkHaving = false;
     switch (typeP) {
       case 'pet':
@@ -75,6 +75,17 @@ const PetCartContextProvider = (props) => {
         if (!checkHaving) {
           console.log(items);
           setItems([...items, itemProductCart]);
+        }
+        else{
+          items.map((e)=>{
+            if(e.itemId==Item.id){
+              e.quantity+=Number(quantity);
+              e.price = (e.price / (e.quantity - Number(quantity))) * e.quantity;
+
+            }
+            return e;
+          })
+          setItems(items);
         }
         break;
       case 'service':
