@@ -377,9 +377,8 @@ const HeroSectionProduct = (props) => {
                 padding: '10px 10px 20px 10px',
                 borderRadius: '5px',
                 borderColor: '#ededed',
- 
-                height:'50%'
-                                
+
+                height: '50%',
               }}
             >
               {props.typeP == 'product' && (

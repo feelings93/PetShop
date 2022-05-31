@@ -107,7 +107,7 @@ export default function FormDialog(props) {
           <Typography
             variant='subtitle1'
             align='center'
-            style={{ color: '#808080', fontWeight: 'bold' }}
+            style={{ color: '#808080', fontWeight: 'bo  ld' }}
           >
             WELCOME
           </Typography>

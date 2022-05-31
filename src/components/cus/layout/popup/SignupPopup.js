@@ -11,7 +11,10 @@ import Slide from '@mui/material/Slide';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Box from '@mui/material/Box';
+import { useForm } from 'react-hook-form';
 
+import useHttp from '../../../../hooks/use-http';
+import { createCustomer } from '../../../../lib/api/customer';
 const Transition = React.forwardRef((props, ref) => {
   // eslint-disable-next-line react/jsx-props-no-spreading
   return <Slide direction='up' ref={ref} {...props} />;
@@ -26,6 +29,12 @@ export default function FormDialog(props) {
   const [emailValidate, setEmailValidate] = React.useState(null);
   const [password, setPassword] = React.useState(null);
   const [passwordValidate, setPasswordValidate] = React.useState(null);
+
+  const { error, status, sendRequest, data } = useHttp(createCustomer);
+  const { handleSubmit, register } = useForm();
+
+  // const petCtx = useContext(PetContext);
+  // const { setPets, pets } = petCtx;
 
   React.useEffect(() => {
     if (username == null) {
@@ -64,16 +73,12 @@ export default function FormDialog(props) {
     setChecked(event.target.checked);
   };
 
-  function HandleClick() {
-    // Swal.fire({
-    //   position: 'mid-center',
-    //   icon: 'success',
-    //   title: 'Your work has been saved',
-    //   showConfirmButton: false,
-    //   timer: 1500,
-    // });
+  const handleClick = () =>{
+    console.log("met nghe");
   }
-
+  const onSubmit = (data) => {
+    sendRequest({ ...data });
+  };
   return (
     <Dialog
       open={props.open}
@@ -92,6 +97,9 @@ export default function FormDialog(props) {
         },
       }}
     >
+       <form
+       onSubmit={handleSubmit(onSubmit)}
+      >
       <DialogTitle>
         <Typography
           variant='subtitle1'
@@ -134,6 +142,16 @@ export default function FormDialog(props) {
               id='name'
               name='FirstName'
               placeholder='Mark'
+            />
+            <TextField
+                          className='form__input'
+                          type='text'
+                          placeholder='Mark'
+
+              {...register('first-name')}
+              id='first-name'
+              label='Họ'
+              required
             />
           </div>
           <div className='nameinput'>
@@ -349,6 +367,7 @@ export default function FormDialog(props) {
             </Typography>
           </div> */}
       </DialogContent>
+      </form>
     </Dialog>
   );
 }
