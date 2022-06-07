@@ -152,6 +152,9 @@ const Pets = () => {
   const [shortPro, setShortPro] = React.useState(true);
   const [label, setLabel] = React.useState('');
 
+  const { error, status, sendRequest, data } = useHttp(getPets, true);
+  const petCtx = useContext(PetContext);
+  const { setPets, pets } = petCtx;
   React.useEffect(() => {
     sendRequest();
   }, [sendRequest]);

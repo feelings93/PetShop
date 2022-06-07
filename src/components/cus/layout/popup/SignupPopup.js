@@ -12,9 +12,12 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Box from '@mui/material/Box';
 import { useForm } from 'react-hook-form';
+import TextField from '@mui/material/TextField';
 
 import useHttp from '../../../../hooks/use-http';
 import { createCustomer } from '../../../../lib/api/customer';
+import swal from 'sweetalert';
+
 const Transition = React.forwardRef((props, ref) => {
   // eslint-disable-next-line react/jsx-props-no-spreading
   return <Slide direction='up' ref={ref} {...props} />;
@@ -22,13 +25,16 @@ const Transition = React.forwardRef((props, ref) => {
 
 export default function FormDialog(props) {
   const [checked, setChecked] = React.useState(false);
-
-  const [username, setUsername] = React.useState(null);
-  const [usernameValidate, setUsernameValidate] = React.useState(null);
+  const [isOpen,setIsOpen] = React.useState(props.open)
+  const [name, setName] = React.useState(null);
+  const [phone, setPhone] = React.useState(null);
+  const [nameValidate, setNameValidate] = React.useState(null);
   const [email, setEmail] = React.useState(null);
   const [emailValidate, setEmailValidate] = React.useState(null);
   const [password, setPassword] = React.useState(null);
   const [passwordValidate, setPasswordValidate] = React.useState(null);
+  const [rePassword, setRePassword] = React.useState(null);
+  const [checkRePassword, setCheckRePassword] = React.useState(false);
 
   const { error, status, sendRequest, data } = useHttp(createCustomer);
   const { handleSubmit, register } = useForm();
@@ -37,13 +43,13 @@ export default function FormDialog(props) {
   // const { setPets, pets } = petCtx;
 
   React.useEffect(() => {
-    if (username == null) {
-      setUsernameValidate(true);
+    if (name == null) {
+      setNameValidate(true);
       return;
     }
-    if (String(username).length > 0) setUsernameValidate(true);
-    else setUsernameValidate(false);
-  }, [username]);
+    if (String(name).length > 0) setNameValidate(true);
+    else setNameValidate(false);
+  }, [name]);
 
   React.useEffect(() => {
     if (password == null) {
@@ -68,20 +74,54 @@ export default function FormDialog(props) {
       setEmailValidate(true);
     else setEmailValidate(false);
   }, [email]);
-
+  React.useEffect(() => {
+    if (status === 'completed') {
+      if (data) {
+        swal('Thành công', 'Bạn đã thêm tài khoản mới thành công', 'success');
+      } else if (error) swal('Thất bại', 'Đã có lỗi xảy ra', 'error');
+    }
+  }, [data, status, error]);
   const handleChange = (event) => {
     setChecked(event.target.checked);
+
+    if (
+      emailValidate &&
+      passwordValidate &&
+      nameValidate &&
+      email != null &&
+      password != null &&
+      name != null &&
+      rePassword != null &&
+      rePassword === password
+    ) {
+      setChecked(true);
+    } else setChecked(false);
   };
 
-  const handleClick = () =>{
-    console.log("met nghe");
-  }
+  const handleClick = () => {
+    console.log('met nghe');
+  };
   const onSubmit = (data) => {
-    sendRequest({ ...data });
+    console.log(data);
+    if (
+      emailValidate &&
+      passwordValidate &&
+      nameValidate &&
+      email != null &&
+      password != null &&
+      name != null &&
+      rePassword != null &&
+      rePassword === password
+    ){
+
+      sendRequest({ ...data });
+      setIsOpen(false);
+    }
+    else swal('Thất bại', 'Đã có lỗi xảy ra', 'error');
   };
   return (
     <Dialog
-      open={props.open}
+      open={isOpen}
       TransitionComponent={Transition}
       keepMounted
       onClose={props.onClose}
@@ -97,84 +137,75 @@ export default function FormDialog(props) {
         },
       }}
     >
-       <form
-       onSubmit={handleSubmit(onSubmit)}
-      >
-      <DialogTitle>
-        <Typography
-          variant='subtitle1'
-          align='center'
-          style={{ color: '#808080', fontWeight: 'bold' }}
-        />
-        <Typography
-          variant='h5'
-          align='center'
-          style={{
-            color: 'black',
-            fontWeight: 'bold',
-            fontSize: '24px',
-            paddingBottom: '10px',
-            paddingTop: '10px',
-          }}
-        >
-          Create your account!
-        </Typography>
-      </DialogTitle>
-      <DialogContent>
-        <div
-          className='textinput'
-          style={{ display: 'flex', justifyContent: 'space-between' }}
-        >
-          <div className='nameinput'>
-            <Typography
-              style={{
-                color: 'black',
-                paddingBottom: '5px',
-                fontSize: '16px',
-                fontWeight: 'bold',
-              }}
-            >
-              First Name
-            </Typography>
-            <input
-              className='form__input'
-              type='text'
-              id='name'
-              name='FirstName'
-              placeholder='Mark'
-            />
-            <TextField
-                          className='form__input'
-                          type='text'
-                          placeholder='Mark'
-
-              {...register('first-name')}
-              id='first-name'
-              label='Họ'
-              required
-            />
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <DialogTitle>
+          <Typography
+            variant='subtitle1'
+            align='center'
+            style={{ color: '#808080', fontWeight: 'bold' }}
+          />
+          <Typography
+            variant='h5'
+            align='center'
+            style={{
+              color: 'black',
+              fontWeight: 'bold',
+              fontSize: '24px',
+              paddingBottom: '10px',
+              paddingTop: '10px',
+            }}
+          >
+            Tạo tài khoản khách hàng
+          </Typography>
+        </DialogTitle>
+        <DialogContent>
+          <div className='textinput'>
+            <div className=''>
+              <Typography
+                style={{
+                  color: 'black',
+                  paddingBottom: '5px',
+                  fontSize: '16px',
+                  fontWeight: 'bold',
+                }}
+              >
+                Họ và tên
+              </Typography>
+              <input
+                {...register('name')}
+                className='form__input'
+                type='text'
+                id='name'
+                name='name'
+                placeholder='Mark'
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </div>
+            <div className=''>
+              <Typography
+                style={{
+                  color: 'black',
+                  paddingBottom: '5px',
+                  fontSize: '16px',
+                  fontWeight: 'bold',
+                }}
+              >
+                Số điện thoại
+              </Typography>
+              <input
+                className='form__input'
+                {...register('phone')}
+                type='text'
+                id='phone'
+                name='phone'
+                placeholder='84 01213111'
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+              />
+            </div>
           </div>
-          <div className='nameinput'>
-            <Typography
-              style={{
-                color: 'black',
-                paddingBottom: '5px',
-                fontSize: '16px',
-                fontWeight: 'bold',
-              }}
-            >
-              Last Name
-            </Typography>
-            <input
-              className='form__input'
-              type='text'
-              id='name'
-              name='FirstName'
-              placeholder='Zuckerberg'
-            />
-          </div>
-        </div>
-        <div className='textinput'>
+          {/* <div className='textinput'>
           <Typography
             style={{
               color: 'black',
@@ -203,10 +234,10 @@ export default function FormDialog(props) {
               </Typography>
             </Box>
           )}
-        </div>
+        </div> */}
 
-        <div className='textinput'>
-          {/* <TextField
+          <div className='textinput'>
+            {/* <TextField
             variant="outlined"
             margin="dense"
             id="username"
@@ -214,144 +245,183 @@ export default function FormDialog(props) {
             type="email"
             fullWidth
           /> */}
-          <Typography
-            style={{
-              color: 'black',
-              paddingBottom: '5px',
-              fontSize: '16px',
-              fontWeight: 'bold',
-            }}
-          >
-            E-mail
-          </Typography>
-          <input
-            className='form__input'
-            type='email'
-            id='Email'
-            name='Email'
-            placeholder='foodroad@gmail.com'
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
-          />
-          {emailValidate === false && (
-            <Box pt={1}>
-              <Typography fontSize={15} color='red'>
-                Example: Foodroad@gmail.com
-              </Typography>
-            </Box>
-          )}
-        </div>
+            <Typography
+              style={{
+                color: 'black',
+                paddingBottom: '5px',
+                fontSize: '16px',
+                fontWeight: 'bold',
+              }}
+            >
+              E-mail
+            </Typography>
+            <input
+              className='form__input'
+              {...register('email')}
+              type='email'
+              id='email'
+              name='email'
+              placeholder='foodroad@gmail.com'
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
+            />
+            {emailValidate === false && (
+              <Box pt={1}>
+                <Typography fontSize={15} color='red'>
+                  Example: Foodroad@gmail.com
+                </Typography>
+              </Box>
+            )}
+          </div>
 
-        <div className='textinput'>
-          <Typography
-            style={{
-              color: 'black',
-              paddingBottom: '5px',
-              fontSize: '16px',
-              fontWeight: 'bold',
-            }}
-          >
-            Password
-          </Typography>
-          <input
-            className='form__input'
-            type='password'
-            id='Password'
-            name='Password'
-            placeholder='Enter a password'
-            value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
-          />
-          {passwordValidate === false && (
-            <Box pt={1}>
-              <Typography fontSize={15} color='red'>
-                Password must be between 6-20 characters
-              </Typography>
-            </Box>
-          )}
-        </div>
-        <Box pt={1}>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={checked}
-                onChange={handleChange}
+          <div className='textinput'>
+            <Typography
+              style={{
+                color: 'black',
+                paddingBottom: '5px',
+                fontSize: '16px',
+                fontWeight: 'bold',
+              }}
+            >
+              Mật khẩu
+            </Typography>
+            <input
+              {...register('password')}
+              className='form__input'
+              type='password'
+              id='password'
+              name='Password'
+              placeholder='Nhập mật khẩu'
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+            />
+            {passwordValidate === false && (
+              <Box pt={1}>
+                <Typography fontSize={15} color='red'>
+                  Mập khẩu phải có từ 6-20 ký tự
+                </Typography>
+              </Box>
+            )}
+          </div>
+          <div className='textinput'>
+            <Typography
+              style={{
+                color: 'black',
+                paddingBottom: '5px',
+                fontSize: '16px',
+                fontWeight: 'bold',
+              }}
+            >
+              Nhập lại mật khẩu
+            </Typography>
+            <input
+              className='form__input'
+              type='password'
+              id='Password'
+              name='RePassword'
+              placeholder='Nhập lại mật khẩu'
+              value={rePassword}
+              onChange={(e) => {
+                setRePassword(e.target.value);
+                rePassword === password
+                  ? setCheckRePassword(true)
+                  : setCheckRePassword(false);
+              }}
+            />
+            {rePassword !== password && (
+              <Box pt={1}>
+                <Typography fontSize={15} color='red'>
+                  Mật khẩu phải trùng với mật khẩu ở trên
+                </Typography>
+              </Box>
+            )}
+          </div>
+          <Box pt={1}>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={checked}
+                  onChange={handleChange}
+                  style={{
+                    color: '#42b72a',
+                  }}
+                />
+              }
+              label={
+                <Typography
+                  variant='subtitle6'
+                  style={{ color: '#808080', fontSize: '13px' }}
+                >
+                  Ive read and agree with Terms of Service and our Privacy
+                  Policy
+                </Typography>
+              }
+              style={{ paddingRight: '10px', paddingLeft: '10px' }}
+            />
+          </Box>
+
+          <div className='textinput'>
+            {checked ? (
+              <Button
+                variant='contained'
+                fullWidth
+                type='submit'
+                // onClick={() => {
+                //   if (
+                //     emailValidate &&
+                //     passwordValidate &&
+                //     nameValidate &&
+                //     email != null &&
+                //     password != null &&
+                //     name != null &&
+                //     rePassword !=null &&
+                //     checkRePassword
+                //   ) {
+                //     props.onClose();
+                //     // Swal.fire({
+                //     //   title: 'SUCCESS',
+                //     //   text: 'Your account has been created.',
+                //     //   icon: 'success',
+                //     //   timer: 1500,
+                //     //   showConfirmButton: false,
+                //     // });
+                //   }
+                // }}
                 style={{
-                  color: '#42b72a',
+                  height: '50px',
+                  textTransform: 'none',
+                  fontSize: '20px',
+                  fontWeight: 'bold',
+                  borderRadius: '24px',
+                  backgroundColor: '#42b72a',
                 }}
-              />
-            }
-            label={
-              <Typography
-                variant='subtitle6'
-                style={{ color: '#808080', fontSize: '13px' }}
               >
-                Ive read and agree with Terms of Service and our Privacy Policy
-              </Typography>
-            }
-            style={{ paddingRight: '10px', paddingLeft: '10px' }}
-          />
-        </Box>
+                Đăng ký
+              </Button>
+            ) : (
+              <Button
+                disabled
+                variant='contained'
+                fullWidth
+                style={{
+                  height: '50px',
+                  textTransform: 'none',
+                  fontSize: '20px',
+                  fontWeight: 'bold',
+                  borderRadius: '24px',
+                  backgroundColor: 'rgba(0, 0, 0, 0.12)',
+                }}
+              >
+                Đăng ký
+              </Button>
+            )}
+          </div>
 
-        <div className='textinput'>
-          {checked ? (
-            <Button
-              variant='contained'
-              fullWidth
-              onClick={() => {
-                if (
-                  emailValidate &&
-                  passwordValidate &&
-                  usernameValidate &&
-                  email != null &&
-                  password != null &&
-                  username != null
-                ) {
-                  props.onClose();
-                  // Swal.fire({
-                  //   title: 'SUCCESS',
-                  //   text: 'Your account has been created.',
-                  //   icon: 'success',
-                  //   timer: 1500,
-                  //   showConfirmButton: false,
-                  // });
-                }
-              }}
-              style={{
-                height: '50px',
-                textTransform: 'none',
-                fontSize: '20px',
-                fontWeight: 'bold',
-                borderRadius: '24px',
-                backgroundColor: '#42b72a',
-              }}
-            >
-              Sign Up
-            </Button>
-          ) : (
-            <Button
-              disabled
-              variant='contained'
-              fullWidth
-              style={{
-                height: '50px',
-                textTransform: 'none',
-                fontSize: '20px',
-                fontWeight: 'bold',
-                borderRadius: '24px',
-                backgroundColor: 'rgba(0, 0, 0, 0.12)',
-              }}
-            >
-              Sign Up
-            </Button>
-          )}
-        </div>
-
-        {/* <Divider
+          {/* <Divider
               sx={{ bgcolor: (theme) => theme.palette.divider }}
               style={{
                 border: "none",
@@ -366,7 +436,7 @@ export default function FormDialog(props) {
               Already had an account?
             </Typography>
           </div> */}
-      </DialogContent>
+        </DialogContent>
       </form>
     </Dialog>
   );

@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, {useContext} from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
@@ -16,6 +16,13 @@ import MuiAlert from '@mui/material/Alert';
 import TextField from '@mui/material/TextField';
 import { FcGoogle } from 'react-icons/fc';
 import SignupPopup from './SignupPopup';
+import { useForm } from 'react-hook-form';
+import swal from 'sweetalert';
+import useHttp from '../../../../hooks/use-http';
+import { getCustomers } from '../../../../lib/api/customer';
+import { CustomerContext } from '../../../../store/customer-context';
+import LoadingCom from '../../../LoadingCom';
+// import * as bcrypt from 'bcrypt';
 
 const Transition = React.forwardRef((props, ref) => {
   return <Slide direction='up' ref={ref} {...props} />;
@@ -36,6 +43,9 @@ export default function FormDialog(props) {
   const [emailValidate, setEmailValidate] = React.useState(null);
   const [password, setPassword] = React.useState(null);
   const [passwordValidate, setPasswordValidate] = React.useState(null);
+  const cusCtx = useContext(CustomerContext);
+  const { setCustomers, customers } = cusCtx;
+  const { handleSubmit, register } = useForm();
 
   function CheckValidate(email, password) {
     if (emailValidate && passwordValidate && email != null && password != null)
@@ -43,18 +53,18 @@ export default function FormDialog(props) {
   }
 
   const [openSignup, setOpenSignup] = React.useState(false);
-  const [status, setStatus] = React.useState(null);
+  // const [status, setStatus] = React.useState(null);
   const loginHandler = async () => {
     setStatus('loading');
     await sleep(5000);
     setStatus('completed');
   };
-  React.useEffect(() => {
-    if (status === 'completed') {
-      window.location.reload();
-      localStorage.setItem('isLogin', true);
-    }
-  }, [status, props]);
+  // React.useEffect(() => {
+  //   if (status === 'completed') {
+  //     window.location.reload();
+  //     localStorage.setItem('isLogin', true);
+  //   }
+  // }, [status, props]);
   React.useEffect(() => {
     if (password == null) {
       setPasswordValidate(true);
@@ -77,7 +87,29 @@ export default function FormDialog(props) {
       setEmailValidate(true);
     else setEmailValidate(false);
   }, [email]);
+  const { error, status, sendRequest, data } = useHttp(getCustomers,true);
+  React.useEffect(() => {
+    sendRequest();
+  }, [sendRequest]);
+  const onSubmit = (value) => {
+    
+    if (status === 'completed' && data) {
+      setCustomers(data);
+      // if (emailValidate && passwordValidate && email != null && password != null){
+      //   customers.forEach(async (cus)=>{
+      //    console.log ( await bcrypt.compare(password, cus.password));
+      //   });
+      // }
 
+    }
+    else if (status === 'pending') return <LoadingCom />;
+    if (error) return <h1>Đã có lỗi xảy ra</h1>;
+
+    // if (emailValidate && passwordValidate && email != null && password != null)
+    // setStatus('loading');
+    // await sleep(5000);
+    // setStatus('completed');
+  };
   return (
     <Dialog
       open={props.open}
@@ -96,20 +128,16 @@ export default function FormDialog(props) {
         },
       }}
     >
-      <form
-        onSubmit={(event) => {
-          event.preventDefault();
-          CheckValidate(email, password);
-        }}
-      >
-        {status === 'loading' && <LinearProgress />}
+            <form onSubmit={handleSubmit(onSubmit)}>
+
+        {status === 'pending' && <LinearProgress />}
         <DialogTitle>
           <Typography
             variant='subtitle1'
             align='center'
             style={{ color: '#808080', fontWeight: 'bo  ld' }}
           >
-            WELCOME
+            XIN CHÀO
           </Typography>
 
           <Typography
@@ -122,7 +150,7 @@ export default function FormDialog(props) {
               paddingBottom: '10px',
             }}
           >
-            Log into your account
+            Đăng nhập tài khoản
           </Typography>
         </DialogTitle>
         <DialogContent sx={{ padding: '0px 40px' }}>
@@ -134,14 +162,17 @@ export default function FormDialog(props) {
               fontWeight: 'bold',
             }}
           >
-            E-mail or Username
+            E-mail 
           </Typography>
           <input
+                          {...register('email')}
+
             className='form__input'
             type='email'
-            id='Email'
+            id='email'
             name='email'
-            placeholder='Enter your e-mail or username'
+            placeholder='Nhập vào email của bạn
+            '
             value={email}
             onChange={(e) => {
               setEmail(e.target.value);
@@ -150,7 +181,7 @@ export default function FormDialog(props) {
           {emailValidate === false && (
             <Box pt={1}>
               <Typography fontSize={15} color='red'>
-                Example: Foodroad@gmail.com
+                Ví dụ: Foodroad@gmail.com
               </Typography>
             </Box>
           )}
@@ -163,13 +194,15 @@ export default function FormDialog(props) {
               marginTop: '10px',
             }}
           >
-            Password
+            Mật khẩu
           </Typography>
           <input
+                          {...register('password')}
+
             className='form__input'
             type='password'
             minLength={6}
-            id='Password'
+            id='password'
             name='password'
             placeholder='Enter your password'
             value={password}
@@ -180,7 +213,7 @@ export default function FormDialog(props) {
           {passwordValidate === false && (
             <Box pt={1}>
               <Typography fontSize={15} color='red'>
-                Password must be between 6-20 characters
+                Mật khẩu phải từ 6-20 ký tự
               </Typography>
             </Box>
           )}
@@ -198,12 +231,12 @@ export default function FormDialog(props) {
               marginTop: '20px',
             }}
           >
-            Log In
+            Đăng nhập
           </Button>
           <Box pt='10px' pb='20px'>
             <Divider sx={{ color: '#808080', fontSize: '14px' }}>
               {' '}
-              or Sign In with{' '}
+              hoặc Đăng nhập với{' '}
             </Divider>
           </Box>
           <Box>
@@ -259,7 +292,7 @@ export default function FormDialog(props) {
             <Box p='10px' pt='20px' display='flex' justifyContent='center'>
               <Box pr='5px'>
                 <Typography variant='subtitle5' style={{ color: '#808080' }}>
-                  Not registered yet?
+                  Chưa đăng ký ? 
                 </Typography>
               </Box>
               <a
@@ -268,7 +301,7 @@ export default function FormDialog(props) {
                   setOpenSignup(true);
                 }}
               >
-                Create an Account
+                Tạo tài khoản mới
               </a>
             </Box>
           </Box>
