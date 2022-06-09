@@ -17,7 +17,7 @@ import TextField from '@mui/material/TextField';
 import useHttp from '../../../../hooks/use-http';
 import { createCustomer } from '../../../../lib/api/customer';
 import swal from 'sweetalert';
-
+import { login } from '../../../../lib/api/customer_auth';
 const Transition = React.forwardRef((props, ref) => {
   // eslint-disable-next-line react/jsx-props-no-spreading
   return <Slide direction='up' ref={ref} {...props} />;
@@ -36,7 +36,7 @@ export default function FormDialog(props) {
   const [rePassword, setRePassword] = React.useState(null);
   const [checkRePassword, setCheckRePassword] = React.useState(false);
 
-  const { error, status, sendRequest, data } = useHttp(createCustomer);
+  const { data, error, status, sendRequest } = useHttp(login);
   const { handleSubmit, register } = useForm();
 
   // const petCtx = useContext(PetContext);
@@ -76,9 +76,14 @@ export default function FormDialog(props) {
   }, [email]);
   React.useEffect(() => {
     if (status === 'completed') {
-      if (data) {
+      if (!error) {
+        console.log(data);
         swal('Thành công', 'Bạn đã thêm tài khoản mới thành công', 'success');
-      } else if (error) swal('Thất bại', 'Đã có lỗi xảy ra', 'error');
+        window.localStorage.setItem('accessToken', data.accessToken);
+        window.location.reload();
+      } else {
+        swal('Đã có lỗi xảy ra', error, 'error');
+      }
     }
   }, [data, status, error]);
   const handleChange = (event) => {
@@ -101,8 +106,12 @@ export default function FormDialog(props) {
   const handleClick = () => {
     console.log('met nghe');
   };
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = (data1) => {
+    console.log(data1);
+    data1={email: "1@1.com",
+    name: "123",
+    password: "123456",
+    phone: "123"}
     if (
       emailValidate &&
       passwordValidate &&
@@ -114,7 +123,7 @@ export default function FormDialog(props) {
       rePassword === password
     ){
 
-      sendRequest({ ...data });
+      sendRequest(data1);
       setIsOpen(false);
     }
     else swal('Thất bại', 'Đã có lỗi xảy ra', 'error');
@@ -292,7 +301,7 @@ export default function FormDialog(props) {
               className='form__input'
               type='password'
               id='password'
-              name='Password'
+              name='Mật khẩu'
               placeholder='Nhập mật khẩu'
               value={password}
               onChange={(e) => {
@@ -321,7 +330,7 @@ export default function FormDialog(props) {
             <input
               className='form__input'
               type='password'
-              id='Password'
+              id='rePassword'
               name='RePassword'
               placeholder='Nhập lại mật khẩu'
               value={rePassword}

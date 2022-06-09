@@ -25,7 +25,6 @@ import Badge from '@mui/material/Badge';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import CartNof from './CartHeader';
 import { PetCartContext } from '../../../../store/petCart-context';
-
 function ElevationScroll(props) {
   const { children, window } = props;
   // Note that you normally won't need to set the window ref as useScrollTrigger
