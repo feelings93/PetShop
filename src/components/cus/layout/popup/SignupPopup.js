@@ -18,6 +18,7 @@ import useHttp from '../../../../hooks/use-http';
 import { createCustomer } from '../../../../lib/api/customer';
 import swal from 'sweetalert';
 import { login } from '../../../../lib/api/customer_auth';
+import { signUp } from '../../../../lib/api/auth';
 const Transition = React.forwardRef((props, ref) => {
   // eslint-disable-next-line react/jsx-props-no-spreading
   return <Slide direction='up' ref={ref} {...props} />;
@@ -36,7 +37,7 @@ export default function FormDialog(props) {
   const [rePassword, setRePassword] = React.useState(null);
   const [checkRePassword, setCheckRePassword] = React.useState(false);
 
-  const { data, error, status, sendRequest } = useHttp(login);
+  const { data, error, status, sendRequest } = useHttp(signUp);
   const { handleSubmit, register } = useForm();
 
   // const petCtx = useContext(PetContext);

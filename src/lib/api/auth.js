@@ -2,7 +2,16 @@ import { axios, bearerHeader } from '../config';
 
 export const login = async ({ email, password }) => {
   try {
-    const response = await axios.post('/admin-auth/login', { email, password });
+    const response = await axios.post('/customer-auth/login', { email, password });
+    return response.data;
+  } catch (err) {
+    throw new Error(err);
+  }
+};
+
+export const signUp = async ({ email, password, phone, name }) => {
+  try {
+    const response = await axios.post('/customer-auth/register', { email, password, phone, name });
     return response.data;
   } catch (err) {
     throw new Error(err);
@@ -11,7 +20,7 @@ export const login = async ({ email, password }) => {
 
 export const getProfile = async () => {
   try {
-    const response = await axios.get('/admin-auth/profile', {
+    const response = await axios.get('/customer-auth/profile', {
       headers: {
         Authorization: bearerHeader,
       },
@@ -29,7 +38,7 @@ export const logout = async () => {
 
 export const updateProfile = async (data) => {
   try {
-    const response = await axios.patch('/admin-auth/profile', data, {
+    const response = await axios.patch('/customer-auth/profile', data, {
       headers: {
         Authorization: bearerHeader,
       },
@@ -42,7 +51,7 @@ export const updateProfile = async (data) => {
 
 export const changePassword = async (data) => {
   try {
-    const response = await axios.patch('/admin-auth/password', data, {
+    const response = await axios.patch('/customer-auth/password', data, {
       headers: {
         Authorization: bearerHeader,
       },
