@@ -1,5 +1,4 @@
-
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
@@ -19,11 +18,9 @@ import SignupPopup from './SignupPopup';
 import { useForm } from 'react-hook-form';
 import swal from 'sweetalert';
 import useHttp from '../../../../hooks/use-http';
-import { getCustomers } from '../../../../lib/api/customer';
 import { CustomerContext } from '../../../../store/customer-context';
 import LoadingCom from '../../../LoadingCom';
-// import * as bcrypt from 'bcrypt';
-
+import { login } from '../../../../lib/api/auth';
 const Transition = React.forwardRef((props, ref) => {
   return <Slide direction='up' ref={ref} {...props} />;
 });
@@ -46,19 +43,22 @@ export default function FormDialog(props) {
   const cusCtx = useContext(CustomerContext);
   const { setCustomers, customers } = cusCtx;
   const { handleSubmit, register } = useForm();
+  const { data, error, status, sendRequest } = useHttp(login);
 
-  function CheckValidate(email, password) {
-    if (emailValidate && passwordValidate && email != null && password != null)
-      loginHandler();
-  }
+  React.useEffect(() => {
+    if (status === 'completed') {
+      if (!error) {
+        console.log(data);
+        swal('Thành công', 'Đăng nhập thành công', 'success');
+        window.localStorage.setItem('accessToken', data.accessToken);
+        // window.location.reload();
+      } else {
+        swal('Đã có lỗi xảy ra', error, 'error');
+      }
+    }
+  }, [data, status, error]);
 
   const [openSignup, setOpenSignup] = React.useState(false);
-  // const [status, setStatus] = React.useState(null);
-  const loginHandler = async () => {
-    setStatus('loading');
-    await sleep(5000);
-    setStatus('completed');
-  };
   // React.useEffect(() => {
   //   if (status === 'completed') {
   //     window.location.reload();
@@ -87,28 +87,17 @@ export default function FormDialog(props) {
       setEmailValidate(true);
     else setEmailValidate(false);
   }, [email]);
-  const { error, status, sendRequest, data } = useHttp(getCustomers,true);
-  React.useEffect(() => {
-    sendRequest();
-  }, [sendRequest]);
+
   const onSubmit = (value) => {
-    
-    if (status === 'completed' && data) {
-      setCustomers(data);
-      // if (emailValidate && passwordValidate && email != null && password != null){
-      //   customers.forEach(async (cus)=>{
-      //    console.log ( await bcrypt.compare(password, cus.password));
-      //   });
-      // }
-
+    console.log(value);
+    if (
+      emailValidate &&
+      passwordValidate &&
+      email != null &&
+      password != null
+    ) {
+      sendRequest(value);
     }
-    else if (status === 'pending') return <LoadingCom />;
-    if (error) return <h1>Đã có lỗi xảy ra</h1>;
-
-    // if (emailValidate && passwordValidate && email != null && password != null)
-    // setStatus('loading');
-    // await sleep(5000);
-    // setStatus('completed');
   };
   return (
     <Dialog
@@ -128,8 +117,7 @@ export default function FormDialog(props) {
         },
       }}
     >
-            <form onSubmit={handleSubmit(onSubmit)}>
-
+      <form onSubmit={handleSubmit(onSubmit)}>
         {status === 'pending' && <LinearProgress />}
         <DialogTitle>
           <Typography
@@ -162,11 +150,10 @@ export default function FormDialog(props) {
               fontWeight: 'bold',
             }}
           >
-            E-mail 
+            E-mail
           </Typography>
           <input
-                          {...register('email')}
-
+            {...register('email')}
             className='form__input'
             type='email'
             id='email'
@@ -197,8 +184,7 @@ export default function FormDialog(props) {
             Mật khẩu
           </Typography>
           <input
-                          {...register('password')}
-
+            {...register('password')}
             className='form__input'
             type='password'
             minLength={6}
@@ -292,7 +278,7 @@ export default function FormDialog(props) {
             <Box p='10px' pt='20px' display='flex' justifyContent='center'>
               <Box pr='5px'>
                 <Typography variant='subtitle5' style={{ color: '#808080' }}>
-                  Chưa đăng ký ? 
+                  Chưa đăng ký ?
                 </Typography>
               </Box>
               <a

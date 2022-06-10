@@ -7,8 +7,9 @@ export const AuthContext = React.createContext({
 });
 
 const AuthContextProvider = ({ children }) => {
-  const [user, setUser] = React.useState(null);
-
+  const [user, setUser] = React.useState(localStorage.getItem('user'));
+  console.log('Vo user');
+  console.log(user);
   const contextValue = {
     user,
     setUser,

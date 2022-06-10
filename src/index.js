@@ -5,14 +5,15 @@ import './index.css';
 import App from './App';
 import PetCartContextProvider from './store/petCart-context';
 import CustomerAuthContextProvider from './store/customerAuth-context';
+import AuthContextProvider from './store/auth-context';
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <CustomerAuthContextProvider>
+      <AuthContextProvider>
         <PetCartContextProvider>
           <App />
         </PetCartContextProvider>
-      </CustomerAuthContextProvider>
+      </AuthContextProvider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')

@@ -25,11 +25,14 @@ import Badge from '@mui/material/Badge';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import CartNof from './CartHeader';
 import { PetCartContext } from '../../../../store/petCart-context';
+import { AuthContext } from '../../../../store/auth-context';
+import Menu from '@mui/material/Menu';
+import Tooltip from '@mui/material/Tooltip';
+import MenuItem from '@mui/material/MenuItem';
+import AdbIcon from '@mui/icons-material/Adb';
 function ElevationScroll(props) {
   const { children, window } = props;
-  // Note that you normally won't need to set the window ref as useScrollTrigger
-  // will default to window.
-  // This is only being set here because the demo is in an iframe.
+
   const trigger = useScrollTrigger({
     disableHysteresis: true,
     threshold: 0,
@@ -70,6 +73,8 @@ const Header = (props) => {
 
   const petCartCtx = useContext(PetCartContext);
   const { items } = petCartCtx;
+  const authCtx = useContext(AuthContext);
+  const { user, setUser } = authCtx;
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -81,7 +86,37 @@ const Header = (props) => {
   const handlePopoverClose = () => {
     setAnchorEl(null);
   };
+  const settings = ['Thông tin', 'Đơn hàng', 'Đăng xuất'];
+  const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
 
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
+  };
+
+  const handleCloseUserMenu = (event) => {
+    setAnchorElUser(null);
+  };
+  const handleCheckUserMenu = (setting) => {
+    switch (setting) {
+      case 'Thông tin':
+        console.log('0');
+        break;
+      case 'Đơn hàng':
+        console.log(1);
+        break;
+      case 'Đăng xuất':
+        console.log(2);
+        localStorage.setItem('isLogin', false);
+        window.location.reload();
+        break;
+      default:
+        break;
+    }
+  };
   const open = Boolean(anchorEl);
   const drawer = (
     <div>
@@ -162,20 +197,29 @@ const Header = (props) => {
             fullWidth
             onClick={() => {
               setOpenLogin(true);
+              setOpenSignup(false);
             }}
             variant='outlined'
             sx={{ backgroundColor: '#ff6b00' }}
           >
-            Đăng nhập
+            Đăng nhập1
           </Button>
 
-          <Button fullWidth href='/sign-up' variant='contained'>
-            Đăng ký
+          <Button
+            fullWidth
+            onClick={() => {
+              setOpenLogin(false);
+
+              setOpenSignup(true);
+            }}
+            variant='contained'
+          >
+            Đăng ký1
           </Button>
           <CartNof countItem={items.length} />
         </Stack>
       )}
-      {localStorage.getItem('isLogin') && (
+      {localStorage.getItem('isLogin') === true && (
         <Stack
           mt={2}
           sx={{ paddingLeft: '20px', paddingRight: '20px' }}
@@ -185,7 +229,7 @@ const Header = (props) => {
           <Button
             fullWidth
             onClick={() => {
-              localStorage.removeItem('isLogin');
+              localStorage.setItem('isLogin', false);
               window.location.reload();
             }}
             variant='outlined'
@@ -302,26 +346,77 @@ const Header = (props) => {
                   Tin tức
                 </NavLink>
               </Stack>
-
-              <Stack direction='row' spacing={1}>
-                <Button
-                  onClick={() => {
-                    setOpenLogin(true);
-                  }}
-                  variant='outlined'
-                >
-                  Đăng nhập
-                </Button>
-                <Button
-                  onClick={() => {
-                    setOpenSignup(true);
-                  }}
-                  variant='contained'
-                >
-                  Đăng ký
-                </Button>
-                <CartNof countItem={items.length} />
-              </Stack>
+              {localStorage.getItem('isLogin') == 'false' && (
+                <Stack direction='row' spacing={1}>
+                  <Button
+                    onClick={() => {
+                      setOpenLogin(true);
+                      setOpenSignup(false);
+                    }}
+                    variant='outlined'
+                  >
+                    Đăng nhập
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      setOpenSignup(true);
+                      setOpenLogin(false);
+                      console.log('Click ', openSignup);
+                    }}
+                    variant='contained'
+                  >
+                    Đăng ký
+                  </Button>
+                  <CartNof countItem={items.length} />
+                </Stack>
+              )}
+              {localStorage.getItem('isLogin') == 'true' && (
+                <Stack direction='row' spacing={1}>
+                  <Box sx={{ flexGrow: 0 }}>
+                    <Tooltip title='Mở rộng tính năng'>
+                      <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                        <Avatar alt='Hao' src='/static/images/avatar/2.jpg' />
+                      </IconButton>
+                    </Tooltip>
+                    <Menu
+                      sx={{ mt: '45px' }}
+                      id='menu-appbar'
+                      anchorEl={anchorElUser}
+                      anchorOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right',
+                      }}
+                      keepMounted
+                      transformOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right',
+                      }}
+                      open={Boolean(anchorElUser)}
+                      onClose={handleCloseUserMenu}
+                    >
+                      {settings.map((setting) => (
+                        <MenuItem
+                          key={setting}
+                          onClick={() => handleCheckUserMenu(setting)}
+                        >
+                          <Typography textAlign='center'>{setting}</Typography>
+                        </MenuItem>
+                      ))}
+                    </Menu>
+                  </Box>
+                  {/* <Button
+                    fullWidth
+                    onClick={() => {
+                      localStorage.removeItem('isLogin');
+                      // window.location.reload();
+                    }}
+                    variant='outlined'
+                  >
+                    Đăng xuất
+                  </Button> */}
+                  <CartNof countItem={items.length} />
+                </Stack>
+              )}
             </Toolbar>
           </Container>
         </AppBar>

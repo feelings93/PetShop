@@ -22,7 +22,7 @@ export default function CheckoutPage() {
       underline='hover'
       key='1'
       color='#000'
-      href='/gio-hang'
+      to='/gio-hang'
       fontWeight='regular'
       sx={{ textDecoration: 'none' }}
     >
@@ -56,41 +56,6 @@ export default function CheckoutPage() {
         <Grid item sm={6} sx={{ backgroundColor: '#f7faff' }}>
           <ListProduct />
         </Grid>
-        {/* <Button
-            variant='contained'
-            endIcon={<ArrowDropDownIcon sx={{ color: '' }} />}
-            size='medium'
-            sx={{ width: '100%' }}
-            onClick={() => setHideDiscount(!hideDiscout)}
-          >
-            Sử dụng mã giảm giá
-          </Button>
-          {!hideDiscout && (
-            <>
-              <Grid item md={10}>
-                <TextField
-                  id='outlined-basic'
-                  label='Điền mã giảm giá'
-                  variant='outlined'
-                  size='small'
-                  sx={{ width: '100%' }}
-                />
-              </Grid>
-              <Grid
-                item
-                md={2}
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'flex-end',
-                  alignItems: 'center',
-                }}
-              >
-                <Button variant='contained' size='medium'>
-                  Áp dụng
-                </Button>
-              </Grid>
-            </>
-          )} */}
       </Grid>
     </Container>
   );

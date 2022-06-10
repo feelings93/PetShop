@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/destructuring-assignment */
-import React from 'react';
+import React, { useContext } from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
@@ -17,8 +17,8 @@ import TextField from '@mui/material/TextField';
 import useHttp from '../../../../hooks/use-http';
 import { createCustomer } from '../../../../lib/api/customer';
 import swal from 'sweetalert';
-import { login } from '../../../../lib/api/customer_auth';
 import { signUp } from '../../../../lib/api/auth';
+import { AuthContext } from '../../../../store/auth-context';
 const Transition = React.forwardRef((props, ref) => {
   // eslint-disable-next-line react/jsx-props-no-spreading
   return <Slide direction='up' ref={ref} {...props} />;
@@ -26,7 +26,7 @@ const Transition = React.forwardRef((props, ref) => {
 
 export default function FormDialog(props) {
   const [checked, setChecked] = React.useState(false);
-  const [isOpen,setIsOpen] = React.useState(props.open)
+  const [isOpen, setIsOpen] = React.useState(props.open);
   const [name, setName] = React.useState(null);
   const [phone, setPhone] = React.useState(null);
   const [nameValidate, setNameValidate] = React.useState(null);
@@ -40,8 +40,8 @@ export default function FormDialog(props) {
   const { data, error, status, sendRequest } = useHttp(signUp);
   const { handleSubmit, register } = useForm();
 
-  // const petCtx = useContext(PetContext);
-  // const { setPets, pets } = petCtx;
+  const authCtx = useContext(AuthContext);
+  const { user, setUser } = authCtx;
 
   React.useEffect(() => {
     if (name == null) {
@@ -78,10 +78,15 @@ export default function FormDialog(props) {
   React.useEffect(() => {
     if (status === 'completed') {
       if (!error) {
-        console.log(data);
+        console.log(123);
+        setUser(data?.user);
+        console.log(user);
         swal('Thành công', 'Bạn đã thêm tài khoản mới thành công', 'success');
         window.localStorage.setItem('accessToken', data.accessToken);
-        window.location.reload();
+        window.localStorage.setItem('user', data?.user);
+
+        window.localStorage.setItem('isLogin', true);
+        // window.location.reload();
       } else {
         swal('Đã có lỗi xảy ra', error, 'error');
       }
@@ -108,11 +113,6 @@ export default function FormDialog(props) {
     console.log('met nghe');
   };
   const onSubmit = (data1) => {
-    console.log(data1);
-    data1={email: "1@1.com",
-    name: "123",
-    password: "123456",
-    phone: "123"}
     if (
       emailValidate &&
       passwordValidate &&
@@ -122,12 +122,9 @@ export default function FormDialog(props) {
       name != null &&
       rePassword != null &&
       rePassword === password
-    ){
-
-      sendRequest(data1);
-      setIsOpen(false);
-    }
-    else swal('Thất bại', 'Đã có lỗi xảy ra', 'error');
+    ) {
+      sendRequest({ ...data1, password });
+    } else swal('Thất bại', 'Đã có lỗi xảy ra', 'error');
   };
   return (
     <Dialog
@@ -298,8 +295,8 @@ export default function FormDialog(props) {
               Mật khẩu
             </Typography>
             <input
-              {...register('password')}
               className='form__input'
+              {...register('password')}
               type='password'
               id='password'
               name='Mật khẩu'

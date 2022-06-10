@@ -2,7 +2,10 @@ import { axios, bearerHeader } from '../config';
 
 export const login = async ({ email, password }) => {
   try {
-    const response = await axios.post('/customer-auth/login', { email, password });
+    const response = await axios.post('/customer-auth/login', {
+      email,
+      password,
+    });
     return response.data;
   } catch (err) {
     throw new Error(err);
@@ -11,7 +14,12 @@ export const login = async ({ email, password }) => {
 
 export const signUp = async ({ email, password, phone, name }) => {
   try {
-    const response = await axios.post('/customer-auth/register', { email, password, phone, name });
+    const response = await axios.post('/customer-auth/register', {
+      email,
+      password,
+      phone,
+      name,
+    });
     return response.data;
   } catch (err) {
     throw new Error(err);
