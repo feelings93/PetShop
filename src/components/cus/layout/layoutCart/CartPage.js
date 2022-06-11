@@ -19,10 +19,15 @@ import { useNavigate } from 'react-router-dom';
 
 export default function CartPage() {
   const petCartCtx = useContext(PetCartContext);
-  let { items, handleUpQuantity, handleDowQuantity, handleGetTotal } =
+  let { items, handleUpQuantity, handleDowQuantity, handleGetTotal, setItems } =
     petCartCtx;
-  let navigate = useNavigate();
 
+  let navigate = useNavigate();
+  // React.useEffect(() => {
+  //   if (items.length > 0) {
+  //     localStorage.setItem('itemsCart', JSON.stringify(items));
+  //   } else setItems(JSON.parse(localStorage.getItem('itemsCart')));
+  // }, [items]);
   const breadcrumbs = [
     <Link
       underline='hover'
@@ -80,7 +85,7 @@ export default function CartPage() {
             color: '#5e5e5e',
           }}
         >
-          Bạn có {items.length} mặt hàng muốn mua đang chờ được thanh toán
+          Bạn có {items?.length} mặt hàng muốn mua đang chờ được thanh toán
         </Typography>
       </Grid>
       <Grid

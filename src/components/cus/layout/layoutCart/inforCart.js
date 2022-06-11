@@ -32,7 +32,7 @@ const InfoCart = () => {
   const [hideDiscout, setHideDiscount] = useState(true);
 
   const petCartCtx = useContext(PetCartContext);
-  let { items, handleUpQuantity, handleDowQuantity, handleGetTotal } =
+  let { items, handleUpQuantity, handleDowQuantity, handleGetTotal, setItems } =
     petCartCtx;
   const authCtx = useContext(AuthContext);
   const { user, setUser } = authCtx;
@@ -49,7 +49,7 @@ const InfoCart = () => {
   const [commune, setCommune] = useState('');
   const [detailAddress, setDetailAddress] = useState(null);
   const [orderDate, setOrderDate] = useState(null);
-  const [customerId, setCustomerId] = useState(null);
+  const [customerId, setCustomerId] = useState();
   const [services, setService] = useState([]);
   const [pets, setPets] = useState([]);
   const [products, setProducts] = useState([]);
@@ -68,21 +68,37 @@ const InfoCart = () => {
       if (!error) {
         console.log(data);
         swal('Thành công', 'Đặt hàng thành công', 'success');
-        // window.location.reload();
+        setItems([]);
+        // localStorage.setItem('itemsCart', []);
+
+        window.location.reload();
       } else {
         swal('Đã có lỗi xảy ra', error, 'error');
       }
     }
   }, [data, status, error]);
-  const onSubmit = (data1) => {
+  const updateValue = () => {
     setTotal(handleGetTotal());
-    console.log(user);
-    if (user?.id != null || user?.id != undefined) {
-      setCustomerId(user?.id);
-    } else {
-      setCustomerId(-1);
-    }
+    console.log(Number(localStorage.getItem('userId')));
+    if (localStorage.getItem('userId'))
+      setCustomerId(Number(localStorage.getItem('userId')));
+    let listPets = [];
+    let listProducts = [];
+    items?.forEach((item) => {
+      if (item.type == 'pet') listPets.push({ id: item?.itemId });
+      else if (item.type == 'product')
+        listProducts.push({ id: item?.itemId, quantity: item?.quantity });
+    });
+    setPets(listPets);
+    setProducts(listProducts);
+  };
+
+  const onSubmit = (data1) => {
+    updateValue();
+    console.log(total);
     console.log(customerId);
+    console.log(pets);
+    console.log(products);
     // console.log({
     //   ...data1,
     //   total,
@@ -96,7 +112,8 @@ const InfoCart = () => {
     //   products,
     //   pets,
     // });
-    if (items?.length > 0) {
+    console.log(items);
+    if (pets?.length > 0 || products.length > 0) {
       sendRequest({
         ...data1,
         total,
@@ -168,6 +185,7 @@ const InfoCart = () => {
           <Grid item sm={8}>
             <TextField
               id='email'
+              {...register('email')}
               label='Email'
               variant='outlined'
               size='small'

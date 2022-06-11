@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import AppBar from '@mui/material/AppBar';
 import PropTypes from 'prop-types';
 import Toolbar from '@mui/material/Toolbar';
@@ -72,9 +72,18 @@ const Header = (props) => {
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const petCartCtx = useContext(PetCartContext);
-  const { items } = petCartCtx;
+  const { items, setItems } = petCartCtx;
+
   const authCtx = useContext(AuthContext);
   const { user, setUser } = authCtx;
+
+  // useEffect(() => {
+  //   if (items == null) items = [];
+  //   if (items.length > 0) {
+  //     localStorage.setItem('itemsCart', JSON.stringify(items));
+  //     console.log(JSON.parse(localStorage.getItem('itemsCart')));
+  //   } else setItems(JSON.parse(localStorage.getItem('itemsCart')));
+  // }, [items]);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -110,7 +119,9 @@ const Header = (props) => {
         break;
       case 'Đăng xuất':
         console.log(2);
-        localStorage.setItem('isLogin', false);
+        localStorage.removeItem('isLogin');
+        localStorage.removeItem('userId');
+        localStorage.removeItem('accessToken');
         window.location.reload();
         break;
       default:
@@ -185,7 +196,7 @@ const Header = (props) => {
       </Stack>
 
       <Divider />
-
+      {console.log(123, user)}
       {!localStorage.getItem('isLogin') === true && (
         <Stack
           mt={2}
@@ -216,10 +227,10 @@ const Header = (props) => {
           >
             Đăng ký1
           </Button>
-          <CartNof countItem={items.length} />
+          <CartNof countItem={items?.length} />
         </Stack>
       )}
-      {localStorage.getItem('isLogin') === true && (
+      {localStorage.getItem('isLogin') === true && user && (
         <Stack
           mt={2}
           sx={{ paddingLeft: '20px', paddingRight: '20px' }}
@@ -236,7 +247,7 @@ const Header = (props) => {
           >
             Đăng xuất
           </Button>
-          <CartNof countItem={items.length} />
+          <CartNof countItem={items?.length} />
         </Stack>
       )}
     </div>
@@ -346,7 +357,7 @@ const Header = (props) => {
                   Tin tức
                 </NavLink>
               </Stack>
-              {localStorage.getItem('isLogin') == 'false' && (
+              {!localStorage.getItem('isLogin') && (
                 <Stack direction='row' spacing={1}>
                   <Button
                     onClick={() => {
@@ -367,7 +378,7 @@ const Header = (props) => {
                   >
                     Đăng ký
                   </Button>
-                  <CartNof countItem={items.length} />
+                  <CartNof countItem={items?.length} />
                 </Stack>
               )}
               {localStorage.getItem('isLogin') == 'true' && (
@@ -414,7 +425,7 @@ const Header = (props) => {
                   >
                     Đăng xuất
                   </Button> */}
-                  <CartNof countItem={items.length} />
+                  <CartNof countItem={items?.length} />
                 </Stack>
               )}
             </Toolbar>

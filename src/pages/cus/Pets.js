@@ -160,7 +160,7 @@ const Pets = () => {
   }, [sendRequest]);
   React.useEffect(() => {
     if (status === 'completed' && data) {
-      setPets(data);
+      setPets(data?.filter((e) => e.status == 'Còn hàng'));
     }
   }, [status, setPets, data]);
 

@@ -24,7 +24,7 @@ const PetCartContextProvider = (props) => {
   const [items, setItems] = useState([]);
   const [openAdd, setOpenAdd] = useState(false);
 
-  const handleAddToCart = useCallback((Item, typeP, quantity=0) => {
+  const handleAddToCart = useCallback((Item, typeP, quantity = 0) => {
     let checkHaving = false;
     switch (typeP) {
       case 'pet':
@@ -38,7 +38,7 @@ const PetCartContextProvider = (props) => {
                 Item.photos[0].url
               )
             : new ItemPetCart(Item.name, Item.price, Item.id, 1, logo);
-        items.map((item) => {
+        items?.map((item) => {
           if (item.itemId === itemPetCart.itemId && item.type == 'pet') {
             checkHaving = true;
           }
@@ -62,7 +62,7 @@ const PetCartContextProvider = (props) => {
                 Item.photos[0].url
               )
             : new ItemProductCart(Item.name, 1, Item.price, 1, Item.id, logo);
-        items.map((item) => {
+        items?.map((item) => {
           if (
             item.itemId === itemProductCart.itemId &&
             item.type == 'product'
@@ -75,16 +75,15 @@ const PetCartContextProvider = (props) => {
         if (!checkHaving) {
           console.log(items);
           setItems([...items, itemProductCart]);
-        }
-        else{
-          items.map((e)=>{
-            if(e.itemId==Item.id){
-              e.quantity+=Number(quantity);
-              e.price = (e.price / (e.quantity - Number(quantity))) * e.quantity;
-
+        } else {
+          items?.map((e) => {
+            if (e.itemId == Item.id) {
+              e.quantity += Number(quantity);
+              e.price =
+                (e.price / (e.quantity - Number(quantity))) * e.quantity;
             }
             return e;
-          })
+          });
           setItems(items);
         }
         break;
@@ -93,7 +92,7 @@ const PetCartContextProvider = (props) => {
           Item?.photos.length > 0
             ? new ItemServiceOrder(Item.name, Item.id, 1, 1, Item.photos[0].url)
             : new ItemServiceOrder(Item.name, Item.id, 1, 1, logo);
-        items.map((item) => {
+        items?.map((item) => {
           if (
             item.itemId === itemServiceCart.itemId &&
             item.type == 'service'
@@ -123,7 +122,7 @@ const PetCartContextProvider = (props) => {
 
   const handleDeleteItem = useCallback((id, typeP) => {
     setItems(
-      items.filter((item) => {
+      items?.filter((item) => {
         if (item.type == typeP && item.itemId == id) return false;
         return true;
       })
@@ -156,7 +155,7 @@ const PetCartContextProvider = (props) => {
   });
   const handleGetTotal = () => {
     let total = 0;
-    items.forEach((item) => (total += item.price));
+    items?.forEach((item) => (total += item.price));
     return total;
   };
   // React.useEffect(() => {

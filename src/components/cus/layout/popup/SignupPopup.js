@@ -15,6 +15,7 @@ import { useForm } from 'react-hook-form';
 import TextField from '@mui/material/TextField';
 
 import useHttp from '../../../../hooks/use-http';
+// import { useAuth } from './hooks/use-auth';
 import { createCustomer } from '../../../../lib/api/customer';
 import swal from 'sweetalert';
 import { signUp } from '../../../../lib/api/auth';
@@ -78,14 +79,15 @@ export default function FormDialog(props) {
   React.useEffect(() => {
     if (status === 'completed') {
       if (!error) {
-        console.log(123);
-        setUser(data?.user);
-        console.log(user);
-        swal('Thành công', 'Bạn đã thêm tài khoản mới thành công', 'success');
-        window.localStorage.setItem('accessToken', data.accessToken);
-        window.localStorage.setItem('user', data?.user);
-
-        window.localStorage.setItem('isLogin', true);
+        // const [{ data: dataUser, status: statusUser }] = useAuth();
+        if (data) {
+          console.log(123);
+          console.log(user);
+          swal('Thành công', 'Bạn đã thêm tài khoản mới thành công', 'success');
+          window.localStorage.setItem('accessToken', data.accessToken);
+          window.localStorage.setItem('user', data?.user);
+          window.localStorage.setItem('isLogin', true);
+        }
         // window.location.reload();
       } else {
         swal('Đã có lỗi xảy ra', error, 'error');

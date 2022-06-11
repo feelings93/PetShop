@@ -24,11 +24,11 @@ import { PetTypeContext } from '../../../../store/pet-type-context';
 import { CategoryContext } from '../../../../store/category-context';
 
 import Dialog from '@mui/material/Dialog';
-import CircularProgress from '@mui/material/CircularProgress';
 import { PetContext } from '../../../../store/pet-context';
 import { getPets } from '../../../../lib/api/pet';
 import { ProductContext } from '../../../../store/product-context';
 import { getProducts } from '../../../../lib/api/product';
+import LoadingCom from '../../../LoadingCom';
 const Typographyf14light = (props) => {
   return (
     <Typography
@@ -136,11 +136,7 @@ const ListFilters = (props) => {
     statusPets === 'pending' ||
     statusProducts === 'pending'
   )
-    return (
-      <Dialog open={true}>
-        <CircularProgress />
-      </Dialog>
-    );
+    return <LoadingCom />;
   if (error || errorPets || errorProducts) return <h1>Đã có lỗi xảy ra</h1>;
 
   const handleChange = (event, newValue, activeThumb) => {
@@ -211,9 +207,7 @@ const ListFilters = (props) => {
               }}
               onClick={() => handleChangeType(e.name)}
             >
-              <Typography >
-                {e.name}
-              </Typography>
+              <Typography>{e.name}</Typography>
               <Typography>
                 ({props.typeP == 'pet' ? e.pets?.length : e.products?.length})
               </Typography>

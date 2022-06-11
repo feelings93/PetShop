@@ -18,9 +18,12 @@ import SignupPopup from './SignupPopup';
 import { useForm } from 'react-hook-form';
 import swal from 'sweetalert';
 import useHttp from '../../../../hooks/use-http';
+// import { useAuth } from './hooks/use-auth';
 import { CustomerContext } from '../../../../store/customer-context';
 import LoadingCom from '../../../LoadingCom';
 import { login } from '../../../../lib/api/auth';
+import { AuthContext } from '../../../../store/auth-context';
+
 const Transition = React.forwardRef((props, ref) => {
   return <Slide direction='up' ref={ref} {...props} />;
 });
@@ -40,18 +43,26 @@ export default function FormDialog(props) {
   const [emailValidate, setEmailValidate] = React.useState(null);
   const [password, setPassword] = React.useState(null);
   const [passwordValidate, setPasswordValidate] = React.useState(null);
-  const cusCtx = useContext(CustomerContext);
-  const { setCustomers, customers } = cusCtx;
+  const [isOpenSignIn, setIsOpenSignIn] = React.useState(props?.open);
   const { handleSubmit, register } = useForm();
   const { data, error, status, sendRequest } = useHttp(login);
 
+  const authCtx = useContext(AuthContext);
+  const { user, setUser } = authCtx;
   React.useEffect(() => {
     if (status === 'completed') {
       if (!error) {
+        // console.log(useAuth());
         console.log(data);
-        swal('Thành công', 'Đăng nhập thành công', 'success');
-        window.localStorage.setItem('accessToken', data.accessToken);
-        // window.location.reload();
+        if (data) {
+          console.log(123);
+          console.log(user);
+          swal('Thành công', 'Đăng nhập thành công', 'success');
+          window.localStorage.setItem('accessToken', data.accessToken);
+          window.localStorage.setItem('userId', data.user.id);
+          window.localStorage.setItem('isLogin', true);
+          window.location.reload();
+        }
       } else {
         swal('Đã có lỗi xảy ra', error, 'error');
       }
@@ -101,7 +112,7 @@ export default function FormDialog(props) {
   };
   return (
     <Dialog
-      open={props.open}
+      open={isOpenSignIn}
       TransitionComponent={Transition}
       keepMounted
       onClose={props.onClose}
