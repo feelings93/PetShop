@@ -32,6 +32,7 @@ import useHttp from '../../hooks/use-http';
 import { getServices } from '../../lib/api/service';
 import { ServiceContext } from '../../store/service-context';
 import LoadingCom from '../../components/LoadingCom';
+import AddReservationForm from '../../components/cus/layout/service/AddReservationForm';
 
 const topData = [
   { label: 'Giá tăng dần', type: 'asc' },
@@ -40,7 +41,8 @@ const topData = [
 ];
 const Services = () => {
   const [label, setLabel] = React.useState('');
-
+  const [openAdd, setOpenAdd] = React.useState(false);
+  const [selectedService, setSelectedService] = React.useState(null);
   const { error, status, sendRequest, data } = useHttp(getServices, true);
   const serviceCtx = useContext(ServiceContext);
   const { setServices, services } = serviceCtx;
@@ -152,6 +154,11 @@ const Services = () => {
                   <CardService
                     {...service}
                     typeP='service'
+                    onOpenReservation={() => {
+                      setOpenAdd(true);
+                      setSelectedService(service);
+                    }}
+
                     // new={false}
                   />
 
@@ -166,6 +173,16 @@ const Services = () => {
           </Box>
         </Grid>
       </Grid>
+      {openAdd && (
+        <AddReservationForm
+          service={selectedService}
+          onClose={() => {
+            setOpenAdd(false);
+            setSelectedService(null);
+          }}
+          open={openAdd}
+        />
+      )}
     </Container>
   );
 };

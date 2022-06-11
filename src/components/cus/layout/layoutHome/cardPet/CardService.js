@@ -172,6 +172,7 @@ const CardService = (props) => {
             }}
             onClick={() => {
               //   handleAddToCart(props, props.typeP);
+              props.onOpenReservation();
             }}
           >
             Đặt lịch hẹn
@@ -277,6 +278,8 @@ const CardService = (props) => {
           }}
           onClick={() => {
             // handleAddToCart(props,props.typeP);
+            props.onOpenReservation();
+
           }}
         >
           Đặt lịch hẹn
