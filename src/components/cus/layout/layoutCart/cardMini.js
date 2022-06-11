@@ -22,7 +22,6 @@ const CardMini = (props) => {
   return (
     <>
       <Grid container sm={12} sx={{ display: 'flex', alignItems: 'center' }}>
-        {console.log(itemCart)}
         <Grid item sm={2}>
           <Badge badgeContent={itemCart.quantity} color='warning'>
             <Box

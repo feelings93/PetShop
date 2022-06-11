@@ -1,4 +1,4 @@
-import React, { Component, useState, useContext } from 'react';
+import React, { Component, useState, useContext, useRef } from 'react';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
@@ -27,6 +27,8 @@ import { PetCartContext } from '../../../../store/petCart-context';
 import { AuthContext } from '../../../../store/auth-context';
 import { createOrder } from '../../../../lib/api/order';
 import useHttp from '../../../../hooks/use-http';
+import * as emailjs from 'emailjs-com';
+
 const InfoCart = () => {
   const [value, setValue] = useState(new Date('2014-08-18T21:11:54'));
   const [hideDiscout, setHideDiscount] = useState(true);
@@ -43,6 +45,7 @@ const InfoCart = () => {
   const [orderType, setOrderType] = useState(null);
   const [paymentType, setPaymentType] = useState('Thanh toán khi nhận hàng');
   const [customerName, setCustomerName] = useState(null);
+  const [email, setEmail] = useState(null);
   const [phone, setPhone] = useState(null);
   const [province, setProvince] = useState('');
   const [district, setDistrict] = useState('');
@@ -55,6 +58,7 @@ const InfoCart = () => {
   const [products, setProducts] = useState([]);
   const [note, setNotes] = useState('None');
   const { handleSubmit, register } = useForm();
+  const form = useRef();
 
   const handleChange = (newValue) => {
     setValue(newValue);
@@ -63,15 +67,49 @@ const InfoCart = () => {
 
   const { data, error, status, sendRequest } = useHttp(createOrder, true);
 
-  React.useEffect(() => {
+  const sendEmail = async () => {
+    const linkWeb = `${window.location.origin}/don-hang/${data?.id}`;
+    await emailjs
+      .send(
+        'service_3a37tfu',
+        'template_f0t10ud',
+        {
+          customerName: customerName,
+          idDonHang: data?.id,
+          sdt: phone,
+          ngayDat: data?.orderDate,
+          toEmail: email,
+          linkWeb: linkWeb,
+        },
+        'U9LL460YLNSrnPP8T'
+      )
+      .then(
+        (result) => {
+          console.log(result.text);
+        },
+        (error) => {
+          console.log(error.text);
+        }
+      );
+  };
+  React.useEffect(async () => {
     if (status === 'completed') {
       if (!error) {
         console.log(data);
+        console.log({
+          customerName: customerName,
+          idDonHang: data?.id,
+          sdt: phone,
+          ngayDat: data?.orderDate,
+          toEmail: email,
+          link: `${window.location.origin}/don-hang/${data?.id}`,
+        });
+        await sendEmail();
         swal('Thành công', 'Đặt hàng thành công', 'success');
         setItems([]);
         // localStorage.setItem('itemsCart', []);
-
-        window.location.reload();
+        navigate(`/`);
+        // window.location.reload();
       } else {
         swal('Đã có lỗi xảy ra', error, 'error');
       }
@@ -95,10 +133,13 @@ const InfoCart = () => {
 
   const onSubmit = (data1) => {
     updateValue();
-    console.log(total);
-    console.log(customerId);
-    console.log(pets);
-    console.log(products);
+    // console.log(total);
+    // console.log(customerId);
+    // console.log(pets);
+    // console.log(products);
+    setEmail(data1?.email);
+    setCustomerName(data1?.customerName);
+    setPhone(data1?.phone);
     // console.log({
     //   ...data1,
     //   total,
@@ -146,7 +187,7 @@ const InfoCart = () => {
   };
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form ref={form} onSubmit={handleSubmit(onSubmit)}>
         <Typography
           sx={{
             fontSize: '16px',
