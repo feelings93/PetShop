@@ -10,8 +10,11 @@ import ListProduct from './listProduct';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import Link from '@mui/material/Link';
+import { useNavigate } from 'react-router-dom';
 
 export default function CheckoutPage() {
+  let navigate = useNavigate();
+
   const [value, setValue] = React.useState(new Date('2014-08-18T21:11:54'));
   const [hideDiscout, setHideDiscount] = React.useState(true);
   const handleChange = (newValue) => {
@@ -22,9 +25,9 @@ export default function CheckoutPage() {
       underline='hover'
       key='1'
       color='#000'
-      to='/gio-hang'
+      onClick={() => navigate('/gio-hang')}
       fontWeight='regular'
-      sx={{ textDecoration: 'none' }}
+      sx={{ textDecoration: 'none', cursor: 'pointer' }}
     >
       Giỏ hàng
     </Link>,

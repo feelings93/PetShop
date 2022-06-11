@@ -43,7 +43,6 @@ const CategoryContextProvider = (props) => {
         return item;
       });
 
-      console.log(newCategories);
       setCategories(newCategories);
     },
     [categories]

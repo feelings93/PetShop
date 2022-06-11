@@ -20,8 +20,6 @@ const AuthContextProvider = ({ children }) => {
       }
     }
   }, [data, status, setUser]);
-  console.log('Vo user');
-  console.log(user);
   const contextValue = {
     user,
     setUser,

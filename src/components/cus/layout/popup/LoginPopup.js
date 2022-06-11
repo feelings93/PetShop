@@ -52,14 +52,11 @@ export default function FormDialog(props) {
   React.useEffect(() => {
     if (status === 'completed') {
       if (!error) {
-        // console.log(useAuth());
-        console.log(data);
         if (data) {
-          console.log(123);
-          console.log(user);
           swal('Thành công', 'Đăng nhập thành công', 'success');
           window.localStorage.setItem('accessToken', data.accessToken);
           window.localStorage.setItem('userId', data.user.id);
+          window.localStorage.setItem('userName', data.user.name);
           window.localStorage.setItem('isLogin', true);
           window.location.reload();
         }
@@ -230,15 +227,15 @@ export default function FormDialog(props) {
           >
             Đăng nhập
           </Button>
-          <Box pt='10px' pb='20px'>
+          {/* <Box pt='10px' pb='20px'>
             <Divider sx={{ color: '#808080', fontSize: '14px' }}>
               {' '}
               hoặc Đăng nhập với{' '}
             </Divider>
-          </Box>
+          </Box> */}
           <Box>
             <Stack spacing='15px'>
-              <Button
+              {/* <Button
                 variant='contained'
                 fullWidth
                 style={{
@@ -252,11 +249,11 @@ export default function FormDialog(props) {
                   alignItems: 'center',
                   display: 'flex',
                 }}
-              >
-                {/* <Box pr='10px'>
+              > */}
+              {/* <Box pr='10px'>
                   <i className='fab fa-google fa-x' />
                 </Box> */}
-                <Box
+              {/* <Box
                   sx={{
                     alignItems: 'center',
                     display: 'flex',
@@ -266,7 +263,7 @@ export default function FormDialog(props) {
                   <FcGoogle />
                 </Box>
                 Google
-              </Button>
+              </Button> */}
               {/* <Button
                 variant='contained'
                 fullWidth

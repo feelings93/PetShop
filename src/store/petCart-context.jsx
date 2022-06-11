@@ -46,7 +46,6 @@ const PetCartContextProvider = (props) => {
         });
 
         if (!checkHaving) {
-          console.log(items);
           setItems([...items, itemPetCart]);
         }
         break;
@@ -73,7 +72,6 @@ const PetCartContextProvider = (props) => {
         });
 
         if (!checkHaving) {
-          console.log(items);
           setItems([...items, itemProductCart]);
         } else {
           items?.map((e) => {
@@ -103,7 +101,6 @@ const PetCartContextProvider = (props) => {
         });
 
         if (!checkHaving) {
-          console.log(items);
           setItems([...items, itemServiceCart]);
         }
         break;

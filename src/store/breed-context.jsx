@@ -44,7 +44,6 @@ const BreedContextProvider = (props) => {
         return item;
       });
 
-      console.log(newBreeds);
       setBreeds(newBreeds);
     },
     [breeds]
@@ -82,9 +81,7 @@ const BreedContextProvider = (props) => {
       setSearchBreeds(breeds);
     } else {
       setSearchBreeds(
-        breeds.filter((x) =>
-          x.name.toUpperCase().includes(query.toUpperCase())
-        )
+        breeds.filter((x) => x.name.toUpperCase().includes(query.toUpperCase()))
       );
     }
   }, [breeds, query]);

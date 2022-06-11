@@ -24,7 +24,6 @@ export const getProduct = async (id) => {
 
 export const createProduct = async (Product) => {
   const formData = new FormData();
-  console.log(Product);
 
   formData.append('name', Product.name);
   formData.append('price', Product.price);
@@ -51,7 +50,6 @@ export const createProduct = async (Product) => {
 
 export const editProduct = async (Product) => {
   const formData = new FormData();
-  console.log(Product);
 
   if (Product.name) formData.append('name', Product.name);
   if (Product.price) formData.append('price', Product.price);

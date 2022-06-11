@@ -304,7 +304,9 @@ export default function InforOrder() {
                   fontWeight: 'bold',
                   marginBottom: '10px',
                   marginLeft: '10px',
-                  color: `${data?.paymentStatus ? 'red' : 'green'}`,
+                  color: `${
+                    data?.paymentStatus == 'Chưa thanh toán' ? 'red' : 'green'
+                  }`,
                 }}
               >
                 {data?.paymentStatus}

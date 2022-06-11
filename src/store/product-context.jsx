@@ -47,7 +47,6 @@ const ProductContextProvider = (props) => {
         return item;
       });
 
-      console.log(newproducts);
       setProducts(newproducts);
     },
     [products]
@@ -56,7 +55,6 @@ const ProductContextProvider = (props) => {
     (Product) => {
       const newProducts = products.filter((item) => item.id !== Product.id);
 
-      console.log(newProducts);
       setProducts(newProducts);
     },
     [products]

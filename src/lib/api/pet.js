@@ -20,7 +20,6 @@ export const getPet = async (id) => {
 
 export const createPet = async (Pet) => {
   const formData = new FormData();
-  console.log(Pet);
 
   formData.append('name', Pet.name);
   formData.append('age', Pet.age);
@@ -47,7 +46,6 @@ export const createPet = async (Pet) => {
 
 export const editPet = async (Pet) => {
   const formData = new FormData();
-  console.log(Pet);
 
   if (Pet.name) formData.append('name', Pet.name);
   if (Pet.price) formData.append('price', Pet.price);

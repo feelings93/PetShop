@@ -24,7 +24,6 @@ export const getService = async (id) => {
 
 export const createService = async (Service) => {
   const formData = new FormData();
-  console.log(Service);
 
   formData.append('name', Service.name);
   formData.append('price', Service.price);
@@ -50,7 +49,6 @@ export const createService = async (Service) => {
 
 export const editService = async (Service) => {
   const formData = new FormData();
-  console.log(Service);
 
   if (Service.name) formData.append('name', Service.name);
   if (Service.price) formData.append('price', Service.price);

@@ -95,7 +95,7 @@ const Header = (props) => {
   const handlePopoverClose = () => {
     setAnchorEl(null);
   };
-  const settings = ['Thông tin', 'Đơn hàng', 'Đăng xuất'];
+  const settings = ['Đơn hàng', 'Đăng xuất'];
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const handleOpenUserMenu = (event) => {
@@ -111,17 +111,14 @@ const Header = (props) => {
   };
   const handleCheckUserMenu = (setting) => {
     switch (setting) {
-      case 'Thông tin':
-        console.log('0');
-        break;
       case 'Đơn hàng':
-        console.log(1);
+        navigate('/danh-sach-don-hang');
         break;
       case 'Đăng xuất':
-        console.log(2);
         localStorage.removeItem('isLogin');
         localStorage.removeItem('userId');
         localStorage.removeItem('accessToken');
+        localStorage.removeItem('userName');
         window.location.reload();
         break;
       default:
@@ -372,7 +369,6 @@ const Header = (props) => {
                     onClick={() => {
                       setOpenSignup(true);
                       setOpenLogin(false);
-                      console.log('Click ', openSignup);
                     }}
                     variant='contained'
                   >

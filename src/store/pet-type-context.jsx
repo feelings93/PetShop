@@ -44,7 +44,6 @@ const PetTypeContextProvider = (props) => {
         return item;
       });
 
-      console.log(newPetTypes);
       setPetTypes(newPetTypes);
     },
     [petTypes]

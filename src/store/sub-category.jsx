@@ -44,7 +44,6 @@ const SubCategoryContextProvider = (props) => {
         return item;
       });
 
-      console.log(newSubCategories);
       setSubCategories(newSubCategories);
     },
     [subCategories]

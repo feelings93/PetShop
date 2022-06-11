@@ -152,23 +152,32 @@ const ListFilters = (props) => {
   };
   const handleChangeType = (typeName) => {
     if (props.typeP == 'pet') {
-      setPets([...dataPets]?.filter((e) => e.type.name == typeName));
+      setPets(
+        [...dataPets]?.filter(
+          (e) => e.type.name == typeName && e.status == 'Còn hàng'
+        )
+      );
     } else if (props.typeP == 'product') {
-      console.log(dataProducts);
       setProducts(
-        [...dataProducts]?.filter((e) => e.category.name == typeName)
+        [...dataProducts]?.filter(
+          (e) => e.category.name == typeName && e.status == 'Còn hàng'
+        )
       );
     }
   };
   const handleFilterPrice = () => {
     if (props.typeP == 'pet') {
       setPets(
-        [...dataPets]?.filter((e) => e.price >= price[0] && e.price <= price[1])
+        [...dataPets]?.filter(
+          (e) =>
+            e.price >= price[0] && e.price <= price[1] && e.status == 'Còn hàng'
+        )
       );
     } else if (props.typeP == 'product') {
       setProducts(
         [...dataProducts]?.filter(
-          (e) => e.price >= price[0] && e.price <= price[1]
+          (e) =>
+            e.price >= price[0] && e.price <= price[1] && e.status == 'Còn hàng'
         )
       );
     }
@@ -209,7 +218,11 @@ const ListFilters = (props) => {
             >
               <Typography>{e.name}</Typography>
               <Typography>
-                ({props.typeP == 'pet' ? e.pets?.length : e.products?.length})
+                (
+                {props.typeP == 'pet'
+                  ? e.pets?.filter((e) => e.status == 'Còn hàng')?.length
+                  : e.products?.filter((e) => e.status == 'Còn hàng').length}
+                )
               </Typography>
             </Box>
           </>

@@ -81,14 +81,13 @@ export default function FormDialog(props) {
       if (!error) {
         // const [{ data: dataUser, status: statusUser }] = useAuth();
         if (data) {
-          console.log(123);
-          console.log(user);
           swal('Thành công', 'Bạn đã thêm tài khoản mới thành công', 'success');
           window.localStorage.setItem('accessToken', data.accessToken);
           window.localStorage.setItem('user', data?.user);
+          window.localStorage.setItem('userName', data.user.name);
           window.localStorage.setItem('isLogin', true);
+          window.location.reload();
         }
-        // window.location.reload();
       } else {
         swal('Đã có lỗi xảy ra', error, 'error');
       }
@@ -111,9 +110,7 @@ export default function FormDialog(props) {
     } else setChecked(false);
   };
 
-  const handleClick = () => {
-    console.log('met nghe');
-  };
+  const handleClick = () => {};
   const onSubmit = (data1) => {
     if (
       emailValidate &&

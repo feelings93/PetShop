@@ -47,8 +47,9 @@ const InfoCart = () => {
   const [customerName, setCustomerName] = useState(null);
   const [email, setEmail] = useState(null);
   const [phone, setPhone] = useState(null);
-  const [province, setProvince] = useState('');
+  const [province, setProvince] = useState('Hồ Chí Minh');
   const [district, setDistrict] = useState('');
+  const [communes, setCommunes] = useState(['']);
   const [commune, setCommune] = useState('');
   const [detailAddress, setDetailAddress] = useState(null);
   const [orderDate, setOrderDate] = useState(null);
@@ -72,7 +73,7 @@ const InfoCart = () => {
     await emailjs
       .send(
         'service_3a37tfu',
-        'template_f0t10ud',
+        'template_67wnlmx',
         {
           customerName: customerName,
           idDonHang: data?.id,
@@ -164,6 +165,7 @@ const InfoCart = () => {
         orderType,
         province,
         district,
+        commune,
         services,
         products,
         pets,
@@ -184,6 +186,76 @@ const InfoCart = () => {
     //   sendRequest({ ...data1, password });
     //   setIsOpen(false);
     // } else swal('Thất bại', 'Đã có lỗi xảy ra', 'error');
+  };
+  const ChangeCommune = (event, value) => {
+    switch (value) {
+      case 'Quận 1':
+        setCommunes(Quan1);
+        break;
+      case 'Quận 2':
+        setCommunes(Quan2);
+        break;
+      case 'Quận 3':
+        setCommunes(Quan3);
+        break;
+      case 'Quận 4':
+        setCommunes(Quan4);
+        break;
+      case 'Quận 5':
+        setCommunes(Quan5);
+        break;
+      case 'Quận 6':
+        setCommunes(Quan6);
+        break;
+      case 'Quận 7':
+        setCommunes(Quan7);
+        break;
+      case 'Quận 8':
+        setCommunes(Quan9);
+        break;
+      case 'Quận 10':
+        setCommunes(Quan10);
+        break;
+      case 'Quận 11':
+        setCommunes(Quan11);
+        break;
+      case 'Quận 12':
+        setCommunes(Quan12);
+        break;
+      case 'Quận Bình Tân':
+        setCommunes(QuanBinhTan);
+        break;
+      case 'Quận Thủ Đức':
+        setCommunes(ThuDuc);
+        break;
+      case 'Quận Tân Phú':
+        setCommunes(QuanTanPhu);
+        break;
+      case 'Quận Phú Nhuận':
+        setCommunes(QuanPhuNhuan);
+        break;
+      case 'Quận Gò Vấp':
+        setCommunes(QuanGoVap);
+        break;
+      case 'Quận Bình Thạnh':
+        setCommunes(QuanBinhThanh);
+        break;
+      case 'Huyện Bình Chánh':
+        setCommunes(HuyenhBinhChanh);
+        break;
+      case 'Huyện Cần Giờ':
+        setCommunes(HuyenCanGio);
+        break;
+      case 'Huyện Hóc Môn':
+        setCommunes(HuyenHocMon);
+        break;
+      case 'Huyện Nhà Bè':
+        setCommunes(HuyenNhaBe);
+        break;
+
+      default:
+        break;
+    }
   };
   return (
     <>
@@ -220,6 +292,7 @@ const InfoCart = () => {
               label='Họ và tên'
               variant='outlined'
               size='small'
+              defaultValue={localStorage.getItem('userName')}
               sx={{ width: '100%' }}
             />
           </Grid>
@@ -272,8 +345,7 @@ const InfoCart = () => {
             <Autocomplete
               disablePortal
               id='province'
-              {...register('province')}
-              options={topData}
+              options={ThanhPho}
               size='small'
               renderInput={(params) => (
                 <TextField {...params} label='Tỉnh, thành phố' />
@@ -284,9 +356,9 @@ const InfoCart = () => {
             <Autocomplete
               disablePortal
               id='distric'
-              {...register('distric')}
-              options={topData}
+              options={AllQuan}
               size='small'
+              onChange={ChangeCommune}
               renderInput={(params) => (
                 <TextField {...params} label='Quận, huyện' />
               )}
@@ -296,9 +368,9 @@ const InfoCart = () => {
             <Autocomplete
               disablePortal
               id='commune'
-              {...register('commune')}
-              options={topData}
+              options={communes}
               size='small'
+              onChange={(event, value) => setCommune(value)}
               renderInput={(params) => (
                 <TextField {...params} label='Phường, xã' />
               )}
@@ -427,10 +499,399 @@ const InfoCart = () => {
     </>
   );
 };
-const topData = [
-  { label: 'The Shawshank Redemption', year: 1994 },
-  { label: 'The Godfather', year: 1972 },
-  { label: 'The Godfather: Part II', year: 1974 },
-  { label: 'The Dark Knight', year: 2008 },
+const ThanhPho = ['Hồ Chí Minh'];
+
+const Quan1 = [
+  'Phường Bến Nghé',
+  'Phường Bến Thành',
+  'Phường Cầu Kho',
+  'Phường Cầu Ông Lãnh',
+  'Phường Cô Giang',
+  'Phường Đa Kao',
+  'Phường Nguyễn Cư Trinh',
+  'Phường Nguyễn Thái Bình',
+  'Phường Phạm Ngũ Lão',
+  'Phường Phường Tân Định',
+];
+const Quan2 = [
+  'Phường An Khánh',
+  'Phường An Lợi Đông',
+  'Phường An Phú',
+  'Phường Bình An',
+  'Phường Bình Khánh',
+  'Phường Bình Trưng Đông',
+  'Phường Bình Trưng Tây',
+  'Phường Cát Lái',
+  'Phường Thạnh Mỹ Lợi',
+  'Phường Thảo Điền',
+  'Phường Thủ Thiêm',
+];
+const Quan3 = [
+  'Phường 1',
+  'Phường 2',
+  'Phường 3',
+  'Phường 4',
+  'Phường 5',
+  'Phường 6',
+  'Phường 7',
+  'Phường 8',
+  'Phường 9',
+  'Phường 10',
+  'Phường 11',
+  'Phường 12',
+  'Phường 13',
+  'Phường 14',
+];
+const Quan4 = [
+  'Phường 1',
+  'Phường 2',
+  'Phường 3',
+  'Phường 4',
+  'Phường 5',
+  'Phường 6',
+  'Phường 7',
+  'Phường 8',
+  'Phường 9',
+  'Phường 10',
+  'Phường 11',
+  'Phường 12',
+  'Phường 13',
+  'Phường 14',
+];
+const Quan5 = [
+  'Phường 1',
+  'Phường 2',
+  'Phường 3',
+  'Phường 4',
+  'Phường 5',
+  'Phường 6',
+  'Phường 7',
+  'Phường 8',
+  'Phường 9',
+  'Phường 10',
+  'Phường 11',
+  'Phường 12',
+  'Phường 13',
+  'Phường 14',
+  'Phường 15',
+];
+const Quan6 = [
+  'Phường 1',
+  'Phường 2',
+  'Phường 3',
+  'Phường 4',
+  'Phường 5',
+  'Phường 6',
+  'Phường 7',
+  'Phường 8',
+  'Phường 9',
+  'Phường 10',
+  'Phường 11',
+  'Phường 12',
+  'Phường 13',
+  'Phường 14',
+];
+const Quan7 = [
+  'Phường Bình Thuận',
+  'Phường Phú Mỹ',
+  'Phường Phú Thuận',
+  'Phường Tân Hưng',
+  'Phường Tân Kiểng',
+  'Phường Tân Phong',
+  'Phường Tân Phú',
+  'Phường Tân Quy',
+  'Phường Tân Thuận Đông',
+  'Phường Tân Thuận Tây',
+];
+const Quan8 = [
+  'Phường 1',
+  'Phường 2',
+  'Phường 3',
+  'Phường 4',
+  'Phường 5',
+  'Phường 6',
+  'Phường 7',
+  'Phường 8',
+  'Phường 9',
+  'Phường 10',
+  'Phường 11',
+  'Phường 12',
+  'Phường 13',
+  'Phường 14',
+  'Phường 15',
+  'Phường 16',
+];
+const Quan9 = [
+  'Phường Hiệp Phú',
+  'Phường Long Bình',
+  'Phường Long Phước',
+  'Phường Long Thạnh Mỹ',
+  'Phường Long Trường',
+  'Phường Phú Hữu',
+  'Phường Phước Bình',
+  'Phường Phước Long A',
+  'Phường Phước Long B',
+  'Phường Tân Phú',
+  'Phường Tăng Nhơn Phú A',
+  'Phường Tăng Nhơn Phú B',
+  'Phường Trường Thạnh',
+];
+const Quan10 = [
+  'Phường 1',
+  'Phường 2',
+  'Phường 3',
+  'Phường 4',
+  'Phường 5',
+  'Phường 6',
+  'Phường 7',
+  'Phường 8',
+  'Phường 9',
+  'Phường 10',
+  'Phường 11',
+  'Phường 12',
+  'Phường 13',
+  'Phường 14',
+  'Phường 15',
+];
+const Quan11 = [
+  'Phường 1',
+  'Phường 2',
+  'Phường 3',
+  'Phường 4',
+  'Phường 5',
+  'Phường 6',
+  'Phường 7',
+  'Phường 8',
+  'Phường 9',
+  'Phường 10',
+  'Phường 11',
+  'Phường 12',
+  'Phường 13',
+  'Phường 14',
+  'Phường 15',
+  'Phường 16',
+];
+const Quan12 = [
+  'Phường An Phú Đông',
+  'Phường Đông Hưng Thuận',
+  'Phường Hiệp Thành',
+  'Phường Tân Chánh Hiệp',
+  'Phường Tân Hưng Thuận',
+  'Phường Tân Thới Hiệp',
+  'Phường Tân Thới Nhất',
+  'Phường Thạnh Lộc',
+  'Phường Thạnh Xuân',
+  'Phường Thới An',
+  'Phường Trung Mỹ Tây',
+];
+const QuanBinhTan = [
+  'Phường An Lạc',
+  'Phường An Lạc A',
+  'Phường Bình Hưng Hòa',
+  'Phường Bình Hưng Hòa A',
+  'Phường Bình Hưng Hòa B',
+  'Phường Bình Trị Đông',
+  'Phường Bình Trị Đông A',
+  'Phường Bình Trị Đông B',
+  'Phường Tân Tạo',
+  'Phường Tân Tạo A',
+];
+const ThuDuc = [
+  'Phường Bình Chiểu',
+  'Phường Bình Thọ',
+  'Phường Hiệp Bình Chánh',
+  'Phường Hiệp Bình Phước',
+  'Phường Linh Chiểu',
+  'Phường Linh Ðông',
+  'Phường Linh Tây',
+  'Phường Linh Trung',
+  'Phường Linh Xuân',
+  'Phường Tam Bình',
+  'Phường Tam Phú',
+  'Phường Trường Thọ',
+];
+const QuanTanPhu = [
+  'Phường Hiệp Tân',
+  'Phường Hòa Thạnh',
+  'Phường Phú Thạnh',
+  'Phường Phú Thọ Hòa',
+  'Phường Phú Trung',
+  'Phường Sơn Kỳ',
+  'Phường Tân Quý',
+  'Phường Tân Sơn Nhì',
+  'Phường Tân Thành',
+  'Phường Tân Thới Hòa',
+  'Phường Tây Thạnh',
+];
+
+const QuanTanBinh = [
+  'Phường 1',
+  'Phường 2',
+  'Phường 3',
+  'Phường 4',
+  'Phường 5',
+  'Phường 6',
+  'Phường 7',
+  'Phường 8',
+  'Phường 9',
+  'Phường 10',
+  'Phường 11',
+  'Phường 12',
+  'Phường 13',
+  'Phường 14',
+  'Phường 15',
+];
+const QuanPhuNhuan = [
+  'Phường 1',
+  'Phường 2',
+  'Phường 3',
+  'Phường 4',
+  'Phường 5',
+  'Phường 7',
+  'Phường 8',
+  'Phường 9',
+  'Phường 10',
+  'Phường 11',
+  'Phường 12',
+  'Phường 13',
+  'Phường 14',
+  'Phường 15',
+  'Phường 17',
+];
+const QuanGoVap = [
+  'Phường 1',
+  'Phường 2',
+  'Phường 3',
+  'Phường 4',
+  'Phường 5',
+  'Phường 7',
+  'Phường 8',
+  'Phường 9',
+  'Phường 10',
+  'Phường 11',
+  'Phường 12',
+  'Phường 13',
+  'Phường 14',
+  'Phường 15',
+  'Phường 17',
+];
+const QuanBinhThanh = [
+  'Phường 1',
+  'Phường 2',
+  'Phường 3',
+  'Phường 5',
+  'Phường 6',
+  'Phường 7',
+  'Phường 11',
+  'Phường 12',
+  'Phường 13',
+  'Phường 14',
+  'Phường 15',
+  'Phường 17',
+  'Phường 19',
+  'Phường 21',
+  'Phường 22',
+  'Phường 24',
+  'Phường 25',
+  'Phường 26',
+  'Phường 27',
+  'Phường 28',
+];
+const HuyenBinhChanh = [
+  'Xã An Phú Tây',
+  'Xã Bình Chánh',
+  'Xã Bình Hưng',
+  'Xã Bình Lợi',
+  'Xã Đa Phước',
+  'Xã Hưng Long',
+  'Xã Lê Minh Xuân',
+  'Xã Phạm Văn Hai',
+  'Xã Phong Phú',
+  'Xã Quy Đức',
+  'Xã Tân Kiên',
+  'Xã Tân Nhựt',
+  'Xã Tân Quý Tây',
+  'Xã Vĩnh Lộc A',
+  'Xã Vĩnh Lộc B',
+];
+const HuyenCanGio = [
+  'Xã An Thới Đông',
+  'Xã Bình Khánh',
+  'Xã Long Hòa',
+  'Xã Lý Nhơn',
+  'Xã Tam Thôn Hiệp',
+  'Xã Thạnh An',
+];
+const HuyenCuChi = [
+  'Thị Trấn Củ Chi ',
+  'Xã An Nhơn Tây',
+  'Xã An Phú',
+  'Xã Bình Mỹ',
+  'Xã Hòa Phú',
+  'Xã Nhuận Đức',
+  'Xã Phạm Văn Cội',
+  'Xã Phú Hòa Đông',
+  'Xã Phú Mỹ Hưng',
+  'Xã Phước Hiệp',
+  'Xã Phước Thạnh',
+  'Xã Phước Vĩnh An',
+  'Xã Tân An Hội',
+  'Xã Tân Phú Trung',
+  'Xã Tân Thạnh Đông',
+  'Xã Tân Thạnh Tây',
+  'Xã Tân Thông Hội',
+  'Xã Thái Mỹ',
+  'Xã Trung An',
+  'Xã Trung Lập Hạ',
+  'Xã Trung Lập Thượng',
+];
+const HuyenHocMon = [
+  'Xã Bà Điểm',
+  'Xã Đông Thạnh',
+  'Xã Nhị Bình',
+  'Xã Tân Hiệp',
+  'Xã Tân Thới Nhì',
+  'Xã Tân Xuân',
+  'Xã Thới Tam Thôn',
+  'Xã Trung Chánh',
+  'Xã Xuân Thới Đông',
+  'Xã Xuân Thới Sơn',
+  'Xã Xuân Thới Thượng',
+];
+const HuyenNhaBe = [
+  'Thị Trấn Nhà Bè',
+  'Xã Hiệp Phước',
+  'Xã Long Thới',
+  'Xã Nhơn Đức',
+  'Xã Phú Xuân',
+  'Xã Phước Kiển',
+  'Xã Phước Lộc',
+];
+
+const AllQuan = [
+  'Quận 1',
+  'Quận 2',
+  'Quận 3',
+  'Quận 4',
+  'Quận 5',
+  'Quận 6',
+  'Quận 7',
+  'Quận 8',
+  'Quận 9',
+  'Quận 10',
+  'Quận 11',
+  'Quận 12',
+  'Quận Bình Tân',
+  'Quận Bình Thạnh',
+  'Quận Gò Vấp',
+  'Quận Phú Nhuận',
+  'Quận Tân Bình',
+  'Quận Tân Phú',
+  'Quận Thủ Đức',
+  'Huyện Bình Chánh',
+  'Huyện Cần Giờ',
+  'Huyện Củ Chi',
+  'Huyện Hóc Môn',
+  'Huyện Nhà Bè',
 ];
 export default InfoCart;

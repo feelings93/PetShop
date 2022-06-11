@@ -51,7 +51,6 @@ const Services = () => {
   }, [sendRequest]);
   React.useEffect(() => {
     if (status === 'completed' && data) {
-      console.log(data);
       setServices(data);
     }
   }, [status, setServices, data]);

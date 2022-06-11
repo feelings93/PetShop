@@ -57,7 +57,6 @@ const UserContextProvider = (props) => {
         return item;
       });
 
-      console.log(newusers);
       setUsers(newusers);
     },
     [users]
@@ -67,7 +66,6 @@ const UserContextProvider = (props) => {
     (User) => {
       const newusers = users.filter((item) => item.id !== User.id);
 
-      console.log(newusers);
       setUsers(newusers);
     },
     [users]

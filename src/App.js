@@ -23,7 +23,7 @@ import PetContextProvider from './store/pet-context';
 import ProductContextProvider from './store/product-context';
 import ServiceContextProvider from './store/service-context';
 import InforOrder from './pages/cus/InforOrder';
-
+import ListOrder from './pages/cus/ListOrder';
 const theme = createTheme({
   palette: {
     primary: {
@@ -85,6 +85,7 @@ function App() {
           <Route exact path='/san-pham/:id' element={<DetailProduct />} />
           <Route exact path='/gioi-thieu' element={<About />} />
           <Route exact path='/don-hang/:id' element={<InforOrder />} />
+          <Route exact path='/danh-sach-don-hang' element={<ListOrder />} />
           <Route
             exact
             path='/thu-cung'

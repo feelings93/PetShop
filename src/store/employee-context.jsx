@@ -44,7 +44,6 @@ const EmployeeContextProvider = (props) => {
         return item;
       });
 
-      console.log(newEmployees);
       setEmployees(newEmployees);
     },
     [employees]
@@ -83,7 +82,9 @@ const EmployeeContextProvider = (props) => {
     } else {
       setSearchEmployees(
         employees.filter((x) =>
-          `${x?.firstName} ${x?.lastName}`.toUpperCase().includes(query.toUpperCase())
+          `${x?.firstName} ${x?.lastName}`
+            .toUpperCase()
+            .includes(query.toUpperCase())
         )
       );
     }
