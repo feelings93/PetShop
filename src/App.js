@@ -24,6 +24,7 @@ import ProductContextProvider from './store/product-context';
 import ServiceContextProvider from './store/service-context';
 import InforOrder from './pages/cus/InforOrder';
 import ListOrder from './pages/cus/ListOrder';
+import NotFound from './pages/cus/NotFound';
 const theme = createTheme({
   palette: {
     primary: {
@@ -118,7 +119,7 @@ function App() {
           />
         </Route>
 
-        <Route path='*' element={<h1> NOT FOUND</h1>} />
+        <Route path='*' element={<NotFound />} />
       </Routes>
     </ThemeProvider>
   );
